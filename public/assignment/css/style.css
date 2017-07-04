@@ -6,3 +6,12 @@ body {
     margin-top: 50px;
     padding: 15px;
 }
+
+.side-padding {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.right-padding {
+    padding-right: 15px;
+}
