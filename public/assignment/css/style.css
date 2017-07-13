@@ -16,3 +16,10 @@ body {
 .right-padding {
     padding-right: 15px;
 }
+
+.editWidgetDiv {
+    position:absolute;
+    opacity: .8;
+    right: 0;
+    z-index: 2;
+}
