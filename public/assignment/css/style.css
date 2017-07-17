@@ -18,9 +18,9 @@ body {
 }
 
 .editWidgetDiv {
-    position:absolute;
+    position: absolute;
     opacity: .8;
-    border:0px solid transparent;
+    border: 0px solid transparent;
     right: 0;
     z-index: 2;
 }
