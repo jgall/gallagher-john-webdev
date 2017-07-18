@@ -22,33 +22,9 @@
 
 <div class="container-fluid">
     <ul class="list-group">
-        <li class="list-group-item row">
-            <a href="#/widget-list">Blog Post</a>
-            <a href="#/page-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog pull-right"></span>
-            </a>
-        </li>
-        <li class="list-group-item row">
-            <a href="#/widget-list">Blogs</a>
-            <a href="#/page-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog pull-right"></span>
-            </a>
-        </li>
-        <li class="list-group-item row">
-            <a href="#/widget-list">Home</a>
-            <a href="#/page-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog pull-right"></span>
-            </a>
-        </li>
-        <li class="list-group-item row">
-            <a href="#/widget-list">About</a>
-            <a href="#/page-edit" class="pull-right">
-                <span class="glyphicon glyphicon-cog pull-right"></span>
-            </a>
-        </li>
-        <li class="list-group-item row">
-            <a href="#/widget-list">Contact Us</a>
-            <a href="#/page-edit" class="pull-right">
+        <li ng-repeat="page in model.pages" class="list-group-item row">
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}/widget">{{page.name}}</a>
+            <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{page._id}}" class="pull-right">
                 <span class="glyphicon glyphicon-cog pull-right"></span>
             </a>
         </li>

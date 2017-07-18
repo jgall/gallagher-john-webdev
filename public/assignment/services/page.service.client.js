@@ -27,7 +27,7 @@
         }
 
         function findPageByWebsiteId(websiteId) {
-            return pages.find(p => p.websiteId == websiteId);
+            return pages.filter(p => p.websiteId == websiteId);
         }
 
         function findPageById(pageId) {

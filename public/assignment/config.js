@@ -26,6 +26,8 @@
             })
             .when("/user/:uid/website", {
                 templateUrl: "views/website/templates/website-list.view.client.html",
+                controller: "ListWebsiteController",
+                controllerAs: "model"
             })
             .when("/user/:uid/website/new", {
                 templateUrl: "views/website/templates/website-new.view.client.html",

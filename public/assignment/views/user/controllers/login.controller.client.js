@@ -13,6 +13,8 @@
             let user = UserService.findUserByCredentials(username, password);
             if (user) {
                 $location.path("/user/" + user._id);
+            } else {
+                vm.failedLogin = true;
             }
         }
     }

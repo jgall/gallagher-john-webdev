@@ -37,7 +37,7 @@
         }
 
         function findWidgetsByPageId(pageId) {
-            return widgets.find(w => w.pageId == pageId);
+            return widgets.filter(w => w.pageId == pageId);
         }
 
         function findWidgetById(widgetId) {

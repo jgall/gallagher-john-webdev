@@ -31,7 +31,7 @@
         }
 
         function findWebsitesByUser(userId) {
-            return websites.find(w => w.developerId == userId);
+            return websites.filter(w => w.developerId == userId);
         }
 
         function findWebsiteById(websiteId) {
