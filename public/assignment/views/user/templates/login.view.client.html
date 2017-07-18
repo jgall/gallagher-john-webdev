@@ -1,15 +1,17 @@
 <div class="container">
     <h1>Login</h1>
-    <input type="text"
-           class="form-control"
-           placeholder="username"
-           ng-model="model.user.username"/>
-    <input type="password"
-           class="form-control"
-           placeholder="password"
-           ng-model="model.user.password"/>
-    <a class="btn btn-primary btn-block"
-       href="#!/user/">Login</a>
+    <form ng-submit="model.login(model.user.username, model.user.password)">
+        <input type="text"
+               class="form-control"
+               placeholder="username"
+               ng-model="model.user.username"/>
+        <input type="password"
+               class="form-control"
+               placeholder="password"
+               ng-model="model.user.password"/>
+    <button class="btn btn-primary btn-block"
+       type="submit">Login</button>
     <a class="btn btn-success btn-block"
        href="#!/register">Register</a>
+    </form>
 </div>

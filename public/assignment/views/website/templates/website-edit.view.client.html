@@ -69,11 +69,13 @@
         <form>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Name" value="Existing Name">
+                <input type="text" class="form-control" id="name" placeholder="Name" value="Existing Name"
+                       ng-model="model.website.name">
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea rows="3" class="form-control" id="description" placeholder="Description">Existing Description
+                <textarea rows="3" class="form-control" id="description" placeholder="Description"
+                          ng-model="model.website.description">Existing Description
                 </textarea>
             </div>
             <a href="#/website-list" class="btn btn-danger btn-block">Delete</a>

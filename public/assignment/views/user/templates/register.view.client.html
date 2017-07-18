@@ -1,15 +1,20 @@
 <body>
     <div class="container">
         <h1>Register</h1>
-        <input type="text"
-               class="form-control"
-               placeholder="username"/>
-        <input type="password"
-               class="form-control"
-               placeholder="password"/>
-        <input type="password"
-               class="form-control"
-               placeholder="very password"/>
+        <form>
+            <input type="text"
+                   class="form-control"
+                   placeholder="username"
+                   ng-model="model.user.username"/>
+            <input type="password"
+                   class="form-control"
+                   placeholder="password"
+                   ng-model="model.user.password"/>
+            <input type="password"
+                   class="form-control"
+                   placeholder="verify password"
+                   ng-model="model.user.passwordVerify"/>
+        </form>
         <a class="btn btn-primary btn-block"
            href="#/profile">Register</a>
         <a class="btn btn-danger  btn-block"
