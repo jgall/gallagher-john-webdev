@@ -14,7 +14,7 @@
             if (user) {
                 $location.path("/user/" + user._id);
             } else {
-                vm.failedLogin = true;
+                vm.alert = "Unable to login"
             }
         }
     }

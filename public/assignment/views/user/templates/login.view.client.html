@@ -1,7 +1,7 @@
 <div class="container">
     <h1>Login</h1>
     <form ng-submit="model.login(model.user.username, model.user.password)">
-        <div class="alert alert-danger" ng-show="model.failedLogin">Incorrect Login Credentials</div>
+        <div class="alert alert-danger" ng-show="model.alert">{{model.alert}}</div>
         <input type="text"
                class="form-control"
                placeholder="username"
