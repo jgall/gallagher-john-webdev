@@ -12,7 +12,6 @@
         vm.createWebsite = createWebsite;
 
         function createWebsite(website) {
-            console.log(angular.toJson(website));
             WebsiteService.createWebsite(vm.userId, website);
             $location.path("/user/" + vm.userId + "/website");
         }

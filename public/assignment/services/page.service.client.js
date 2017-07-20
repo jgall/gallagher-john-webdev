@@ -13,7 +13,7 @@
 
         let api = {
             "createPage": createPage,
-            "findPageByWebsiteId": findPageByWebsiteId,
+            "findPagesByWebsiteId": findPagesByWebsiteId,
             "findPageById": findPageById,
             "updatePage": updatePage,
             "deletePage": deletePage
@@ -23,10 +23,11 @@
 
         function createPage(websiteId, page) {
             page.websiteId = websiteId;
+            page._id = new Date().toUTCString();
             pages.push(page);
         }
 
-        function findPageByWebsiteId(websiteId) {
+        function findPagesByWebsiteId(websiteId) {
             return pages.filter(p => p.websiteId == websiteId);
         }
 
@@ -36,7 +37,7 @@
 
         function updatePage(pageId, page) {
             let pageToUpdate = pages.find(p => p._id == pageId);
-            pages.splice(pages.indexOf(pageToUpdate), 1, page);
+            pages[pages.indexOf(pageToUpdate)] = page;
         }
 
         function deletePage(pageId) {

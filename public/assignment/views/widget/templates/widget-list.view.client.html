@@ -21,56 +21,20 @@
 </nav>
 
 <div class="container-fluid">
-    <div> <!-- SAMPLE HEADING WIDGET -->
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#/widget-heading"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
+    <div ng-repeat="widget in model.widgets">
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HEADING">
+                <ng-include src="'views/widget/templates/widget-heading.view.client.html'">
+            </div>
+            <div ng-switch-when="IMAGE">
+                <ng-include src="'views/widget/templates/widget-image.view.client.html'">
+            </div>
+            <div ng-switch-when="YOUTUBE">
+                <ng-include src="'views/widget/templates/widget-youtube.view.client.html'">
+            </div>
         </div>
-        <h3>Gizmodo</h3>
     </div>
-    <div> <!-- SAMPLE IMAGE WIDGET -->
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#/widget-heading"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
-        </div>
-        <h4>Image With a dog!</h4>
-    </div>
-    <div>
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#/widget-image"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
-        </div>
-        <img class="img-responsive" src="../../../../img/yumRope.png">
-    </div>
-    <div>
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
-        </div>
-        <p>That YUM ROPE sure does do poor doggo a bamboozle!</p>
-    </div>
-    <div> <!-- SAMPLE YOUTUBE WIDGET -->
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#/widget-heading"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
-        </div>
-        <h4>Youtube video header</h4>
-    </div>
-    <div>
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#/widget-youtube"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
-        </div>
-        <iframe width="427" height="240" src="https://www.youtube.com/embed/Qnf_1laqE9I" frameborder="0"
-                allowfullscreen></iframe>
-    </div>
-    <div>
-        <div class="editWidgetDiv btn btn-default">
-            <a href="#"><span class="glyphicon glyphicon-cog"></span></a>
-            <span class="handle glyphicon glyphicon-align-justify"></span>
-        </div>
-        <p>Wow what an awesome YouTube video that is!</p>
-    </div>
+
 </div>
 
 

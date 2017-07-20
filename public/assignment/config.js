@@ -40,7 +40,9 @@
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page", {
-                templateUrl: "views/page/templates/page-list.view.client.html"
+                templateUrl: "views/page/templates/page-list.view.client.html",
+                controller: "ListPageController",
+                controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/new", {
                 templateUrl: "views/page/templates/page-new.view.client.html",
@@ -53,7 +55,9 @@
                 controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget", {
-                templateUrl: "views/widget/templates/widget-list.view.client.html"
+                templateUrl: "views/widget/templates/widget-list.view.client.html",
+                controller: "ListWidgetController",
+                controllerAs: "model"
             })
             .when("/user/:uid/website/:wid/page/:pid/widget/new", {
                 templateUrl: "views/widget/widget-new.view.client.html"
