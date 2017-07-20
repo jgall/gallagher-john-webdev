@@ -4,7 +4,7 @@
 (function () {
     angular.module("WebAppMaker").controller("EditWebsiteController", EditWebsiteController);
 
-    function EditWebsiteController($scope, $routeParams, UserService, WebsiteService, $location) {
+    function EditWebsiteController($scope, $routeParams, UserService, WebsiteService, $location, $timeout) {
         let vm = this;
 
         vm.userId = $routeParams["uid"];
@@ -16,6 +16,9 @@
         function updateWebsite(website) {
             WebsiteService.updateWebsite(vm.websiteId, angular.copy(website));
             vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+            vm.alert = "Website updated.";
+            vm.hasAlert = true;
+            $timeout(() => vm.hasAlert = false, 3000);
         }
 
         function deleteWebsite() {
