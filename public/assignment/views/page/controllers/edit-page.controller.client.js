@@ -4,7 +4,7 @@
 (function () {
     angular.module("WebAppMaker").controller("EditPageController", EditPageController);
 
-    function EditPageController($scope, $routeParams, PageService, UserService, WebsiteService, $timeout) {
+    function EditPageController($scope, $routeParams, PageService, $location, WebsiteService, $timeout) {
         let vm = this;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
@@ -23,6 +23,7 @@
 
         function deletePage(pageId) {
             PageService.deletePage(pageId);
+            $location.path("/user/" + vm.userId + "/website/" + vm.websiteId + "/page")
         }
 
         function init() {
