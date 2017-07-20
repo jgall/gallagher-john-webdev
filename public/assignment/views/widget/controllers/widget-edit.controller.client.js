@@ -11,9 +11,6 @@
         vm.websiteId = $routeParams["wid"];
         vm.widgetId = $routeParams[":wgid"];
         function init() {
-            vm.user = UserService.findUserById(vm.userId);
-            vm.website = WebsiteService.findWebsiteById(vm.websiteId);
-            vm.page = PageService.findPageById(vm.pageId);
             vm.widget = WidgetService.findWidgetById(vm.widgetId);
         }
         init();

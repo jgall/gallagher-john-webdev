@@ -23,30 +23,17 @@
 <div class="container-fluid row">
 
     <div class="col-md-12 col-sm-12">
-        <form>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Name" value="Existing Name">
+        <div ng-switch="widget.widgetType">
+            <div ng-switch-when="HEADING">
+                <ng-include src="'widget-heading-edit.view.client.html'">
             </div>
-            <div class="form-group">
-                <label for="text">Text</label>
-                <input type="text" class="form-control" id="text" placeholder="Description" value="Existing Text">
+            <div ng-switch-when="IMAGE">
+                <ng-include src="'widget-image-edit.view.client.html'">
             </div>
-            <div class="form-group">
-                <label for="url">URL</label>
-                <input type="url" class="form-control" id="url" placeholder="URL">
+            <div ng-switch-when="YOUTUBE">
+                <ng-include src="'widget-youtube-edit.view.client.html'">
             </div>
-            <div class="form-group">
-                <label for="width">Width</label>
-                <input type="number" min="0" max="100" class="form-control" id="width" placeholder="Width" value="100">
-            </div>
-            <div class="form-group">
-                <label for="upload">Upload</label>
-                <input type="file" class="form-control" id="upload" placeholder="Upload a file">
-            </div>
-            <a href="#/widget-list" class="btn btn-primary btn-block">Upload Image</a>
-            <a href="#/widget-list" class="btn btn-danger btn-block">Delete</a>
-        </form>
+        </div>
     </div>
 </div>
 
