@@ -21,18 +21,24 @@
             {"_id": "789", "widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
         ];
 
+        let widgetTypes = [
+            "HTML", "HEADING", "YOUTUBE", "IMAGE"
+        ];
+
         let api = {
             "createWidget": createWidget,
             "findWidgetsByPageId": findWidgetsByPageId,
             "findWidgetById": findWidgetById,
             "updateWidget": updateWidget,
-            "deleteWidget": deleteWidget
+            "deleteWidget": deleteWidget,
+            "getWidgetTypes": getWidgetTypes
         };
 
         return api;
 
         function createWidget(pageId, widget) {
             widget.pageId = pageId;
+            widget._id = new Date().getTime() + "";
             widgets.push(widget);
         }
 
@@ -45,6 +51,7 @@
         }
 
         function updateWidget(widgetId, widget) {
+            widget._id = widgetId;
             let widgetToUpdate = widgets.find(w => w._id == widgetId);
             widgets.splice(widgets.indexOf(widgetToUpdate), 1, widget);
         }
@@ -52,6 +59,10 @@
         function deleteWidget(widgetId) {
             let widgetToDelete = widgets.find(w => w._id == widgetId);
             widgets.splice(widgets.indexOf(widgetToDelete), 1);
+        }
+
+        function getWidgetTypes() {
+            return widgetTypes;
         }
     }
 

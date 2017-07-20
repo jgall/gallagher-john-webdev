@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="navbar-header navbar-brand pull-left">
-                    <a href="#/widget-list" class="pull-left">
+                    <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget"
+                       class="pull-left">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </div>
@@ -19,35 +20,8 @@
 
     <div class="col-md-12 col-sm-12">
         <ul class="list-group">
-            <li class="list-group-item">
-                <a href="#/widget-heading">Header</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Label</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">HTML</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Text Input</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Link</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Button</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#/widget-image">Image</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#/widget-youtube">YouTube</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Data Table</a>
-            </li>
-            <li class="list-group-item">
-                <a href="#">Repeater</a>
+            <li class="list-group-item" ng-repeat="type in model.widgetTypes">
+                <a ng-click="model.createWidget(type)">{{model.toRegularString(type)}}</a>
             </li>
         </ul>
     </div>

@@ -1,5 +1,5 @@
 
-<form>
+<form ng-submit="model.deleteWidget(model.widget)">
     <div class="form-group">
         <label for="url">URL</label>
         <input type="url" class="form-control" id="url" placeholder="Url" ng-model="model.widget.url">
@@ -8,6 +8,6 @@
         <label for="width">Width</label>
         <input class="form-control" id="width" placeholder="width" ng-model="model.widget.width">
     </div>
-    <a href="" class="btn btn-danger btn-block">Delete</a>
+    <button type="submit" class="btn btn-danger btn-block">Delete</button>
 </form>
 
