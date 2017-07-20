@@ -40,7 +40,7 @@
 
         function updateWebsite(websiteId, website) {
             let websiteToUpdate = websites.find(w => w._id == websiteId);
-            websites.splice(websites.indexOf(websiteToUpdate), 1, website);
+            websites[websites.indexOf(websiteToUpdate)] =  website;
         }
 
         function deleteWebsite(websiteId) {
