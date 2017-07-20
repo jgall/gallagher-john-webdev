@@ -1,7 +1,7 @@
 <body>
     <div class="container">
         <h1>Register</h1>
-        <form>
+        <form ng-submit="model.register(model.user)">
             <input type="text"
                    class="form-control"
                    placeholder="username"
@@ -14,11 +14,11 @@
                    class="form-control"
                    placeholder="verify password"
                    ng-model="model.user.passwordVerify"/>
+            <button class="btn btn-primary btn-block"
+               href="" type="submit">Register</button>
+            <button class="btn btn-danger  btn-block"
+               href="#!/login">Cancel</button>
         </form>
-        <a class="btn btn-primary btn-block"
-           href="#!/profile">Register</a>
-        <a class="btn btn-danger  btn-block"
-           href="#!/login">Cancel</a>
     </div>
 </body>
 </html>

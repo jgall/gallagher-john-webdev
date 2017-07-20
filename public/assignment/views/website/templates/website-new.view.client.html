@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4 hidden-xs hidden-sm">
                 <div class="navbar-header navbar-brand pull-left">
-                    <a href="#/website-list" class="pull-left">
+                    <a href="#!/user/{{model.userId}}/website" class="pull-left">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </div>
@@ -11,14 +11,14 @@
                     Websites
                 </div>
                 <div class="navbar-header navbar-brand pull-right">
-                    <a href="#/website-new">
+                    <a href="#!/user/{{model.userId}}/website/new">
                         <span class="glyphicon glyphicon-plus"></span>
                     </a>
                 </div>
             </div>
             <div class="col-md-8 col-sm-12">
                 <div class="navbar-header navbar-brand pull-left hidden-md hidden-lg">
-                    <a href="#/website-list" class="pull-left">
+                    <a href="#!/user/{{model.userId}}/website" class="pull-left">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </div>
@@ -26,7 +26,7 @@
                     New Website
                 </div>
                 <div class="navbar-header navbar-brand pull-right">
-                    <a href="#/website-list">
+                    <a href="#!/user/{{model.userId}}/website" ng-click="model.createWebsite(model.website)">
                         <span class="glyphicon glyphicon-ok"></span>
                     </a>
                 </div>
@@ -38,27 +38,9 @@
 <div class="container-fluid row">
     <div class="col-md-4 hidden-sm hidden-xs right-padding">
         <ul class="list-group">
-            <li class="list-group-item row">
-                <a href="#/page-list">Address Book App</a>
-                <a href="#/website-edit" class="pull-right">
-                    <span class="glyphicon glyphicon-cog pull-right"></span>
-                </a>
-            </li>
-            <li class="list-group-item row">
-                <a href="#/page-list">Blogger</a>
-                <a href="#/website-edit" class="pull-right">
-                    <span class="glyphicon glyphicon-cog pull-right"></span>
-                </a>
-            </li>
-            <li class="list-group-item row">
-                <a href="#/page-list">Blogging App</a>
-                <a href="#/website-edit" class="pull-right">
-                    <span class="glyphicon glyphicon-cog pull-right"></span>
-                </a>
-            </li>
-            <li class="list-group-item row">
-                <a href="#/page-list">Script Testing App</a>
-                <a href="#/website-edit" class="pull-right">
+            <li ng-repeat="website in model.websites" class="list-group-item row">
+                <a href="#!/user/{{model.userId}}/website/{{website._id}}/page">{{website.name}}</a>
+                <a href="#!/user/{{model.userId}}/website/{{website._id}}" class="pull-right">
                     <span class="glyphicon glyphicon-cog pull-right"></span>
                 </a>
             </li>

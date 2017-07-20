@@ -24,3 +24,16 @@ body {
     right: 0;
     z-index: 2;
 }
+
+.padded-column-content {
+    margin-top: 5px;
+}
+
+.fade {
+    transition: all linear 500ms;
+    opacity: 1;
+}
+
+.fade.ng-hide {
+    opacity: 0;
+}

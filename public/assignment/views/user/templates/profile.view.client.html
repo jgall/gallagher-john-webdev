@@ -35,10 +35,15 @@
         </div>
     </form>
 
+    <a class="btn btn-success  btn-block"
+       href="" ng-click="model.updateUser()">Update</a>
     <a class="btn btn-primary btn-block"
        href="#!/user/{{model.userId}}/website">Websites</a>
     <a class="btn btn-danger btn-block "
        href="#!/login">Logout</a>
+
+    <div class="alert alert-success padded-column-content fade" ng-show="model.hasAlert">{{model.alert}}</div>
+
 </div>
 
 <nav class="navbar navbar-default navbar-fixed-bottom">
