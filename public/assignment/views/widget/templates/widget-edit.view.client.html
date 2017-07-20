@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <div class="navbar-header navbar-brand pull-left">
-                    <a href="#/widget-list" class="pull-left">
+                    <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget" class="pull-left">
                         <span class="glyphicon glyphicon-chevron-left"></span>
                     </a>
                 </div>
@@ -11,7 +11,7 @@
                     Widget Edit
                 </div>
                 <div class="navbar-header navbar-brand pull-right">
-                    <a href="#/widget-list">
+                    <a href="" ng-click="model.updateWidget(model.widget)">
                         <span class="glyphicon glyphicon-ok"></span>
                     </a>
                 </div>
@@ -23,15 +23,18 @@
 <div class="container-fluid row">
 
     <div class="col-md-12 col-sm-12">
-        <div ng-switch="widget.widgetType">
+        <div ng-switch="model.widget.widgetType">
             <div ng-switch-when="HEADING">
-                <ng-include src="'widget-heading-edit.view.client.html'">
+                <ng-include src="'views/widget/editors/widget-heading-edit.view.client.html'">
             </div>
             <div ng-switch-when="IMAGE">
-                <ng-include src="'widget-image-edit.view.client.html'">
+                <ng-include src="'views/widget/editors/widget-image-edit.view.client.html'">
             </div>
             <div ng-switch-when="YOUTUBE">
-                <ng-include src="'widget-youtube-edit.view.client.html'">
+                <ng-include src="'views/widget/editors/widget-youtube-edit.view.client.html'">
+            </div>
+            <div ng-switch-when="HTML">
+                <ng-include src="'views/widget/editors/widget-html-edit.view.client.html'">
             </div>
         </div>
     </div>

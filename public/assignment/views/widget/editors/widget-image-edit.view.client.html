@@ -1,19 +1,11 @@
 <form>
     <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" placeholder="Name" value="Existing Name">
-    </div>
-    <div class="form-group">
-        <label for="text">Text</label>
-        <input type="text" class="form-control" id="text" placeholder="Description" value="Existing Text">
-    </div>
-    <div class="form-group">
         <label for="url">URL</label>
-        <input type="url" class="form-control" id="url" placeholder="URL">
+        <input type="url" class="form-control" id="url" placeholder="URL" ng-model="model.widget.url">
     </div>
     <div class="form-group">
         <label for="width">Width</label>
-        <input type="number" min="0" max="100" class="form-control" id="width" placeholder="Width" value="100">
+        <input class="form-control" id="width" placeholder="Width" ng-model="model.widget.width">
     </div>
     <div class="form-group">
         <label for="upload">Upload</label>

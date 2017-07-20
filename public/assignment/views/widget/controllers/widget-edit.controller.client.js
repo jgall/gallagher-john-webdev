@@ -9,7 +9,7 @@
         vm.userId = $routeParams["uid"];
         vm.pageId = $routeParams["pid"];
         vm.websiteId = $routeParams["wid"];
-        vm.widgetId = $routeParams[":wgid"];
+        vm.widgetId = $routeParams["wgid"];
         function init() {
             vm.widget = WidgetService.findWidgetById(vm.widgetId);
         }
