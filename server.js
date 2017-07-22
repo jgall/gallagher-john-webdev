@@ -19,10 +19,13 @@ logger("Body Parser acquired...");
 app.use(express.static(__dirname + '/public'));
 logger("Public Directory initialized...");
 
-require ("./test/app.js")(app);
-logger("Main app.js run...");
+require("./test/app.js")(app);
+logger("Test app.js run...");
 
-var port = process.env.PORT || 3000;
+require("./assignment/app")(app);
+logger("Assignment app.js run...");
+
+var port = process.env.PORT || 3001;
 
 app.listen(port);
 logger("Listening...");
