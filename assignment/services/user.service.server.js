@@ -1,7 +1,7 @@
 /**
  * Created by jggll on 7/21/17.
  */
-module.exports = function(app) {
+module.exports = function (app) {
     let apiName = "/api/user";
     let users = [
         {_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
