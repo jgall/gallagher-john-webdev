@@ -16,6 +16,31 @@ describe("Website Service", function () {
         server.close();
     });
 
+    describe('finding websites by id', function() {
+        let server;
+        beforeEach(function () {
+            server = require("../server");
+        });
+        afterEach(function () {
+            server.close();
+        });
+        it('finds a website by id', function testFindWebsiteById(done) {
+            request(server)
+                .get('/api/website/678')
+                .expect(200)
+                .end((err, res) => {
+                    assert.deepEqual(res.body, {"_id": "678", "name": "Checkers", "developerId": "123", "description": "Lorem"});
+                    done();
+                });
+        });
+
+        it('404s on finding websites that do not exist', function testFindNonExistentWebsite(done) {
+            request(server)
+                .get('/api/website/241523')
+                .expect(404, done);
+        });
+    });
+
     it('finds websites for user', function testGetWebsitesForUser(done) {
         request(server)
             .get('/api/user/123/website')
@@ -48,4 +73,24 @@ describe("Website Service", function () {
                     });
             });
     });
+
+    it('updates a website', function testUpdateWebsite(done) {
+        request(server).put('/api/website/123')
+            .send({"_id": "123", "name": "Facebook2", "developerId": "456", "description": "Lorem"})
+            .expect(200)
+            .end((err, res) => {
+                request(server)
+                    .get('/api/website/123')
+                    .expect(200)
+                    .end((err, res) => {
+                        assert.deepEqual(res.body, {
+                            "_id": "123",
+                            "name": "Facebook2",
+                            "developerId": "456",
+                            "description": "Lorem"
+                        });
+                        done();
+                    });
+            })
+    })
 });
