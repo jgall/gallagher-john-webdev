@@ -10,12 +10,13 @@
         vm.login = login;
 
         function login(username, password) {
-            let user = UserService.findUserByCredentials(username, password);
-            if (user) {
-                $location.path("/user/" + user._id);
-            } else {
-                vm.alert = "Unable to login"
-            }
+            UserService.findUserByCredentials(username, password).then(user => {
+                if (user) {
+                    $location.path("/user/" + user._id);
+                } else {
+                    vm.alert = "Unable to login"
+                }
+            });
         }
     }
 

@@ -33,6 +33,7 @@ module.exports = function(app) {
             findUserByUsername(req, res);
         } else {
             res.status(404);
+            res.end();
         }
     }
 
@@ -43,20 +44,28 @@ module.exports = function(app) {
             findUserById(req, res);
         } else {
             res.status(404);
+            res.end();
         }
     }
 
     function findUserById(req, res) {
         let user = users.find(u => u._id == req.params.userId);
-        res.json(user);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404);
+        }
+        res.end();
     }
 
     function findUserByCredentials(req, res) {
         res.json(users.find(u => u.username == req.query.username && u.password == req.query.password));
+        res.end();
     }
 
     function findUserByUsername(req, res) {
         res.json(users.find(u => u.username == req.query.username));
+        res.end();
     }
 
     function updateUser(req, res) {
@@ -64,9 +73,14 @@ module.exports = function(app) {
         let userToUpdate = users.find(u => u._id == userId);
         users.splice(users.indexOf(userToUpdate), 1, req.body);
         res.status(200);
+        res.end();
     }
 
     function deleteUser(req, res) {
         let userId = req.params.userId;
+        let userToDelete = users.find(u => u._id == userId);
+        users.splice(users.indexOf(userToDelete), 1);
+        res.status(200);
+        res.end();
     }
 };

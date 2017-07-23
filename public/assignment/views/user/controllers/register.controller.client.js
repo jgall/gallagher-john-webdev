@@ -10,9 +10,9 @@
         vm.register = register;
 
         function register(user) {
-            user._id = new Date().toUTCString();
-            UserService.createUser(user);
-            $location.path("/user/" + user._id);
+            UserService.createUser(user)
+                .then(() => UserService.findUserByCredentials(user.username, user.password)
+                    .then(user => $location.path("/user/" + user._id)));
         }
     }
 

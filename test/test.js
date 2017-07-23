@@ -4,7 +4,7 @@ let describe = require("mocha").describe;
 let beforeEach = require("mocha").beforeEach;
 let afterEach = require("mocha").afterEach;
 describe('Initialize Tests', function () {
-    it('This test should always get run and should always pass: ', function () {
+    it('should always get run and should always pass: ', function () {
         assert.equal(-1, [1, 2, 3].indexOf(4));
     });
 });
@@ -24,14 +24,8 @@ describe("Normal Server Functionality", function () {
     });
 });
 
-describe("User Service : Server", function () {
-    let server;
-    beforeEach(function () {
-        server = require("../server");
-    });
-    afterEach(function () {
-        server.close();
-    });
+describe("User Service", function () {
+    let server = require('../server');
 
     it('finds users by id', function testGetUserById(done) {
         request(server)
@@ -51,39 +45,67 @@ describe("User Service : Server", function () {
             .expect({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"}, done);
     });
 
-    it('creates a new user', function testCreateNewUser(done) {
-        request(server)
-            .post('/api/user')
-            .send({
-                _id: "none",
-                username: "john",
-                password: "john",
-                firstName: "John",
-                lastName: "Gallagher"
-            })
-            .expect(200, done)
-            .expect(function (res) {
-                assert.equal(res.body.username, "john");
-                assert.equal(res.body.password, "john");
-                assert.equal(res.body.firstName, "John");
-                assert.equal(res.body.lastName, "Gallagher");
-            });
+    describe('Creating users', function () {
+        let server;
+        beforeEach(function () {
+            server = require("../server");
+        });
+        afterEach(function () {
+            server.close();
+        });
+        it('creates a new user', function testCreateNewUser(done) {
+            request(server)
+                .post('/api/user')
+                .send({
+                    _id: "none",
+                    username: "john",
+                    password: "john",
+                    firstName: "John",
+                    lastName: "Gallagher"
+                })
+                .expect(200, done)
+                .expect(function (res) {
+                    assert.equal(res.body.username, "john");
+                    assert.equal(res.body.password, "john");
+                    assert.equal(res.body.firstName, "John");
+                    assert.equal(res.body.lastName, "Gallagher");
+                });
+        });
     });
 
-    it('updates a user', function testUpdateUser(done) {
+    describe('Updating a user', function () {
+        it('updates a user', function testUpdateUser(done) {
+            request(server)
+                .put('/api/user/123')
+                .send({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "new last name"})
+                .expect(200)
+                .end((err, res) => {
+                    request(server).get('/api/user/123')
+                        .expect({
+                            _id: "123",
+                            username: "alice",
+                            password: "alice",
+                            firstName: "Alice",
+                            lastName: "new last name"
+                        })
+                        .end((err, res) => {
+                            assert.equal(res.body._id, "123");
+                            assert.equal(res.body.username, "alice");
+                            assert.equal(res.body.lastName, "new last name");
+                            done()
+                        });
+                });
+        });
+    });
+
+
+    it('deletes a user', function testDeleteUser(done) {
         request(server)
-            .put('/api/user/123')
-            .send({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "new last name"})
-            .expect(200, done)
-            .end(function (req, res) {
+            .delete('/api/user/123')
+            .expect(200)
+            .end(function (err, res) {
                 request(server).get('/api/user/123')
-                    .expect({
-                        _id: "123",
-                        username: "alice",
-                        password: "alice",
-                        firstName: "Alice",
-                        lastName: "new last name"
-                    }, done);
+                    .expect(404, done);
             });
     });
 });
