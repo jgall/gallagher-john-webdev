@@ -14,23 +14,24 @@
         vm.deleteWebsite = deleteWebsite;
 
         function updateWebsite(website) {
-            WebsiteService.updateWebsite(vm.websiteId, angular.copy(website));
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            vm.alert = "Website updated.";
-            vm.hasAlert = true;
-            $timeout(() => vm.hasAlert = false, 3000);
+            WebsiteService.updateWebsite(vm.websiteId, angular.copy(website)).then(() => {
+                WebsiteService.findWebsitesByUser(vm.userId).then(data => vm.websites = data);
+                vm.alert = "Website updated.";
+                vm.hasAlert = true;
+                $timeout(() => vm.hasAlert = false, 3000);
+            });
+
         }
 
         function deleteWebsite() {
-            WebsiteService.deleteWebsite(vm.websiteId);
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            $location.path("/user/" + vm.userId + "/website")
+            WebsiteService.deleteWebsite(vm.websiteId).then(() => {
+                $location.path("/user/" + vm.userId + "/website")
+            });
         }
 
         function init() {
-            vm.user = UserService.findUserById(vm.userId);
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
-            vm.website = angular.copy(WebsiteService.findWebsiteById(vm.websiteId));
+            WebsiteService.findWebsitesByUser(vm.userId).then(data => vm.websites = data);
+            WebsiteService.findWebsiteById(vm.websiteId).then(data => vm.website = data);
         }
         init();
     }

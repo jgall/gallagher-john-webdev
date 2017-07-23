@@ -4,16 +4,9 @@
 (function () {
     angular.module("WebAppMaker").factory("WebsiteService", WebsiteService);
 
-    function WebsiteService() {
-        let websites = [
-            {"_id": "123", "name": "Facebook", "developerId": "456", "description": "Lorem"},
-            {"_id": "234", "name": "Tweeter", "developerId": "456", "description": "Lorem"},
-            {"_id": "456", "name": "Gizmodo", "developerId": "456", "description": "Lorem"},
-            {"_id": "890", "name": "Go", "developerId": "123", "description": "Lorem"},
-            {"_id": "567", "name": "Tic Tac Toe", "developerId": "123", "description": "Lorem"},
-            {"_id": "678", "name": "Checkers", "developerId": "123", "description": "Lorem"},
-            {"_id": "789", "name": "Chess", "developerId": "234", "description": "Lorem"}
-        ];
+    function WebsiteService($http) {
+        let userApi = '/api/user/:userId/website';
+        let websiteApi = '/api/website/:websiteId';
 
         let api = {
             "createWebsite": createWebsite,
@@ -26,27 +19,23 @@
         return api;
 
         function createWebsite(userId, website) {
-            website.developerId = "" + userId;
-            website._id = new Date().toUTCString();
-            websites.push(website);
+            return $http.post('/api/user/' + userId + '/website', website).then(res => res.data);
         }
 
         function findWebsitesByUser(userId) {
-            return websites.filter(w => w.developerId == userId);
+            return $http.get('/api/user/' + userId + '/website').then(res => res.data);
         }
 
         function findWebsiteById(websiteId) {
-            return websites.find(w => w._id == websiteId);
+            return $http.get('/api/website/' + websiteId).then(res => res.data);
         }
 
         function updateWebsite(websiteId, website) {
-            let websiteToUpdate = websites.find(w => w._id == websiteId);
-            websites[websites.indexOf(websiteToUpdate)] =  website;
+            return $http.put('/api/website/' + websiteId, website);
         }
 
         function deleteWebsite(websiteId) {
-            let websiteToDelete = websites.find(w => w._id == websiteId);
-            websites.splice(websites.indexOf(websiteToDelete), 1);
+            return $http.delete('/api/website/' + websiteId);
         }
     }
 

@@ -2,7 +2,6 @@
  * Created by jggll on 7/21/17.
  */
 module.exports = function (app) {
-    let apiName = '/api/website';
 
     let websites = [
         {"_id": "123", "name": "Facebook", "developerId": "456", "description": "Lorem"},
@@ -22,7 +21,8 @@ module.exports = function (app) {
 
     function createWebsite(req, res) {
         let website = req.body;
-        if (website.name && website.developerId) {
+        if (website.name) {
+            website.developerId = req.params.userId;
             website._id = new Date().getTime();
             websites.push(website);
             res.status(200);

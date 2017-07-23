@@ -12,13 +12,17 @@
         vm.createWebsite = createWebsite;
 
         function createWebsite(website) {
-            WebsiteService.createWebsite(vm.userId, website);
-            $location.path("/user/" + vm.userId + "/website");
+            if (website.name) {
+                WebsiteService.createWebsite(vm.userId, website).then(() => {
+                    $location.path("/user/" + vm.userId + "/website");
+                });
+            }
         }
 
         function init() {
-            vm.websites = WebsiteService.findWebsitesByUser(vm.userId);
+            WebsiteService.findWebsitesByUser(vm.userId).then(data => vm.websites = data);
         }
+
         init();
     }
 
