@@ -29,7 +29,7 @@ module.exports = function(app) {
     }
 
     function findAllPagesForWebsite(req, res) {
-        res.json(pages.filter(p => p.websiteId == res.params.websiteId));
+        res.json(pages.filter(p => p.websiteId == req.params.websiteId));
         res.end();
     }
 

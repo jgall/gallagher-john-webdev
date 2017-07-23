@@ -15,20 +15,21 @@
 
         function updatePage(page) {
             PageService.updatePage(vm.pageId, angular.copy(page));
-            vm.pages = PageService.findPagesByWebsiteId(vm.websiteId);
+            PageService.findPagesByWebsiteId(vm.websiteId).then(data => vm.pages = data);
             vm.alert = "Page updated.";
             vm.hasAlert = true;
             $timeout(() => vm.hasAlert = false, 3000);
         }
 
         function deletePage(pageId) {
-            PageService.deletePage(pageId);
-            $location.path("/user/" + vm.userId + "/website/" + vm.websiteId + "/page")
+            PageService.deletePage(pageId).then(() => {
+                $location.path("/user/" + vm.userId + "/website/" + vm.websiteId + "/page");
+            });
         }
 
         function init() {
-            vm.pages = PageService.findPagesByWebsiteId(vm.websiteId);
-            vm.page = angular.copy(PageService.findPageById(vm.pageId));
+            vm.pages = PageService.findPagesByWebsiteId(vm.websiteId).then(data => vm.pages = data);
+            PageService.findPageById(vm.pageId).then(data => vm.page = data);
         }
         init();
     }

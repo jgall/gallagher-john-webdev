@@ -9,7 +9,7 @@
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         function init() {
-            vm.pages = PageService.findPagesByWebsiteId(vm.websiteId);
+            PageService.findPagesByWebsiteId(vm.websiteId).then(data => vm.pages = data);
         }
         init();
     }
