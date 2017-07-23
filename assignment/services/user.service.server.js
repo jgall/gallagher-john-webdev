@@ -11,27 +11,36 @@ module.exports = function(app) {
     ];
 
     app.post(apiName, createUser);
-    // TODO figure out whether the "/:userId" will make the following get only called when such a param exists
-    app.get(apiName + "/:userId", handleGet);
+    app.get(apiName, handleGetQuery);
+    app.get(apiName + "/:userId", handleGetParams);
     app.put(apiName + "/:userId", updateUser);
+    app.delete(apiName + "/:userId", deleteUser);
 
     function createUser(req, res) {
         let user = req.body;
+        user._id = new Date().getTime();
         users.push(user);
-        res.status(200);
+        res.json(user);
     }
 
-    function handleGet(req, res) {
+    function handleGetQuery(req, res) {
         let username = req.query.username;
         let password = req.query.password;
+
+        if (password) {
+            findUserByCredentials(req, res);
+        } else if (username) {
+            findUserByUsername(req, res);
+        } else {
+            res.status(404);
+        }
+    }
+
+    function handleGetParams(req, res) {
         let userId = req.params.userId;
 
         if (userId) {
             findUserById(req, res);
-        } else if (password) {
-            findUserByCredentials(req, res);
-        } else if (username) {
-            findUserByUsername(req, res);
         } else {
             res.status(404);
         }
@@ -51,6 +60,13 @@ module.exports = function(app) {
     }
 
     function updateUser(req, res) {
+        let userId = req.params.userId;
+        let userToUpdate = users.find(u => u._id == userId);
+        users.splice(users.indexOf(userToUpdate), 1, req.body);
+        res.status(200);
+    }
 
+    function deleteUser(req, res) {
+        let userId = req.params.userId;
     }
 };
