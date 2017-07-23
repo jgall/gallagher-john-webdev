@@ -20,24 +20,45 @@ module.exports = function (app) {
     app.put('/api/website/:websiteId', updateWebsite);
     app.delete('/api/website/:websiteId', deleteWebsite);
 
-    function createWebsite() {
-
+    function createWebsite(req, res) {
+        let website = req.body;
+        if (website.name && website.developerId) {
+            website._id = new Date().getTime();
+            websites.push(website);
+            res.status(200);
+            res.json(website);
+        } else {
+            res.status(500);
+        }
+        res.end();
     }
 
-    function findAllWebsitesForUser() {
-
+    function findAllWebsitesForUser(req, res) {
+        let userId = req.params.userId;
+        res.json(websites.filter(w => w.developerId == userId));
+        res.end();
     }
 
-    function findWebsiteById() {
-
+    function findWebsiteById(req, res) {
+        let id = req.params.websiteId;
+        res.json(websites.find(w => w._id == id));
+        res.end();
     }
 
-    function updateWebsite() {
-
+    function updateWebsite(req, res) {
+        let id = req.params.websiteId;
+        let websiteToUpdate = websites.find(w => w._id == id);
+        websites.splice(websites.indexOf(websiteToUpdate), 1, req.body);
+        res.status(200);
+        res.end();
     }
 
-    function deleteWebsite() {
-
+    function deleteWebsite(req, res) {
+        let id = req.params.websiteId;
+        let websiteToDelete = websites.find(w => w._id == id);
+        websites.splice(websites.indexOf(websiteToDelete), 1);
+        res.status(200);
+        res.end();
     }
 
 };
