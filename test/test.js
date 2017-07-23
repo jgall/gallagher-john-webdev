@@ -33,16 +33,58 @@ describe("User Service : Server", function () {
         server.close();
     });
 
-    it('gets users by id', function testGetUserById(done) {
+    it('finds users by id', function testGetUserById(done) {
         request(server)
             .get('/api/user/123')
             .expect({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"}, done);
     });
 
-    it('gets users by username', function testGetUserById(done) {
+    it('finds users by username', function testGetUserById(done) {
         request(server)
             .get('/api/user/?username=bob')
             .expect({_id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"}, done);
+    });
+
+    it("finds user by credentials", function testGetUserByCredentials(done) {
+        request(server)
+            .get('/api/user/?username=alice&password=alice')
+            .expect({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"}, done);
+    });
+
+    it('creates a new user', function testCreateNewUser(done) {
+        request(server)
+            .post('/api/user')
+            .send({
+                _id: "none",
+                username: "john",
+                password: "john",
+                firstName: "John",
+                lastName: "Gallagher"
+            })
+            .expect(200, done)
+            .expect(function (res) {
+                assert.equal(res.body.username, "john");
+                assert.equal(res.body.password, "john");
+                assert.equal(res.body.firstName, "John");
+                assert.equal(res.body.lastName, "Gallagher");
+            });
+    });
+
+    it('updates a user', function testUpdateUser(done) {
+        request(server)
+            .put('/api/user/123')
+            .send({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "new last name"})
+            .expect(200, done)
+            .end(function (req, res) {
+                request(server).get('/api/user/123')
+                    .expect({
+                        _id: "123",
+                        username: "alice",
+                        password: "alice",
+                        firstName: "Alice",
+                        lastName: "new last name"
+                    }, done);
+            });
     });
 });
 
