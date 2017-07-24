@@ -23,6 +23,7 @@ module.exports = function(app) {
     app.get('/api/widget/:widgetId', findWidgetById);
     app.put('/api/widget/:widgetId', updateWidget);
     app.delete('/api/widget/:widgetId', deleteWidget);
+    app.put('/page/:pageId/widget', reorderWidgets);
 
     function createWidget(req, res) {
         let widget = req.body;
@@ -78,6 +79,27 @@ module.exports = function(app) {
         } else {
             res.status(404)
         }
+        res.end();
+    }
+
+    function reorderWidgets(req, res) {
+        let pageId = req.params.pageId;
+        let initial = req.query.initial;
+        let final = req.query.final;
+        // Insert widget at initial index into the final index;
+        let widgetsForPage = widgets.filter(w => w.pageId == pageId);
+
+        let widget = widgetsForPage[initial];
+        let finalPositionWidget = widgetsForPage[final];
+
+        if (final < initial) {
+            widgets.splice(widgets.indexOf(widget), 1);
+            widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
+        } else {
+            widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
+            widgets.splice(widgets.indexOf(widget), 1);
+        }
+        res.status(200);
         res.end();
     }
 
