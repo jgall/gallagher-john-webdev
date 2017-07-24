@@ -31,6 +31,8 @@ module.exports = function(app) {
             widget.pageId = pageId;
             widget._id = new Date().getTime();
             widgets.push(widget);
+            res.status(200);
+            res.json(widget);
         } else {
             res.status(404);
         }
@@ -55,7 +57,9 @@ module.exports = function(app) {
 
     function updateWidget(req, res) {
         let id = req.params.widgetId;
+        console.log("id: " + id);
         let widgetToUpdate = widgets.find(w => w._id == id);
+        console.log(widgets);
         if (widgetToUpdate) {
             widgets.splice(widgets.indexOf(widgetToUpdate), 1, req.body);
             res.status(200);

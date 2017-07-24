@@ -15,18 +15,23 @@
         vm.deleteWidget = deleteWidget;
 
         function updateWidget(widget) {
-            WidgetService.updateWidget(vm.widgetId, widget);
+            WidgetService.updateWidget(vm.widgetId, widget).then(() => {
+                $location.path("/user/" + vm.userId + "/website/" + vm.websiteId
+                    + "/page/" + vm.pageId + "/widget/");
+            });
         }
 
         function deleteWidget(widget) {
-            WidgetService.deleteWidget(widget._id);
-            $location.path("/user/" + vm.userId + "/website/" + vm.websiteId
-                + "/page/" + vm.pageId + "/widget/");
+            WidgetService.deleteWidget(widget._id).then(() => {
+                $location.path("/user/" + vm.userId + "/website/" + vm.websiteId
+                    + "/page/" + vm.pageId + "/widget/");
+            });
         }
 
         function init() {
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
+            WidgetService.findWidgetById(vm.widgetId).then(data => vm.widget = data);
         }
+
         init();
     }
 

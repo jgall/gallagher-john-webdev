@@ -9,16 +9,16 @@
         vm.userId = $routeParams["uid"];
         vm.pageId = $routeParams["pid"];
         vm.websiteId = $routeParams["wid"];
-        vm.widgetId = $routeParams[":wgid"];
 
         vm.createWidget = createWidget;
         vm.toRegularString = toRegularString;
 
         function createWidget(type) {
             let widget = {widgetType : type};
-            WidgetService.createWidget(vm.pageId, widget);
-            $location.path("/user/" + vm.userId + "/website/" + vm.websiteId
-                + "/page/" + vm.pageId + "/widget/" + widget._id);
+            WidgetService.createWidget(vm.pageId, widget).then(data => {
+                $location.path("/user/" + vm.userId + "/website/" + vm.websiteId
+                    + "/page/" + vm.pageId + "/widget/" + data._id);
+            });
         }
 
         function toRegularString(str) {
@@ -26,7 +26,6 @@
         }
 
         function init() {
-            vm.widget = WidgetService.findWidgetById(vm.widgetId);
             vm.widgetTypes = WidgetService.getWidgetTypes();
         }
         init();

@@ -22,6 +22,7 @@ module.exports = function(app) {
             page.websiteId = websiteId;
             page._id = new Date().getTime();
             pages.push(page);
+            res.json(page);
         } else {
             res.status(404);
         }
