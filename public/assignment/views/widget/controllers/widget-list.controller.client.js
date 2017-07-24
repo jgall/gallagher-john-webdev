@@ -4,7 +4,7 @@
 (function () {
     angular.module("WebAppMaker").controller("ListWidgetController", ListWidgetController);
 
-    function ListWidgetController($scope, $routeParams, UserService, WebsiteService, PageService, WidgetService, $sce) {
+    function ListWidgetController($routeParams, WidgetService, $sce) {
         let vm = this;
         vm.userId = $routeParams["uid"];
         vm.pageId = $routeParams["pid"];
