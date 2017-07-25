@@ -96,15 +96,28 @@ module.exports = function(app) {
         let widget = widgetsForPage[initial];
         let finalPositionWidget = widgetsForPage[final];
 
-        if (final < initial) {
-            widgets.splice(widgets.indexOf(widget), 1);
-            widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
-        } else {
-            widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
-            widgets.splice(widgets.indexOf(widget), 1);
-        }
+        moveInArray(widgets, widgets.indexOf(widget), widgets.indexOf(finalPositionWidget));
+
+        // if (final < initial) {
+        //     widgets.splice(widgets.indexOf(widget), 1);
+        //     widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
+        // } else {
+        //     widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
+        //     widgets.splice(widgets.indexOf(widget), 1);
+        // }
         res.status(200);
         res.end();
+    }
+
+    function moveInArray(arr, old_index, new_index) {
+        if (new_index >= arr.length) {
+            let k = new_index - arr.length;
+            while ((k--) + 1) {
+                arr.push(undefined);
+            }
+        }
+        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+        return arr; // for testing purposes
     }
 
 };

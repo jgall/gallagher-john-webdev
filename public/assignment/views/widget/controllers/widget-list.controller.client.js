@@ -13,6 +13,7 @@
 
         vm.loadUrl = loadUrl;
         vm.sanitize = sanitize;
+        vm.onMove = onMove;
 
         function loadUrl(url) {
             let modifiedUrl = url.replace("www.youtube.com/watch?v=", "www.youtube.com/embed/")
@@ -24,11 +25,14 @@
             return $sce.trustAsHtml(html);
         }
 
+        function onMove(startIdx, finishIdx) {
+            WidgetService.reorderWidgets(vm.pageId, startIdx, finishIdx);
+        }
+
         function init() {
             WidgetService.findWidgetsByPageId(vm.pageId).then(data => vm.widgets = data);
         }
         init();
-
     }
 
 })();
