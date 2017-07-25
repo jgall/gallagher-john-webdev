@@ -18,10 +18,10 @@ body {
 }
 
 .editWidgetDiv {
-    position: fixed;
+    position: absolute;
     opacity: .8;
     border: 0px solid transparent;
-    right: 0;
+    right: 15px;
     z-index: 2;
 }
 
