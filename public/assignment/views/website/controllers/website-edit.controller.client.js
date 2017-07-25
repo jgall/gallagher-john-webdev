@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("EditWebsiteController", EditWebsiteController);
 
     function EditWebsiteController($scope, $routeParams, UserService, WebsiteService, $location, $timeout) {
-        let vm = this;
+        const vm = this;
 
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];

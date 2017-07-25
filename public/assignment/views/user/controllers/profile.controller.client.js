@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("ProfileController", ProfileController);
 
     function ProfileController($scope, $routeParams, UserService, $timeout) {
-        let vm = this;
+        const vm = this;
         vm.userId = $routeParams["uid"];
         function init() {
             UserService.findUserById(vm.userId).then(user => vm.user = user);

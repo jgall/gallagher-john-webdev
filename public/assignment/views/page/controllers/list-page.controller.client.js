@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("ListPageController", ListPageController);
 
     function ListPageController($scope, $routeParams, PageService) {
-        let vm = this;
+        const vm = this;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         function init() {

@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("LoginController", LoginController);
 
     function LoginController($scope, UserService, $location) {
-        let vm = this;
+        const vm = this;
 
         vm.login = login;
 

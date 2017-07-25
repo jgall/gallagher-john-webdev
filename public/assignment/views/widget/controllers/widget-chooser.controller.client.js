@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("ChooseWidgetController", ChooseWidgetController);
 
     function ChooseWidgetController($scope, $routeParams, UserService, WebsiteService, $location, WidgetService) {
-        let vm = this;
+        const vm = this;
         vm.userId = $routeParams["uid"];
         vm.pageId = $routeParams["pid"];
         vm.websiteId = $routeParams["wid"];

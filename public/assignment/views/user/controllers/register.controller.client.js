@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("RegisterController", RegisterController);
 
     function RegisterController($scope, UserService, $location) {
-        let vm = this;
+        const vm = this;
 
         vm.register = register;
 

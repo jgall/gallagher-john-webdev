@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("NewPageController", NewPageController);
 
     function NewPageController($scope, $routeParams, PageService) {
-        let vm = this;
+        const vm = this;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
 

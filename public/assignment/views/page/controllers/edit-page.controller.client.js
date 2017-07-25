@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("EditPageController", EditPageController);
 
     function EditPageController($scope, $routeParams, PageService, $location, WebsiteService, $timeout) {
-        let vm = this;
+        const vm = this;
         vm.userId = $routeParams["uid"];
         vm.websiteId = $routeParams["wid"];
         vm.pageId = $routeParams["pid"];

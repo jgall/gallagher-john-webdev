@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("EditWidgetController", EditWidgetController);
 
     function EditWidgetController($scope, $routeParams, $location, WebsiteService, PageService, WidgetService) {
-        let vm = this;
+        const vm = this;
         vm.userId = $routeParams["uid"];
         vm.pageId = $routeParams["pid"];
         vm.websiteId = $routeParams["wid"];

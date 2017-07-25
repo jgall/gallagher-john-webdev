@@ -5,7 +5,7 @@
     angular.module("WebAppMaker").controller("NewWebsiteController", NewWebsiteController);
 
     function NewWebsiteController($scope, $routeParams, WebsiteService, $location) {
-        let vm = this;
+        const vm = this;
 
         vm.userId = $routeParams["uid"];
 
