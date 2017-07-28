@@ -12,19 +12,17 @@
             }
 
             let startIdx = -1;
-            let endIdx = -1;
 
             element.sortable({
                 start: (event, ui) => {
                     startIdx = ui.item.index();
                 },
                 stop: (event, ui) => {
-                    endIdx = ui.item.index();
+                    let endIdx = ui.item.index();
                     onMove(startIdx, endIdx);
                 },
                 axis: 'y',
-                handle: '.sortable-handle',
-                tolerance: 'touch'
+                handle: '.sortable-handle'
             });
         }
 
