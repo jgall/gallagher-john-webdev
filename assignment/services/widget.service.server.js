@@ -1,10 +1,10 @@
 /**
  * Created by jggll on 7/21/17.
  */
-module.exports = function(app) {
+module.exports = function (app) {
 
     const multer = require('multer');
-    const upload = multer({ dest: './public/uploads' });
+    const upload = multer({dest: './public/uploads'});
 
     let widgets = [
         {"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
