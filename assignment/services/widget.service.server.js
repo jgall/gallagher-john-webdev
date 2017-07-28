@@ -28,6 +28,8 @@ module.exports = function (app) {
     app.put('/api/widget/:widgetId', updateWidget);
     app.delete('/api/widget/:widgetId', deleteWidget);
     app.put('/page/:pageId/widget', reorderWidgets);
+    app.post ("/api/upload", upload.single('myFile'), uploadImage);
+
 
     function createWidget(req, res) {
         let widget = req.body;
@@ -119,5 +121,31 @@ module.exports = function (app) {
         arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
         return arr; // for testing purposes
     }
+
+    function uploadImage(req, res) {
+
+        var widgetId      = req.body.widgetId;
+        var width         = req.body.width;
+        var myFile        = req.file;
+
+        var userId = req.body.userId;
+        var websiteId = req.body.websiteId;
+        var pageId = req.body.pageId;
+
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+
+        widget = widgets.find(w => w._id == widgetId);
+        widget.url = '/uploads/'+filename;
+
+        var callbackUrl   = "/assignment/#!/user/"+userId+"/website/"+websiteId+"/page/" + pageId +"/widget/"+widgetId;
+
+        res.redirect(callbackUrl);
+    }
+
 
 };
