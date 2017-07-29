@@ -28,7 +28,7 @@ module.exports = function (app) {
     app.put('/api/widget/:widgetId', updateWidget);
     app.delete('/api/widget/:widgetId', deleteWidget);
     app.put('/page/:pageId/widget', reorderWidgets);
-    app.post ("/api/upload", upload.single('myFile'), uploadImage);
+    app.post("/api/upload", upload.single('myFile'), uploadImage);
 
 
     function createWidget(req, res) {
@@ -132,7 +132,7 @@ module.exports = function (app) {
         let mimetype = myFile.mimetype;
 
         let widget = widgets.find(w => w._id == widgetId);
-        widget.url = '/uploads/'+filename;
+        widget.url = '/uploads/' + filename;
         widget.width = width;
 
         let callbackUrl = "/assignment/#!/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId;
