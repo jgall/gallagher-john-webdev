@@ -99,14 +99,6 @@ module.exports = function (app) {
         let finalPositionWidget = widgetsForPage[final];
 
         moveInArray(widgets, widgets.indexOf(widget), widgets.indexOf(finalPositionWidget));
-
-        // if (final < initial) {
-        //     widgets.splice(widgets.indexOf(widget), 1);
-        //     widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
-        // } else {
-        //     widgets.splice(widgets.indexOf(finalPositionWidget), 0, widget);
-        //     widgets.splice(widgets.indexOf(widget), 1);
-        // }
         res.status(200);
         res.end();
     }
@@ -124,29 +116,27 @@ module.exports = function (app) {
 
     function uploadImage(req, res) {
 
-        var widgetId      = req.body.widgetId;
-        var width         = req.body.width;
-        var myFile        = req.file;
+        let widgetId = req.body.widgetId;
+        let width = req.body.width;
+        let myFile = req.file;
 
-        var userId = req.body.userId;
-        var websiteId = req.body.websiteId;
-        var pageId = req.body.pageId;
+        let userId = req.body.userId;
+        let websiteId = req.body.websiteId;
+        let pageId = req.body.pageId;
 
-        var originalname  = myFile.originalname; // file name on user's computer
-        var filename      = myFile.filename;     // new file name in upload folder
-        var path          = myFile.path;         // full path of uploaded file
-        var destination   = myFile.destination;  // folder where file is saved to
-        var size          = myFile.size;
-        var mimetype      = myFile.mimetype;
+        let originalname = myFile.originalname; // file name on user's computer
+        let filename = myFile.filename;     // new file name in upload folder
+        let path = myFile.path;         // full path of uploaded file
+        let destination = myFile.destination;  // folder where file is saved to
+        let size = myFile.size;
+        let mimetype = myFile.mimetype;
 
-        widget = widgets.find(w => w._id == widgetId);
+        let widget = widgets.find(w => w._id == widgetId);
         widget.url = '/uploads/'+filename;
         widget.width = width;
 
-        var callbackUrl   = "/assignment/#!/user/"+userId+"/website/"+websiteId+"/page/" + pageId +"/widget/"+widgetId;
+        let callbackUrl = "/assignment/#!/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId;
 
         res.redirect(callbackUrl);
     }
-
-
 };
