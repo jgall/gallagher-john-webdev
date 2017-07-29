@@ -141,6 +141,7 @@ module.exports = function (app) {
 
         widget = widgets.find(w => w._id == widgetId);
         widget.url = '/uploads/'+filename;
+        widget.width = width;
 
         var callbackUrl   = "/assignment/#!/user/"+userId+"/website/"+websiteId+"/page/" + pageId +"/widget/"+widgetId;
 
