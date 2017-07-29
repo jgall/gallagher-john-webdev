@@ -2,7 +2,7 @@
  * Created by jggll on 7/24/17.
  */
 (function () {
-    angular.module('WebAppMaker').directive('sortableDiv', SortableDiv);
+    angular.module('WebdevDirectives').directive('sortableDiv', SortableDiv);
 
     function SortableDiv() {
         function linkFunc(scope, element, attrs) {
@@ -22,7 +22,8 @@
                     onMove(startIdx, endIdx);
                 },
                 axis: 'y',
-                handle: '.sortable-handle'
+                handle: '.sortable-handle',
+                tolerance: 'touch'
             });
         }
 
