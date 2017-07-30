@@ -1,25 +1,26 @@
 module.exports = function (app) {
     'use strict';
+
     app.get("/api/test", findAllMessages);
     app.post("/api/test", createMessage);
     app.delete("/api/test/:id", deleteMessage);
 
-    var connectionString = 'mongodb://127.0.0.1:27017/test'; // for local
+    let  connectionString = 'mongodb://127.0.0.1:27017/test'; // for local
     if (process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
-        var username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
-        var password = process.env.MLAB_PASSWORD_WEBDEV;
+        let  username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
+        let  password = process.env.MLAB_PASSWORD_WEBDEV;
         connectionString = 'mongodb://' + username + ':' + password;
         connectionString += process.env.MLAB_ACCESS_URL; // user yours
     }
 
-    var mongoose = require("mongoose");
+    let  mongoose = require("mongoose");
     mongoose.connect(connectionString);
 
-    var TestSchema = mongoose.Schema({
+    let  TestSchema = mongoose.Schema({
         message: String
     });
 
-    var TestModel = mongoose.model("TestModel", TestSchema);
+    let  TestModel = mongoose.model("TestModel", TestSchema);
 
     function findAllMessages(req, res) {
         TestModel
