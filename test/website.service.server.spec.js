@@ -1,7 +1,7 @@
 /**
  * Created by jggll on 7/23/17.
  */
-(function() {
+(function () {
     'use strict';
 
     let assert = require('assert');
@@ -19,7 +19,7 @@
             server.close();
         });
 
-        describe('finding websites by id', function() {
+        describe('finding websites by id', function () {
             let server;
             beforeEach(function () {
                 server = require("../server");
@@ -32,7 +32,12 @@
                     .get('/api/website/678')
                     .expect(200)
                     .end((err, res) => {
-                        assert.deepEqual(res.body, {"_id": "678", "name": "Checkers", "developerId": "123", "description": "Lorem"});
+                        assert.deepEqual(res.body, {
+                            "_id": "678",
+                            "name": "Checkers",
+                            "developerId": "123",
+                            "description": "Lorem"
+                        });
                         done();
                     });
             });

@@ -1,7 +1,7 @@
 /**
  * Created by jggll on 7/24/17.
  */
-(function() {
+(function () {
     'use strict';
 
     let assert = require('assert');
@@ -10,7 +10,7 @@
     let beforeEach = require("mocha").beforeEach;
     let afterEach = require("mocha").afterEach;
 
-    describe('Widget Service', function() {
+    describe('Widget Service', function () {
         let server;
         beforeEach(function () {
             server = require("../server");
@@ -19,14 +19,14 @@
             server.close();
         });
 
-        it('finds a widget by id', function(done) {
+        it('finds a widget by id', function (done) {
             request(server)
                 .get('/api/widget/123')
                 .expect(200)
                 .expect({"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"}, done);
         });
 
-        it('reorders widgets', function(done) {
+        it('reorders widgets', function (done) {
             request(server)
                 .put('/page/321/widget?initial=1&final=0')
                 .expect(200)

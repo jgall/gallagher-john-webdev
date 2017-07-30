@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     let assert = require('assert');
@@ -19,7 +19,13 @@
         it('finds users by id', function testGetUserById(done) {
             request(server)
                 .get('/api/user/123')
-                .expect({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"}, done);
+                .expect({
+                    _id: "123",
+                    username: "alice",
+                    password: "alice",
+                    firstName: "Alice",
+                    lastName: "Wonder"
+                }, done);
         });
 
         it('finds users by username', function testGetUserById(done) {
@@ -31,7 +37,13 @@
         it("finds user by credentials", function testGetUserByCredentials(done) {
             request(server)
                 .get('/api/user/?username=alice&password=alice')
-                .expect({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"}, done);
+                .expect({
+                    _id: "123",
+                    username: "alice",
+                    password: "alice",
+                    firstName: "Alice",
+                    lastName: "Wonder"
+                }, done);
         });
 
         describe('Creating users', function () {
@@ -66,7 +78,13 @@
             it('updates a user', function testUpdateUser(done) {
                 request(server)
                     .put('/api/user/123')
-                    .send({_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "new last name"})
+                    .send({
+                        _id: "123",
+                        username: "alice",
+                        password: "alice",
+                        firstName: "Alice",
+                        lastName: "new last name"
+                    })
                     .expect(200)
                     .end((err, res) => {
                         request(server).get('/api/user/123')
