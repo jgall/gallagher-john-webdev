@@ -1,3 +1,5 @@
+'use strict';
+
 let assert = require('assert');
 let request = require('supertest');
 let describe = require("mocha").describe;

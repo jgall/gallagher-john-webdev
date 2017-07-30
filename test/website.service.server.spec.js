@@ -1,6 +1,8 @@
 /**
  * Created by jggll on 7/23/17.
  */
+'use strict';
+
 let assert = require('assert');
 let request = require('supertest');
 let describe = require("mocha").describe;
