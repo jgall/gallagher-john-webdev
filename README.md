@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/jgall/gallagher-john-webdev.svg?style=svg)](https://circleci.com/gh/jgall/gallagher-john-webdev)
+
 # John's Web-Dev README
 
 
