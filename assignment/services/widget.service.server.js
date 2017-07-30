@@ -2,6 +2,7 @@
  * Created by jggll on 7/21/17.
  */
 module.exports = function (app) {
+    'use strict';
 
     const multer = require('multer');
     const upload = multer({dest: './public/uploads'});

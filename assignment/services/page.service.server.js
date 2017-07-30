@@ -2,6 +2,7 @@
  * Created by jggll on 7/21/17.
  */
 module.exports = function(app) {
+    'use strict';
 
     let pages = [
         {"_id": "321", "name": "Post 1", "websiteId": "456", "description": "Lorem"},
