@@ -3,6 +3,8 @@ module.exports = (function() {
 
     let express = require('express');
     let app = express();
+    let path = require('path');
+    let favicon = require('serve-favicon');
 
     let bodyParser = require('body-parser');
     app.use(bodyParser.json());
@@ -10,6 +12,7 @@ module.exports = (function() {
 
 // configure a public directory to host static content
     app.use(express.static(__dirname + '/public'));
+    app.use(favicon(path.join(__dirname, 'public', 'img', 'favicon.ico')));
 
     require("./testMongo/app.js")(app);
 
