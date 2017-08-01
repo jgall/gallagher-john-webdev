@@ -1,7 +1,7 @@
 /**
  * Created by jggll on 7/21/17.
  */
-module.exports = function(app) {
+module.exports = function (app) {
     'use strict';
 
     let pages = [
