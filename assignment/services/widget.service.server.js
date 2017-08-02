@@ -65,7 +65,6 @@ module.exports = function (app) {
 
     function updateWidget(req, res) {
         let id = req.params.widgetId;
-        console.log("id: " + id);
         let widgetToUpdate = widgets.find(w => w._id == id);
 
         if (widgetToUpdate) {
