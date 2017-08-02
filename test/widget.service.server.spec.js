@@ -51,7 +51,7 @@
                 });
         });
 
-        it('updates a wiget', function (done) {
+        it('updates a widget', function (done) {
             request(server)
                 .put('/api/widget/123')
                 .send({size: 3})
