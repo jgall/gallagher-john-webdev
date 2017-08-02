@@ -67,10 +67,9 @@ module.exports = function (app) {
         let id = req.params.widgetId;
         console.log("id: " + id);
         let widgetToUpdate = widgets.find(w => w._id == id);
-        console.log(widgets);
+
         if (widgetToUpdate) {
-            widgets.splice(widgets.indexOf(widgetToUpdate), 1, req.body);
-            res.status(200);
+            Object.keys(req.body).forEach(k => widgetToUpdate[k] = req.body[k]);
         } else {
             res.status(404)
         }

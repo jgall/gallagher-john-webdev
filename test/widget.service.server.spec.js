@@ -26,6 +26,24 @@
                 .expect({"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"}, done);
         });
 
+        it('updates a wiget', function (done) {
+            request(server)
+                .put('/api/widget/123')
+                .send({size: 3})
+                .expect(200)
+                .end((err, res) => {
+                    request(server)
+                        .get('/api/widget/123')
+                        .expect({
+                            "_id": "123",
+                            "widgetType": "HEADING",
+                            "pageId": "321",
+                            "size": 3,
+                            "text": "GIZMODO"
+                        }, done);
+                });
+        });
+
         it('reorders widgets', function (done) {
             request(server)
                 .put('/page/321/widget?initial=1&final=0')
