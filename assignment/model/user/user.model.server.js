@@ -38,6 +38,10 @@ module.exports = function (mongoose) {
     }
 
     function updateUser(userId, user) {
-        return;
+        return userModel.update({_id: userId}, {$set: user});
+    }
+
+    function removeUser(userId) {
+        return userModel.remove({_id: userId});
     }
 };
