@@ -8,10 +8,10 @@
     function FlickrImageSearchController(FlickrService, WidgetService, $location, $routeParams) {
         let vm = this;
 
-        const userId = $routeParams.uid;
-        const websiteId = $routeParams.wid;
-        const pageId = $routeParams.pid;
-        const widgetId = $routeParams.wgid;
+        const userId = $routeParams['uid'];
+        const websiteId = $routeParams['wid'];
+        const pageId = $routeParams['pid'];
+        const widgetId = $routeParams['wgid'];
 
         vm.searchPhotos = function (searchTerm) {
             FlickrService
