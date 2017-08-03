@@ -1,5 +1,6 @@
 'use strict';
-module.exports = function (mongoose) {
+module.exports = (function () {
+    const mongoose = require("mongoose");
     const schema = mongoose.Schema({
         username: {type: String, require: true},
         password: {type: String, require: true},
@@ -12,4 +13,4 @@ module.exports = function (mongoose) {
         dateCreated: {type: Date, default: Date.now}
     }, {collection: "user"});
     return schema;
-};
+}());

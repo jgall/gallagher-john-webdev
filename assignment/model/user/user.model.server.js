@@ -1,8 +1,9 @@
 'use strict';
 module.exports = (function () {
     const mongoose = require("mongoose");
-    const userSchema = require("./user.schema.server")(mongoose);
+    const userSchema = require("./user.schema.server");
     const userModel = mongoose.model("UserModel", userSchema);
+    const websiteModelApi = require("../website/website.model.server");
 
     const api = {
         "createUser": createUser,
@@ -11,7 +12,9 @@ module.exports = (function () {
         "findUserByCredentials": findUserByCredentials,
         "findUserById": findUserById,
         "updateUser": updateUser,
-        "removeUser": removeUser
+        "removeUserById": removeUserById,
+        "addWebsite": addWebsite,
+        "removeWebsiteFromUser": removeWebsiteFromUser
     };
 
     return api;
@@ -40,7 +43,23 @@ module.exports = (function () {
         return userModel.update({_id: userId}, {$set: user});
     }
 
-    function removeUser(userId) {
-        return userModel.remove({_id: userId});
+    function removeUserById(userId) {
+        return findUserById(userId).then(user => {
+                if (user.websites.length == 0) {
+                    return userModel.remove({_id: userId});
+                } else {
+                    return Promise.all(user.websites.map(websiteModelApi.removeWebsite))
+                        .then(() => userModel.remove({_id: userId}));
+                }
+            }
+        );
+    }
+
+    function addWebsite(website) {
+        return userModel.update({_id: website._user}, {$push: {websites: website._id}})
+    }
+
+    function removeWebsiteFromUser(userId, websiteId) {
+        return userModel.update({_id: userId}, {$pull: {websites: websiteId}})
     }
 })();

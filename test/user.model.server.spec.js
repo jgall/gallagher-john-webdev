@@ -24,13 +24,20 @@
                 username: "testUser" + guid,
                 password: "test_user_password",
                 firstName: "Alice",
-                lastName: "Wonder"
+                lastName: "Wonder",
             }).then((createdUser) => {
                 userModelApi.findUserByUsername("testUser" + guid).then(user => {
                     assert.equal(user.password, "test_user_password");
-                    userModelApi.removeUser(createdUser._id);
-                    done();
+                    userModelApi.removeUserById(createdUser._id).then(() => done());
                 })
+            }).catch(console.log);
+        });
+
+        it("handles non-existent users", function (done) {
+            let guid = Date.now();
+            userModelApi.findUserByUsername("nonexistent user " + guid).then(user => {
+                assert.equal(user, null);
+                done();
             })
         });
     });
