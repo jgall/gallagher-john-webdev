@@ -2,6 +2,8 @@
 module.exports = function (app) {
     const unirest = require('unirest');
 
+    let cache = {};
+
     let key = false;
 
     try {
@@ -16,24 +18,35 @@ module.exports = function (app) {
     app.post('/api/poc/recipeSearch', recipeSearch);
 
     function quickAnswer(req, res) {
-        console.log(req.body);
+        if (cache[req.body.query]) {
+            res.json(cache[req.body.query]);
+            res.end();
+            return;
+        }
         unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/quickAnswer?q="
             + req.body.query.split(" ").join("+"))
             .header("X-Mashape-Key", key)
             .header("Accept", "application/json")
             .end(function (result) {
+                cache[req.body.query] = result.body;
                 res.json(result.body.answer);
                 res.end();
             });
     }
 
     function recipeSearch(req, res) {
+        if (cache[req.body.query]) {
+            res.json(cache[req.body.query]);
+            res.end();
+            return;
+        }
         unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="
             + req.body.query.split(" ").join("+"))
             .header("X-Mashape-Key", key)
             .header("Accept", "application/json")
             .end(function (result) {
-                res.json(result.body);
+                cache[req.body.query] = result.body.results;
+                res.json(result.body.results);
                 res.end();
             });
     }

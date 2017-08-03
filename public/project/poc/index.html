@@ -36,6 +36,16 @@
     </form>
 
     <span>{{model.quickAnswerResponse}}</span>
+
+    <hr>
+
+    <form>
+        <label for="recipeSearch">Recipe Search</label>
+        <input class="form-control" name="recipeSearch" id="recipeSearch" type="text" ng-model="recipeSearchInput"
+               placeholder="Search for a recipe">
+        <a class="btn btn-primary btn-block" ng-click="model.recipeSearch(recipeSearchInput)">Search</a>
+    </form>
+    <span ng-repeat="recipe in model.recipeSearchResponse" class="row">Recipe: {{recipe.title}}, duration: {{recipe.readyInMinutes}}</span>
 </div>
 </body>
 </html>
