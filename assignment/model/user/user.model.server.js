@@ -8,6 +8,7 @@ module.exports = (function () {
         "createUser": createUser,
         "findAllUsers": findAllUsers,
         "findUserByUsername": findUserByUsername,
+        "findUserByCredentials": findUserByCredentials,
         "findUserById": findUserById,
         "updateUser": updateUser,
         "removeUser": removeUser
@@ -25,6 +26,10 @@ module.exports = (function () {
 
     function findUserByUsername(username) {
         return userModel.findOne({username: username});
+    }
+
+    function findUserByCredentials(username, password) {
+        return userModel.findOne({username: username, password: password});
     }
 
     function findUserById(id) {
