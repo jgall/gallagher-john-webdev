@@ -3,9 +3,10 @@ module.exports = (function () {
     const mongoose = require("mongoose");
     const userSchema = require("./user.schema.server");
     const userModel = mongoose.model("UserModel", userSchema);
-    const websiteModelApi = require("../website/website.model.server");
+    let websiteModelApi = false;
 
     const api = {
+        "exists": () => true,
         "createUser": createUser,
         "findAllUsers": findAllUsers,
         "findUserByUsername": findUserByUsername,
@@ -48,7 +49,7 @@ module.exports = (function () {
                 if (user.websites.length == 0) {
                     return userModel.remove({_id: userId});
                 } else {
-                    return Promise.all(user.websites.map(websiteModelApi.removeWebsite))
+                    return getWebsiteModelApi().deleteWebsitesOfUser(userId)
                         .then(() => userModel.remove({_id: userId}));
                 }
             }
@@ -56,10 +57,17 @@ module.exports = (function () {
     }
 
     function addWebsite(website) {
-        return userModel.update({_id: website._user}, {$push: {websites: website._id}})
+        return userModel.update({_id: website._user}, {$push: {websites: website._id}});
     }
 
     function removeWebsiteFromUser(userId, websiteId) {
-        return userModel.update({_id: userId}, {$pull: {websites: websiteId}})
+        return userModel.update({_id: userId}, {$pullAll: {websites: [websiteId]}});
+    }
+    
+    function getWebsiteModelApi() {
+        if (!websiteModelApi) {
+            websiteModelApi = require("../website/website.model.server");
+        }
+        return websiteModelApi;
     }
 })();

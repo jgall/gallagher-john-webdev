@@ -3,14 +3,16 @@ module.exports = (function () {
     const mongoose = require("mongoose");
     const websiteSchema = require("./website.schema.server");
     const websiteModel = mongoose.model("WebsiteModel", websiteSchema);
-    const userModelApi = require("../user/user.model.server");
+    let userModelApi = false;
 
     const api = {
+        "exists": () => true,
         "createWebsiteForUser": createWebsiteForUser,
         "findAllWebsitesForUser": findAllWebsitesForUser,
         "findWebsiteById": findWebsiteById,
         "updateWebsite": updateWebsite,
-        "deleteWebsite": deleteWebsite
+        "deleteWebsite": deleteWebsite,
+        "deleteWebsitesOfUser": deleteWebsitesOfUser
     };
 
     return api;
@@ -18,7 +20,9 @@ module.exports = (function () {
 
     function createWebsiteForUser(userId, website) {
         website._user = userId;
-        return websiteModel.create(website).then(userModelApi.addWebsite);
+        return websiteModel.create(website).then(website => {
+            return getUserModelApi().addWebsite(website).then(() => website);
+        });
     }
 
     function findAllWebsitesForUser(userId) {
@@ -34,11 +38,22 @@ module.exports = (function () {
     }
 
     function deleteWebsite(websiteId) {
-        return websiteModel.findOne(websiteId).then(website =>
-            userModelApi.removeWebsiteFromUser(website._user, websiteId).then(() =>
-                websiteModel.delete(websiteId)
-            )
-        )
+        return websiteModel.findOne({_id: websiteId}).then(website => {
+            return getUserModelApi().removeWebsiteFromUser(website._user, websiteId).then(() => {
+                return websiteModel.remove({_id: websiteId})
+            });
+        });
+    }
+
+    function deleteWebsitesOfUser(userId) {
+        return websiteModel.remove({_user: userId});
+    }
+
+    function getUserModelApi() {
+        if (!userModelApi) {
+            userModelApi = require("../user/user.model.server");
+        }
+        return userModelApi;
     }
 
 })();
