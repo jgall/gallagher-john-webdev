@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="POC">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>Proof of concept</title>
     <!-- Load CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <link href="style.css" rel="stylesheet"/>
 
     <!-- Load Javascript-->
     <script
@@ -24,7 +26,16 @@
 
     <script type="text/javascript" src="app.js"></script>
 </head>
-<body>
+<body ng-controller="PocController as model">
+<div class="container-fluid" ng-cloak>
+    <form>
+        <label for="quickAnswer">Quick Answer</label>
+        <input class="form-control" name="quickAnswer" id="quickAnswer" type="text" ng-model="quickAnswerInput"
+               placeholder="Ask me a food related question">
+        <a class="btn btn-primary btn-block" ng-click="model.quickAnswer(quickAnswerInput)">Submit</a>
+    </form>
 
+    <span>{{model.quickAnswerResponse}}</span>
+</div>
 </body>
 </html>

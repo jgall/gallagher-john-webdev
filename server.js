@@ -18,6 +18,8 @@ module.exports = (function() {
 
     require("./assignment/app")(app);
 
+    require("./project/poc.service.server")(app);
+
     let port = process.env.PORT || 3001;
 
     let server = app.listen(port);
