@@ -15,7 +15,7 @@ module.exports = function (app) {
     let mongoose = require("mongoose");
     mongoose.connect(connectionString);
 
-    require("./model/model.server")(mongoose);
+    require("./model/model.server");
 
     require("./services/user.service.server")(app);
     require("./services/website.service.server.js")(app);

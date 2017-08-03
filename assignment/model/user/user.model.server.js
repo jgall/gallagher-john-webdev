@@ -1,28 +1,22 @@
 'use strict';
-module.exports = function (mongoose) {
+module.exports = (function () {
+    const mongoose = require("mongoose");
     const userSchema = require("./user.schema.server")(mongoose);
     const userModel = mongoose.model("UserModel", userSchema);
-
-    //findUserByUsername("alice").then(console.log);
 
     const api = {
         "createUser": createUser,
         "findAllUsers": findAllUsers,
         "findUserByUsername": findUserByUsername,
         "findUserById": findUserById,
-        "updateUser": updateUser
+        "updateUser": updateUser,
+        "removeUser": removeUser
     };
 
     return api;
 
     function createUser(user) {
-        return userModel.create(user, function (err, doc) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(doc);
-            }
-        });
+        return userModel.create(user);
     }
 
     function findAllUsers() {
@@ -44,4 +38,4 @@ module.exports = function (mongoose) {
     function removeUser(userId) {
         return userModel.remove({_id: userId});
     }
-};
+})();
