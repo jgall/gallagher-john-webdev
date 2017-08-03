@@ -6,7 +6,6 @@ module.exports = (function () {
     let websiteModelApi = false;
 
     const api = {
-        "exists": () => true,
         "createUser": createUser,
         "findAllUsers": findAllUsers,
         "findUserByUsername": findUserByUsername,
