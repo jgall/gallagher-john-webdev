@@ -13,6 +13,7 @@ module.exports = function (app) {
     }
 
     app.post('/api/poc/quickAnswer', quickAnswer);
+    app.post('/api/poc/recipeSearch', recipeSearch);
 
     function quickAnswer(req, res) {
         console.log(req.body);
@@ -22,6 +23,17 @@ module.exports = function (app) {
             .header("Accept", "application/json")
             .end(function (result) {
                 res.json(result.body.answer);
+                res.end();
+            });
+    }
+
+    function recipeSearch(req, res) {
+        unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search?query="
+            + req.body.query.split(" ").join("+"))
+            .header("X-Mashape-Key", key)
+            .header("Accept", "application/json")
+            .end(function (result) {
+                res.json(result.body);
                 res.end();
             });
     }
