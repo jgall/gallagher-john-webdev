@@ -28,7 +28,7 @@
 </head>
 <body ng-controller="PocController as model">
 <div class="container-fluid" ng-cloak>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form>
             <label for="quickAnswer">Quick Answer</label>
             <input class="form-control" name="quickAnswer" id="quickAnswer" type="text" ng-model="quickAnswerInput"
@@ -49,7 +49,7 @@
         <span ng-repeat="recipe in model.recipeSearchResponse" class="row"
               ng-click="model.clickRecipe(recipe)">Recipe: {{recipe.title}}, duration: {{recipe.readyInMinutes}}</span>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
         Ingredients for {{model.selectedRecipe.title}}
 
         <span ng-repeat="ingredient in model.selectedRecipe.extendedIngredients"
