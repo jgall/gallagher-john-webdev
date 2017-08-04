@@ -16,6 +16,7 @@ module.exports = function (app) {
 
     app.post('/api/poc/quickAnswer', quickAnswer);
     app.post('/api/poc/recipeSearch', recipeSearch);
+    app.post('/api/poc/getRecipeInformation', getRecipeInformation);
 
     function quickAnswer(req, res) {
         if (cache[req.body.query]) {
@@ -28,7 +29,7 @@ module.exports = function (app) {
             .header("X-Mashape-Key", key)
             .header("Accept", "application/json")
             .end(function (result) {
-                cache[req.body.query] = result.body;
+                cache[req.body.query] = result.body.answer;
                 res.json(result.body.answer);
                 res.end();
             });
@@ -47,6 +48,24 @@ module.exports = function (app) {
             .end(function (result) {
                 cache[req.body.query] = result.body.results;
                 res.json(result.body.results);
+                res.end();
+            });
+    }
+
+    function getRecipeInformation(req, res) {
+        if (cache[req.body.query]) {
+            res.json(cache[req.body.query]);
+            res.end();
+            return;
+        }
+        unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/"
+            + req.body.query
+            + "/information?includenutrition=false")
+            .header("X-Mashape-Key", key)
+            .header("Accept", "application/json")
+            .end(function (result) {
+                cache[req.body.query] = result.body;
+                res.json(result.body);
                 res.end();
             });
     }
