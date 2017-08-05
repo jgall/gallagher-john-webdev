@@ -4,6 +4,8 @@
 module.exports = function (app) {
     'use strict';
 
+    const widgetDbApi = require("../model/widget/widget.model.server");
+
     const multer = require('multer');
     const upload = multer({dest: './public/uploads'});
 
@@ -33,84 +35,74 @@ module.exports = function (app) {
 
 
     function createWidget(req, res) {
-        let widget = req.body;
-        let pageId = req.params.pageId;
-        if (pageId) {
-            widget.pageId = pageId;
-            widget._id = new Date().getTime();
-            widgets.push(widget);
-            res.status(200);
-            res.json(widget);
-        } else {
-            res.status(404);
-        }
-        res.end();
+        console.log("creating widget: " + req.body);
+        widgetDbApi.createWidget(req.params.pageId, req.body).then(w => {
+            res.json(w);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function findAllWidgetsForPage(req, res) {
-        res.json(widgets.filter(w => w.pageId == req.params.pageId));
-        res.end();
+        widgetDbApi.findAllWidgetsForPage(req.params.pageId).then(w => {
+            res.json(w);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function findWidgetById(req, res) {
-        let widgetId = req.params.widgetId;
-        let widget = widgets.find(w => w._id == widgetId);
-        if (widget) {
-            res.json(widget);
-        } else {
-            res.status(404);
-        }
-        res.end();
+        widgetDbApi.findWidgetById(req.params.widgetId).then(w => {
+            res.json(w);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function updateWidget(req, res) {
-        let id = req.params.widgetId;
-        let widgetToUpdate = widgets.find(w => w._id == id);
-
-        if (widgetToUpdate) {
-            Object.keys(req.body).forEach(k => widgetToUpdate[k] = req.body[k]);
-        } else {
-            res.status(404)
-        }
-        res.end();
+        widgetDbApi.updateWidget(req.params.widgetId, req.body).then(w => {
+            res.json(w);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function deleteWidget(req, res) {
-        let id = req.params.widgetId;
-        let widgetToDelete = widgets.find(w => w._id == id);
-        if (widgetToDelete) {
-            widgets.splice(widgets.indexOf(widgetToDelete), 1);
+        widgetDbApi.deleteWidget(req.params.widgetId).then(w => {
             res.status(200);
-        } else {
-            res.status(404)
-        }
-        res.end();
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function reorderWidgets(req, res) {
         let pageId = req.params.pageId;
         let initial = req.query.initial;
         let final = req.query.final;
-        // Insert widget at initial index into the final index;
-        let widgetsForPage = widgets.filter(w => w.pageId == pageId);
 
-        let widget = widgetsForPage[initial];
-        let finalPositionWidget = widgetsForPage[final];
-
-        moveInArray(widgets, widgets.indexOf(widget), widgets.indexOf(finalPositionWidget));
-        res.status(200);
-        res.end();
-    }
-
-    function moveInArray(arr, old_index, new_index) {
-        if (new_index >= arr.length) {
-            let k = new_index - arr.length;
-            while ((k--) + 1) {
-                arr.push(undefined);
-            }
-        }
-        arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-        return arr; // for testing purposes
+        widgetDbApi.reorderWidget(req.params.pageId, initial, final).then(w => {
+            res.status(200);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function uploadImage(req, res) {
@@ -130,12 +122,10 @@ module.exports = function (app) {
         let size = myFile.size;
         let mimetype = myFile.mimetype;
 
-        let widget = widgets.find(w => w._id == widgetId);
-        widget.url = '/uploads/' + filename;
-        widget.width = width;
-
         let callbackUrl = "/assignment/#!/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId;
 
-        res.redirect(callbackUrl);
+        widgetDbApi.updateWidget(widgetId, {url: '/uploads/' + filename, width: width}).then(() => {
+            res.redirect(callbackUrl);
+        });
     }
 };

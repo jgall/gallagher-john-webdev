@@ -14,7 +14,7 @@
         vm.toRegularString = toRegularString;
 
         function createWidget(type) {
-            let widget = {widgetType : type};
+            let widget = {type : type};
             WidgetService.createWidget(vm.pageId, widget).then(data => {
                 $location.path("/user/" + vm.userId + "/website/" + vm.websiteId
                     + "/page/" + vm.pageId + "/widget/" + data._id);

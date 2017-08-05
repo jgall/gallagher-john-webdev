@@ -4,6 +4,8 @@
 module.exports = function (app) {
     'use strict';
 
+    const websiteDbApi = require("../model/website/website.model.server");
+
     let websites = [
         {"_id": "123", "name": "Facebook", "developerId": "456", "description": "Lorem"},
         {"_id": "234", "name": "Tweeter", "developerId": "456", "description": "Lorem"},
@@ -21,50 +23,58 @@ module.exports = function (app) {
     app.delete('/api/website/:websiteId', deleteWebsite);
 
     function createWebsite(req, res) {
-        let website = req.body;
-        if (website.name) {
-            website.developerId = req.params.userId;
-            website._id = new Date().getTime();
-            websites.push(website);
-            res.status(200);
+        websiteDbApi.createWebsiteForUser(req.params.userId, req.body).then(website => {
             res.json(website);
-        } else {
+            res.end();
+        }).catch(err => {
+            console.log(err);
             res.status(500);
-        }
-        res.end();
+            res.end();
+        });
     }
 
     function findAllWebsitesForUser(req, res) {
-        let userId = req.params.userId;
-        res.json(websites.filter(w => w.developerId == userId));
-        res.end();
+        websiteDbApi.findAllWebsitesForUser(req.params.userId).then(websites => {
+            res.json(websites);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function findWebsiteById(req, res) {
-        let id = req.params.websiteId;
-        let website = websites.find(w => w._id == id);
-        if (website) {
-            res.json(website);
-        } else {
-            res.status(404);
-        }
-        res.end();
+        websiteDbApi.findWebsiteById(req.params.websiteId).then(w => {
+            res.json(w);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function updateWebsite(req, res) {
-        let id = req.params.websiteId;
-        let websiteToUpdate = websites.find(w => w._id == id);
-        websites.splice(websites.indexOf(websiteToUpdate), 1, req.body);
-        res.status(200);
-        res.end();
+        websiteDbApi.updateWebsite(req.params.websiteId, req.body).then(w => {
+            res.status(200);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function deleteWebsite(req, res) {
-        let id = req.params.websiteId;
-        let websiteToDelete = websites.find(w => w._id == id);
-        websites.splice(websites.indexOf(websiteToDelete), 1);
-        res.status(200);
-        res.end();
+        websiteDbApi.deleteWebsite(req.params.websiteId).then(() => {
+            res.status(200);
+            res.end();
+        }).catch(err => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
 };

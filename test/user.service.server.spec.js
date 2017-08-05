@@ -7,43 +7,79 @@
     let beforeEach = require("mocha").beforeEach;
     let afterEach = require("mocha").afterEach;
 
+    let users = [
+        {username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
+        {username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"},
+        {username: "charly", password: "charly", firstName: "Charly", lastName: "Garcia"},
+        {username: "jannunzi", password: "jannunzi", firstName: "Jose", lastName: "Annunzi"}
+    ];
+
+    let createdUsers = [];
+
+    let websites = [
+        {"name": "Facebook", "developerId": "456", "description": "Lorem"},
+        {"name": "Tweeter", "developerId": "456", "description": "Lorem"},
+        {"name": "Gizmodo", "developerId": "456", "description": "Lorem"},
+        {"name": "Go", "developerId": "123", "description": "Lorem"},
+        {"name": "Tic Tac Toe", "developerId": "123", "description": "Lorem"},
+        {"name": "Checkers", "developerId": "123", "description": "Lorem"},
+        {"name": "Chess", "developerId": "234", "description": "Lorem"}
+    ];
+
+    let pages = [
+        {"name": "Post 1", "websiteId": "456", "description": "Lorem"},
+        {"name": "Post 2", "websiteId": "456", "description": "Lorem"},
+        {"name": "Post 3", "websiteId": "456", "description": "Lorem"}
+    ];
+
+    let widgets = [
+        {"widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
+        {"widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
+        {"widgetType": "IMAGE", "pageId": "321", "width": "100%", "url": "http://lorempixel.com/400/200/"},
+        {"widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"},
+        {"widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
+        {"widgetType": "YOUTUBE", "pageId": "321", "width": "100%", "url": "https://youtu.be/AM2Ivdi9c4E"},
+        {"widgetType": "HTML", "pageId": "321", "text": "<p>Lorem ipsum</p>"}
+    ];
+
     describe("User Service", function () {
         let server;
-        beforeEach(function () {
+        beforeEach(function (done) {
             server = require("../server");
+            Promise.all(users.map(u => request(server).post('/api/user').send(u))).then(users => {
+                createdUsers = [];
+                users.forEach(u => createdUsers.push(u.body));
+                console.log(createdUsers);
+                done();
+            });
         });
-        afterEach(function () {
-            server.close();
+        afterEach(function (done) {
+            Promise.all(createdUsers.map(u => request(server).delete('/api/user/' + u._id)))
+                .then(() => {
+                    server.close();
+                    done();
+                });
         });
 
         it('finds users by id', function testGetUserById(done) {
-            request(server)
-                .get('/api/user/123')
-                .expect({
-                    _id: "123",
-                    username: "alice",
-                    password: "alice",
-                    firstName: "Alice",
-                    lastName: "Wonder"
-                }, done);
+            Promise.all(createdUsers.map((u) => request(server)
+                .get('/api/user/' + u._id)
+                .expect((user) => {
+                    console.log(user.body);
+                    assert.deepEqual(user.body, u);
+                }))).then(() => done());
         });
 
         it('finds users by username', function testGetUserById(done) {
             request(server)
-                .get('/api/user/?username=bob')
-                .expect({_id: "234", username: "bob", password: "bob", firstName: "Bob", lastName: "Marley"}, done);
+                .get('/api/user/?username=' + createdUsers[0].username)
+                .expect(createdUsers[0], done);
         });
 
         it("finds user by credentials", function testGetUserByCredentials(done) {
             request(server)
-                .get('/api/user/?username=alice&password=alice')
-                .expect({
-                    _id: "123",
-                    username: "alice",
-                    password: "alice",
-                    firstName: "Alice",
-                    lastName: "Wonder"
-                }, done);
+                .get('/api/user/?username=' + createdUsers[0].username + '&password=' + createdUsers[0].password)
+                .expect(createdUsers[0], done);
         });
 
         describe('Creating users', function () {
@@ -58,7 +94,6 @@
                 request(server)
                     .post('/api/user')
                     .send({
-                        _id: "none",
                         username: "john",
                         password: "john",
                         firstName: "John",
@@ -77,27 +112,26 @@
         describe('Updating a user', function () {
             it('updates a user', function testUpdateUser(done) {
                 request(server)
-                    .put('/api/user/123')
+                    .put('/api/user/' + createdUsers[3]._id)
                     .send({
-                        _id: "123",
-                        username: "alice",
+                        username: "newUsername",
                         password: "alice",
                         firstName: "Alice",
                         lastName: "new last name"
                     })
                     .expect(200)
                     .end((err, res) => {
-                        request(server).get('/api/user/123')
+                        request(server).get('/api/user/' + createdUsers[3]._id)
                             .expect({
-                                _id: "123",
-                                username: "alice",
+                                _id: createdUsers[3]._id,
+                                username: "newUsername",
                                 password: "alice",
                                 firstName: "Alice",
                                 lastName: "new last name"
                             })
                             .end((err, res) => {
-                                assert.equal(res.body._id, "123");
-                                assert.equal(res.body.username, "alice");
+                                assert.equal(res.body._id, createdUsers[3]._id);
+                                assert.equal(res.body.username, "newUsername");
                                 assert.equal(res.body.lastName, "new last name");
                                 done()
                             });
@@ -107,11 +141,14 @@
 
         it('deletes a user', function testDeleteUser(done) {
             request(server)
-                .delete('/api/user/123')
+                .delete('/api/user/' + createdUsers[2]._id)
                 .expect(200)
                 .end(function (err, res) {
-                    request(server).get('/api/user/123')
-                        .expect(404, done);
+                    request(server).get('/api/user/' + createdUsers[2]._id)
+                        .expect(404).end((err, res) => {
+                        createdUsers.splice(2, 1);
+                        done();
+                    });
                 });
         });
     });

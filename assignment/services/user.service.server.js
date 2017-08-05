@@ -4,6 +4,8 @@
 module.exports = function (app) {
     'use strict';
 
+    const userDbApi = require("../model/user/user.model.server");
+
     const apiName = "/api/user";
     let users = [
         {_id: "123", username: "alice", password: "alice", firstName: "Alice", lastName: "Wonder"},
@@ -19,10 +21,14 @@ module.exports = function (app) {
     app.delete(apiName + "/:userId", deleteUser);
 
     function createUser(req, res) {
-        let user = req.body;
-        user._id = new Date().getTime();
-        users.push(user);
-        res.json(user);
+        userDbApi.createUser(req.body).then(user => {
+            res.json(user);
+            res.end();
+        }).catch((err) => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function handleGetQuery(req, res) {
@@ -51,38 +57,48 @@ module.exports = function (app) {
     }
 
     function findUserById(req, res) {
-        let user = users.find(u => u._id == req.params.userId);
-        if (user) {
-            res.json(user);
-        } else {
+        userDbApi.findUserById(req.params.userId).then((user) => {
+            if (!!user) {
+                res.json(user);
+            } else {
+                res.status(404);
+            }
+            res.end();
+        }).catch(err => {
             res.status(404);
-        }
-        res.end();
+            res.end();
+        });
     }
 
     function findUserByCredentials(req, res) {
-        res.json(users.find(u => u.username == req.query.username && u.password == req.query.password));
-        res.end();
+        userDbApi.findUserByCredentials(req.query.username, req.query.password).then((user) => {
+            res.json(user);
+            res.end();
+        });
     }
 
     function findUserByUsername(req, res) {
-        res.json(users.find(u => u.username == req.query.username));
-        res.end();
+        userDbApi.findUserByUsername(req.query.username).then((user) => {
+            res.json(user);
+            res.end();
+        });
     }
 
     function updateUser(req, res) {
-        let userId = req.params.userId;
-        let userToUpdate = users.find(u => u._id == userId);
-        users.splice(users.indexOf(userToUpdate), 1, req.body);
-        res.status(200);
-        res.end();
+        userDbApi.updateUser(req.params.userId, req.body).then(() => {
+            res.status(200);
+            res.end();
+        }).catch((err) => {
+            console.log(err);
+            res.status(500);
+            res.end();
+        });
     }
 
     function deleteUser(req, res) {
-        let userId = req.params.userId;
-        let userToDelete = users.find(u => u._id == userId);
-        users.splice(users.indexOf(userToDelete), 1);
-        res.status(200);
-        res.end();
+        userDbApi.removeUserById(req.params.userId).then(() => {
+            res.status(200);
+            res.end();
+        });
     }
 };
