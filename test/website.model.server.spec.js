@@ -7,7 +7,7 @@
     let beforeEach = require("mocha").beforeEach;
     let afterEach = require("mocha").afterEach;
 
-    describe("User Model", function () {
+    describe("Website Model", function () {
         let server;
         let websiteModelApi;
         let userModelApi;
@@ -34,9 +34,9 @@
                 }).then(website => {
                     userModelApi.findUserByUsername("testUser" + guid).then(user => {
                         assert.deepEqual(user.websites[0], website._id);
-                        websiteModelApi.deleteWebsite(website).then(() => {
-                            userModelApi.findUserByUsername("testUser" + guid).then((user) => {
-                                userModelApi.removeUserById(createdUser._id).then(() => done());
+                        return websiteModelApi.deleteWebsite(website).then(() => {
+                            return userModelApi.findUserByUsername("testUser" + guid).then((user) => {
+                                return userModelApi.removeUserById(createdUser._id).then(() => done());
                             });
                         });
                     }).catch(console.log);

@@ -14,15 +14,18 @@ module.exports = (function () {
         "deletePage": deletePage,
         "deletePagesOfWebsite": deletePagesOfWebsite,
         "addWidgetToPage": addWidgetToPage,
-        "removeWidgetFromPage": removeWidgetFromPage
+        "removeWidgetFromPage": removeWidgetFromPage,
+        "findAllPages": () => pageModel.find({}) // for testing purposes
     };
 
     return api;
 
     function createPage(websiteId, page) {
         page._website = websiteId;
-        return pageModel.create(page).then(createdPage =>
-            getWebsiteModelApi().addPageToWebsite(websiteId, page._id));
+        return pageModel.create(page).then(createdPage => {
+            getWebsiteModelApi().addPageToWebsite(websiteId, page._id);
+            return createdPage;
+        });
     }
 
     function findAllPagesForWebsite(websiteId) {
@@ -42,7 +45,7 @@ module.exports = (function () {
             pageModel.findOne({_id: pageId})
                 .then(page => getWebsiteModelApi().removePageFromWebsite(page._website, pageId))
             , getWidgetModelApi().deleteWidgetsOfPage(pageId)])
-            .then(pageModel.remove({_id: pageId}));
+            .then(() => pageModel.remove({_id: pageId}));
     }
 
     function deletePagesOfWebsite(websiteId) {

@@ -6,6 +6,7 @@ module.exports = (function () {
     let userModelApi = false;
     let pageModelApi = false;
 
+
     const api = {
         "createWebsiteForUser": createWebsiteForUser,
         "findAllWebsitesForUser": findAllWebsitesForUser,
@@ -14,7 +15,8 @@ module.exports = (function () {
         "deleteWebsite": deleteWebsite,
         "deleteWebsitesOfUser": deleteWebsitesOfUser,
         "addPageToWebsite": addPageToWebsite,
-        "removePageFromWebsite": removePageFromWebsite
+        "removePageFromWebsite": removePageFromWebsite,
+        "findAllWebsites": () => websiteModel.find({}) // for testing purposes
     };
 
     return api;
@@ -43,7 +45,7 @@ module.exports = (function () {
             websiteModel.findOne({_id: websiteId})
                 .then(website => getUserModelApi().removeWebsiteFromUser(website._user, websiteId))
             , getPageModelApi().deletePagesOfWebsite(websiteId)])
-            .then(websiteModel.remove({_id: websiteId}));
+            .then(() => websiteModel.remove({_id: websiteId}));
     }
 
     function deleteWebsitesOfUser(userId) {

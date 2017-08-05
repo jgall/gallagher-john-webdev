@@ -8,6 +8,6 @@ module.exports = (function () {
         description: String,
         widgets: [{type: mongoose.Schema.ObjectId, ref: "WidgetModel"}],
         dateCreated: {type: Date, default: Date.now}
-    });
+    }, {collection: "page"});
     return schema;
 })();

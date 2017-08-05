@@ -13,6 +13,7 @@ module.exports = (function () {
         "deleteWidget": deleteWidget,
         "reorderWidget": reorderWidget,
         "deleteWidgetsOfPage": deleteWidgetsOfPage,
+        "findAllWidgets": () => widgetModel.find({}) // for testing purposes
     };
 
     return api;
