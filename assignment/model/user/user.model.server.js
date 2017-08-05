@@ -13,7 +13,7 @@ module.exports = (function () {
         "findUserById": findUserById,
         "updateUser": updateUser,
         "removeUserById": removeUserById,
-        "addWebsite": addWebsite,
+        "addWebsiteToUser": addWebsiteToUser,
         "removeWebsiteFromUser": removeWebsiteFromUser
     };
 
@@ -55,8 +55,8 @@ module.exports = (function () {
         );
     }
 
-    function addWebsite(website) {
-        return userModel.update({_id: website._user}, {$push: {websites: website._id}});
+    function addWebsiteToUser(userId, websiteId) {
+        return userModel.update({_id: userId}, {$push: {websites: websiteId}});
     }
 
     function removeWebsiteFromUser(userId, websiteId) {

@@ -3,6 +3,7 @@ module.exports = (function () {
     const mongoose = require("mongoose");
     const widgetSchema = require("./widget.schema.server");
     const widgetModel = mongoose.model("WidgetModel", widgetSchema);
+    let pageModelApi = false;
 
     const api = {
         "createWidget": createWidget,
@@ -10,11 +11,11 @@ module.exports = (function () {
         "findWidgetById": findWidgetById,
         "updateWidget": updateWidget,
         "deleteWidget": deleteWidget,
-        "reorderWidget": reorderWidget
+        "reorderWidget": reorderWidget,
+        "deleteWidgetsOfPage": deleteWidgetsOfPage,
     };
 
     return api;
-
 
     function createWidget(pageId, widget) {
     }
@@ -32,6 +33,17 @@ module.exports = (function () {
     }
 
     function reorderWidget(pageId, start, end) {
+    }
+
+    function deleteWidgetsOfPage(pageId) {
+
+    }
+
+    function getPageModelApi() {
+        if (!pageModelApi) {
+            pageModelApi = require("../page/page.model.server");
+        }
+        return pageModelApi;
     }
 
 })();

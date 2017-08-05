@@ -4,6 +4,7 @@ module.exports = (function () {
     const websiteSchema = require("./website.schema.server");
     const websiteModel = mongoose.model("WebsiteModel", websiteSchema);
     let userModelApi = false;
+    let pageModelApi = false;
 
     const api = {
         "createWebsiteForUser": createWebsiteForUser,
@@ -11,16 +12,17 @@ module.exports = (function () {
         "findWebsiteById": findWebsiteById,
         "updateWebsite": updateWebsite,
         "deleteWebsite": deleteWebsite,
-        "deleteWebsitesOfUser": deleteWebsitesOfUser
+        "deleteWebsitesOfUser": deleteWebsitesOfUser,
+        "addPageToWebsite": addPageToWebsite,
+        "removePageFromWebsite": removePageFromWebsite
     };
 
     return api;
 
-
     function createWebsiteForUser(userId, website) {
         website._user = userId;
         return websiteModel.create(website).then(website => {
-            return getUserModelApi().addWebsite(website).then(() => website);
+            return getUserModelApi().addWebsiteToUser(userId, website._id).then(() => website);
         });
     }
 
@@ -37,15 +39,24 @@ module.exports = (function () {
     }
 
     function deleteWebsite(websiteId) {
-        return websiteModel.findOne({_id: websiteId}).then(website => {
-            return getUserModelApi().removeWebsiteFromUser(website._user, websiteId).then(() => {
-                return websiteModel.remove({_id: websiteId})
-            });
-        });
+        return Promise.all([
+            websiteModel.findOne({_id: websiteId})
+                .then(website => getUserModelApi().removeWebsiteFromUser(website._user, websiteId))
+            , getPageModelApi().deletePagesOfWebsite(websiteId)])
+            .then(websiteModel.remove({_id: websiteId}));
     }
 
     function deleteWebsitesOfUser(userId) {
-        return websiteModel.remove({_user: userId});
+        return findAllWebsitesForUser(userId).then(websites =>
+            Promise.all(websites.map(w => deleteWebsite(w._id))));
+    }
+
+    function addPageToWebsite(websiteId, pageId) {
+        return websiteModel.update({_id: websiteId}, {$push: {pages: pageId}});
+    }
+
+    function removePageFromWebsite(websiteId, pageId) {
+        return websiteModel.update({_id: websiteId}, {$pullAll: {pages: [pageId]}});
     }
 
     function getUserModelApi() {
@@ -53,6 +64,13 @@ module.exports = (function () {
             userModelApi = require("../user/user.model.server");
         }
         return userModelApi;
+    }
+
+    function getPageModelApi() {
+        if (!pageModelApi) {
+            pageModelApi = require("../page/page.model.server");
+        }
+        return pageModelApi;
     }
 
 })();
