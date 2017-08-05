@@ -37,6 +37,9 @@ module.exports = (function () {
     }
 
     function deleteWidget(widgetId) {
+        return widgetModel.findOne({_id: widgetId}).then(widget => getPageModelApi()
+            .removeWidgetFromPage(widget._page, widgetId))
+            .then(() => widgetModel.remove({_id: widgetId}));
     }
 
     function reorderWidget(pageId, start, end) {
@@ -45,7 +48,8 @@ module.exports = (function () {
     }
 
     function deleteWidgetsOfPage(pageId) {
-
+        return findAllWidgetsForPage(pageId).then(widgets =>
+            Promise.all(widgets.map(w => deleteWidget(w._id))));
     }
 
     function getPageModelApi() {
