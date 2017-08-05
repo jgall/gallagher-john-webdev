@@ -1,8 +1,10 @@
 <form ng-submit="model.deleteWidget(model.widget)">
     <div class="form-group">
         <label for="html">HTML</label>
-        <textarea rows="3" class="form-control" id="html" placeholder="HTML" ng-model="model.widget.text">
-        </textarea>
+        <div ng-model="model.widget.text"
+             text-angular
+             ta-toolbar="[['h1','h2','h3'],['bold','italics','underline','strikeThrough'],['ul','ol'],['justifyLeft','justifyCenter','justifyRight','justifyFull'],['indent','outdent'],['html']]" id="html">
+        </div>
     </div>
     <button type="submit" class="btn btn-danger btn-block">Delete</button>
 </form>
