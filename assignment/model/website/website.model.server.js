@@ -21,8 +21,8 @@ module.exports = (function () {
 
     function createWebsiteForUser(userId, website) {
         website._user = userId;
-        return websiteModel.create(website).then(website => {
-            return getUserModelApi().addWebsiteToUser(userId, website._id).then(() => website);
+        return websiteModel.create(website).then(createdWebsite => {
+            return getUserModelApi().addWebsiteToUser(userId, createdWebsite._id).then(() => createdWebsite);
         });
     }
 

@@ -18,6 +18,10 @@ module.exports = (function () {
     return api;
 
     function createWidget(pageId, widget) {
+        widget._page = pageId;
+        return widgetModel.create(widget).then(createdWidget => {
+            return getPageModelApi().addWidgetToPage(pageId, createdWidget._id).then(() => createdWidget);
+        });
     }
 
     function findAllWidgetsForPage(pageId) {
