@@ -35,7 +35,6 @@ module.exports = function (app) {
 
 
     function createWidget(req, res) {
-        console.log("creating widget: " + req.body);
         widgetDbApi.createWidget(req.params.pageId, req.body).then(w => {
             res.json(w);
             res.end();

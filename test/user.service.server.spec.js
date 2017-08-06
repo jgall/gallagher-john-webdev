@@ -65,7 +65,6 @@
             Promise.all(createdUsers.map((u) => request(server)
                 .get('/api/user/' + u._id)
                 .expect((user) => {
-                    console.log(user.body);
                     assert.deepEqual(user.body, u);
                 }))).then(() => done());
         });

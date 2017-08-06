@@ -26,7 +26,7 @@ module.exports = (function () {
     }
 
     function findAllWidgetsForPage(pageId) {
-        return widgetModel.find({_page: pageId});
+        return getPageModelApi().findPageById(pageId).then(page => Promise.all(page.widgets.map(findWidgetById)));
     }
 
     function findWidgetById(widgetId) {
@@ -44,8 +44,9 @@ module.exports = (function () {
     }
 
     function reorderWidget(pageId, start, end) {
-        return getPageModelApi().findPageById(pageId).then(page => getPageModelApi()
-            .updatePage(pageId, {widgets: moveInArray(page.widgets, start, end)}))
+        return getPageModelApi().findPageById(pageId).then(page => {
+            return getPageModelApi().updatePage(pageId, {widgets: moveInArray(page.widgets, start, end)})
+        })
     }
 
     function deleteWidgetsOfPage(pageId) {
