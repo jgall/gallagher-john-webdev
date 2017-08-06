@@ -14,10 +14,11 @@
         vm.loadUrl = loadUrl;
         vm.sanitize = sanitize;
         vm.onMove = onMove;
+        vm.getViewUrl = getViewUrl;
 
         function loadUrl(url) {
             let modifiedUrl = url.replace("www.youtube.com/watch?v=", "www.youtube.com/embed/")
-                .replace("youtu.be/","youtube.com/embed/");
+                .replace("youtu.be/", "youtube.com/embed/");
             return $sce.trustAsResourceUrl(modifiedUrl);
         }
 
@@ -29,9 +30,14 @@
             WidgetService.reorderWidgets(vm.pageId, startIdx, finishIdx);
         }
 
+        function getViewUrl(widget) {
+            return 'views/widget/templates/widget-' + widget.type.toLowerCase() + '.view.client.html';
+        }
+
         function init() {
             WidgetService.findWidgetsByPageId(vm.pageId).then(data => vm.widgets = data);
         }
+
         init();
     }
 

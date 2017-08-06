@@ -22,25 +22,8 @@
 </nav>
 
 <div class="container-fluid row">
-
     <div class="col-md-12 col-sm-12">
-        <div ng-switch="model.widget.type">
-            <div ng-switch-when="HEADING">
-                <ng-include src="'views/widget/editors/widget-heading-edit.view.client.html'"></ng-include>
-            </div>
-            <div ng-switch-when="IMAGE">
-                <ng-include src="'views/widget/editors/widget-image-edit.view.client.html'"></ng-include>
-            </div>
-            <div ng-switch-when="YOUTUBE">
-                <ng-include src="'views/widget/editors/widget-youtube-edit.view.client.html'"></ng-include>
-            </div>
-            <div ng-switch-when="HTML">
-                <ng-include src="'views/widget/editors/widget-html-edit.view.client.html'"></ng-include>
-            </div>
-            <div ng-switch-when="TEXT">
-                <ng-include src="'views/widget/editors/widget-text-edit.view.client.html'"></ng-include>
-            </div>
-        </div>
+        <ng-include src="model.getEditorUrl(model.widget)"></ng-include>
         <a href="" ng-click="model.deleteWidget(model.widget)"
            class="btn btn-block btn-danger padded-column-content">Delete</a>
     </div>
