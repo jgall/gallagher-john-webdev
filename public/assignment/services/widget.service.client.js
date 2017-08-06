@@ -7,7 +7,7 @@
     function WidgetService($http) {
 
         let widgetTypes = [
-            "HTML", "HEADING", "YOUTUBE", "IMAGE"
+            "HTML", "HEADING", "YOUTUBE", "IMAGE", "TEXT"
         ];
 
         let api = {

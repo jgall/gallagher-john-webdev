@@ -3,7 +3,7 @@ module.exports = (function () {
     const mongoose = require("mongoose");
     const schema = mongoose.Schema({
         _page: {required: true, type: mongoose.Schema.ObjectId, ref: "PageModel"},
-        type: {type: String, enum: ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'INPUT'], required: true},
+        type: {type: String, enum: ['HEADING', 'IMAGE', 'YOUTUBE', 'HTML', 'INPUT', 'TEXT'], required: true},
         name: String,
         text: String,
         placeholder: String,
