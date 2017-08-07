@@ -4,6 +4,10 @@
 'use strict';
 module.exports = function (app) {
 
+    let passport = require('passport');
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     let connectionString = 'mongodb://127.0.0.1:27017/test'; // for local
     if (process.env.MLAB_USERNAME_WEBDEV) { // check if running remotely
         let username = process.env.MLAB_USERNAME_WEBDEV; // get from environment
