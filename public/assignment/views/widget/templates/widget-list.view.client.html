@@ -21,7 +21,7 @@
 </nav>
 
 <div class="container-fluid" sortable-div on-move-callback="model.onMove">
-    <div ng-repeat="widget in model.widgets">
+    <div ng-if="model.widgets" ng-repeat="widget in model.widgets">
         <div class="editWidgetDiv btn btn-default">
             <a href="#!/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
                 <span class="glyphicon glyphicon-cog"></span></a>
@@ -29,6 +29,11 @@
         </div>
         <ng-include src="model.getViewUrl(widget)"></ng-include>
     </div>
+
+    <div class="center-content" ng-hide="model.widgets">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+    </div>
+
 
 </div>
 
