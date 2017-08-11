@@ -1,0 +1,143 @@
+input.form-control {
+    margin-bottom: 5px;
+}
+
+body {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 15px;
+}
+
+.side-padding {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.margin-top {
+    margin-top: 5px;
+}
+
+.right-padding {
+    padding-right: 15px;
+}
+
+.editWidgetDiv {
+    position: absolute;
+    opacity: .8;
+    border: 0px solid transparent;
+    right: 15px;
+    z-index: 2;
+}
+
+.padded-column-content {
+    margin-top: 5px;
+}
+
+.fade {
+    transition: all linear 500ms;
+    opacity: 1;
+}
+
+.fade.ng-hide {
+    opacity: 0;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: scale(1) rotate(0deg);
+    }
+    to {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+.glyphicon.glyphicon-refresh-animate {
+    font-size: 40px;
+}
+
+.center-content {
+    text-align: center;
+}
+
+.page-content {
+    height: 100%;
+}
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 25px;
+}
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+}
+
+.card-body {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.hint {
+    color: #999999;
+}
+
+.form-inline {
+    display: inline-flex;
+}
+
+.nav-form {
+    margin: 7px;
+}
+
+.nav-input {
+    width: 100%;
+}

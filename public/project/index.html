@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="MealPlanner">
 <head>
     <meta charset="UTF-8">
-    <title>Project Home Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>Proof of concept</title>
+
+    <!-- Load CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/css/mdb.min.css" rel="stylesheet"/>
+
+    <link href="css/style.css" rel="stylesheet"/>
+
+    <!-- Load Javascript-->
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    <script
+            src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.6.5/angular.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.6.5/angular-route.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.6.5/angular-animate.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.6.5/angular-sanitize.js"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css">
+
+    <!-- Load Custom Javascript in proper order -->
+    <script type="text/javascript" src="app.js"></script>
+    <script type="text/javascript" src="config.js"></script>
+
+    <script type="text/javascript" src="views/user/controller/profile.controller.client.js"></script>
+    <script type="text/javascript" src="views/user/controller/login.controller.client.js"></script>
+    <script type="text/javascript" src="views/user/controller/register.controller.client.html.js"></script>
+    <script type="text/javascript" src="views/home/controller/home.controller.client.js"></script>
+    <script type="text/javascript" src="service/user.service.client.js"></script>
+    <script type="text/javascript" src="service/meal.service.client.js"></script>
+    <script type="text/javascript" src="service/recipe.service.client.js"></script>
 </head>
 <body>
-    <h1>Project Home Page</h1>
+
+<ng-view ng-cloak></ng-view>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.0/js/mdb.min.js"></script>
 </body>
 </html>

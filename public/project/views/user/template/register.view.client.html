@@ -1,0 +1,41 @@
+<nav class="navbar navbar-default navbar-fixed-top justify-content-between" role="navigation">
+    <div class="navbar-header navbar-brand float-left">
+        <a class="float-left" href="#!/login">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="navbar-header navbar-brand">
+        <span>Register for Meal Planner</span>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="alert alert-danger padded-column-content fade" ng-show="model.hasAlert">{{model.alert}}</div>
+    <form ng-submit="model.register(model.user)">
+        <input type="text"
+               class="form-control"
+               placeholder="username"
+               ng-model="model.user.username"/>
+        <input type="password"
+               class="form-control"
+               placeholder="password"
+               ng-model="model.user.password"/>
+        <input type="password"
+               class="form-control"
+               placeholder="verify password"
+               ng-model="model.user.passwordVerify"/>
+        <button class="btn btn-primary btn-block waves-effect"
+                type="submit">Register
+        </button>
+        <a class="btn btn-danger btn-block waves-effect"
+           href="#!/login">Cancel</a>
+        <div class="row">
+            <div class="col-md-6 margin-top">
+                <button class="btn btn-block btn-blue-grey waves-effect" ng-click="model.googleSignin()">Sign in with Google</button>
+            </div>
+            <div class="col-md-6 margin-top">
+                <button class="btn btn-block btn-primary waves-effect" ng-click="model.facebookSignin()">Sign in with Facebook</button>
+            </div>
+        </div>
+    </form>
+</div>

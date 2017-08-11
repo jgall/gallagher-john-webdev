@@ -5,8 +5,20 @@ module.exports = (function() {
     let app = express();
     let path = require('path');
     let favicon = require('serve-favicon');
+    let passport = require('passport');
+    let cookieParser = require('cookie-parser');
+    let session = require('express-session');
 
     let bodyParser = require('body-parser');
+
+    app.use(cookieParser());
+    app.use(session({
+        secret: 'my secret', // TODO: change to env variable
+        resave: true,
+        saveUninitialized: true
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -18,7 +30,9 @@ module.exports = (function() {
 
     require("./assignment/app")(app);
 
-    require("./project/poc.service.server")(app);
+    require("./project/spoontacular.service.server")(app);
+
+    require("./project/app")(app);
 
     let port = process.env.PORT || 3001;
 

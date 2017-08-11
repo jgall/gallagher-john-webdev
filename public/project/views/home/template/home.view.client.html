@@ -1,0 +1,64 @@
+<nav class="navbar navbar-default navbar-fixed-top justify-content-between" role="navigation">
+    <div class="navbar-header navbar-brand">
+        Meal Planner
+    </div>
+
+
+    <form class="form-inline flex-center nav-form" ng-submit="model.searchRecipes(searchInput)">
+        <i class="fa fa-search prefix"></i>
+        <input class="form-control mr-sm-2 nav-input" ng-model="searchInput" type="text" placeholder="Search recipes to plan meals"
+               aria-label="Search">
+    </form>
+
+    <div class="pull-right" ng-hide="model.loggedIn">
+        <a href="#!/login" class="btn btn-primary btn-md nav-btn waves-effect wow">
+            Sign Up/Log In
+        </a>
+    </div>
+    <div class="pull-right" ng-show="model.loggedIn">
+        <a href="#!/profile" ng-show="model.loggedIn" class="btn btn-primary btn-md nav-btn waves-effect wow">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>
+
+<div ng-show="model.loggedIn" class="page-content container-fluid">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <h3 class="flex-center">Upcoming Meals</h3>
+        <div class="card" ng-repeat="meal in model.user.meals">
+            <div class="card-body">
+                <h4>Meal Title</h4>
+            </div>
+        </div>
+        <div class="flex-center hint" ng-hide="model.user.meals.length > 0">
+            Plan some meals to have them show up here!
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
+<div ng-hide="model.loggedIn" class="page-content container-fluid">
+    <div class="col-md-3">
+
+    </div>
+    <div class="col-md-6">
+        <h3>Upcoming Meals</h3>
+        <div class="card" ng-repeat="meal in model.user.meals">
+            <div class="card-body">
+                <h4>You can create cards for meals!</h4>
+
+                <p class="card-text">
+                    Here would go a description of the meal you've planned along with the friends who you've invited!
+                </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+
+    </div>
+</div>
