@@ -20,14 +20,14 @@
             <span class="glyphicon glyphicon-user"></span>
         </a>
     </div>
-
-    <form class="navbar-brand float-left hidden-md hidden-lg hidden-xl hidden-sm"
-          ng-submit="model.searchForRecipes(model.searchInput)">
-        <input class="form-control nav-input" ng-model="model.searchInput" type="text"
-               placeholder="Search recipes to plan meals"
-               aria-label="Search">
-    </form>
 </nav>
+
+<form class="flex-center hidden-md hidden-lg hidden-xl hidden-sm"
+      ng-submit="model.searchForRecipes(model.searchInput)">
+    <input class="form-control nav-input" ng-model="model.searchInput" type="text"
+           placeholder="Search recipes to plan meals"
+           aria-label="Search">
+</form>
 
 <div ng-show="model.loggedIn" class="page-content container-fluid">
     <div class="col-md-3">
