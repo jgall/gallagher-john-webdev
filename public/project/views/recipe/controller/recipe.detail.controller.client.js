@@ -1,7 +1,7 @@
 (function () {
     angular.module("MealPlanner").controller("RecipeDetailController", RecipeDetailController);
 
-    function RecipeDetailController($location, RecipeService, UserService, $window, $routeParams) {
+    function RecipeDetailController($location, RecipeService, UserService, $window, $routeParams, $sce) {
         const vm = this;
 
         function init() {
@@ -28,6 +28,7 @@
         vm.searchForRecipe = searchForRecipe;
         vm.planMeal = planMeal;
         vm.back = back;
+        vm.sanitize = sanitize;
 
         function searchForRecipe(text) {
             $location.path("/recipeSearch/" + text);
@@ -40,6 +41,10 @@
 
         function back() {
             $window.history.back();
+        }
+
+        function sanitize(html) {
+            return $sce.trustAsHtml(html);
         }
     }
 })();

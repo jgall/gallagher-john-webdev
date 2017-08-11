@@ -53,9 +53,8 @@
                     </li>
                 </ul>
                 <hr>
-                <p class="card-text">
-                    {{model.recipe.instructions}}
-                </p>
+                <div ng-bind-html="model.sanitize(model.recipe.instructions)"></div>
+
                 <hr>
                 <a href="{{model.recipe.sourceUrl}}"><span>{{model.recipe.sourceName}}</span></a>
             </div>
