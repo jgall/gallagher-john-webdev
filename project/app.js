@@ -16,4 +16,6 @@ module.exports = function(app) {
     require('./model/model.server');
 
     require('./service/user.service.server')(app);
+    require('./service/meal.service.server.js')(app);
+    require('./service/recipe.service.server')(app);
 };

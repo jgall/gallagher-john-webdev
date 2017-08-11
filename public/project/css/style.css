@@ -132,12 +132,24 @@ body {
 
 .form-inline {
     display: inline-flex;
+    width: 60%;
+    text-align:center;
 }
 
-.nav-form {
-    margin: 7px;
+.card {
+    margin-bottom: 15px;
 }
 
-.nav-input {
+.recipe-card {
+    max-width: 560px;
+}
+
+.self-centering {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-control.nav-input {
+    padding-bottom: 5px;
     width: 100%;
 }

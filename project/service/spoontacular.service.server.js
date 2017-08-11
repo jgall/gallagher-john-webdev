@@ -7,15 +7,16 @@ module.exports = function (app) {
     let key = false;
 
     try {
-        key = require("../env.vars.local")["X-Mashape-Key"];
+        key = require("../../env.vars.local")["X-Mashape-Key"];
     } catch (e) {
         if (process.env.X_Mashape_Key) {
             key = process.env["X_Mashape_Key"];
         }
     }
 
+
     app.post('/api/poc/quickAnswer', quickAnswer);
-    app.post('/api/poc/recipeSearch', recipeSearch);
+    app.post('/api/poc/recipeSearch', searchForRecipe);
     app.post('/api/poc/getRecipeInformation', getRecipeInformation);
 
     function quickAnswer(req, res) {
@@ -35,7 +36,7 @@ module.exports = function (app) {
             });
     }
 
-    function recipeSearch(req, res) {
+    function searchForRecipe(req, res) {
         if (cache[req.body.query]) {
             res.json(cache[req.body.query]);
             res.end();
@@ -69,4 +70,12 @@ module.exports = function (app) {
                 res.end();
             });
     }
+
+    const api = {
+        getRecipeInformation: getRecipeInformation,
+        searchForRecipe: searchForRecipe,
+        quickAnswer: quickAnswer
+    };
+
+    return api;
 };

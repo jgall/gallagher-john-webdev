@@ -1,7 +1,7 @@
 (function () {
     angular.module("MealPlanner").config(Config);
 
-    function Config($routeProvider) {
+    function Config($routeProvider, $locationProvider) {
         $routeProvider
             .when("/", {
                 templateUrl: "views/home/template/home.view.client.html",
@@ -26,6 +26,11 @@
                 resolve: {
                     currentUser: currentUser
                 }
+            })
+            .when("/recipeSearch/:recipeQuery", {
+                templateUrl: "views/recipe/template/recipe.search.view.client.html",
+                controller: "RecipeSearchController",
+                controllerAs: "model"
             })
             .otherwise({redirectTo: "/"});
     }

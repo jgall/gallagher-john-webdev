@@ -29,6 +29,7 @@
         }
 
         function logout() {
+            console.log("logging out");
             return $http.post('/api/project/logout').then(res => res.data);
         }
 

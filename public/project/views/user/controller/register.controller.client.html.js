@@ -8,7 +8,7 @@
 
         function register(user) {
             return UserService.register(user.username, user.password)
-                .then(u => UserService.login(u.username, u.password),
+                .then(u => UserService.login(u.username, u.password).then(() => $location.path("/profile")),
                     err => {
                     vm.alert = err;
                     vm.hasAlert = true;

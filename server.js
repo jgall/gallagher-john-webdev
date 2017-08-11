@@ -30,7 +30,7 @@ module.exports = (function() {
 
     require("./assignment/app")(app);
 
-    require("./project/spoontacular.service.server")(app);
+    require("./project/service/spoontacular.service.server")(app);
 
     require("./project/app")(app);
 

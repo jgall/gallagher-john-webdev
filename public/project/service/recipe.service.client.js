@@ -9,10 +9,19 @@
         let apiUrl = "/api/project";
 
         let api = {
-
+            searchForRecipe: searchForRecipe,
+            getRecipeInformation: getRecipeInformation
         };
 
         return api;
+
+        function searchForRecipe(text) {
+            return $http.post("/api/project/searchForRecipe", {query: text}).then(res => res.data);
+        }
+
+        function getRecipeInformation(recipeId) {
+            return $http.post("/api/project/getRecipeInformation", {query: recipeId}).then(res => res.data);
+        }
 
     }
 

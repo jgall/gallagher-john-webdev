@@ -1,18 +1,17 @@
 (function () {
     angular.module("MealPlanner").controller("HomeController", HomeController);
 
-    function HomeController(UserService, MealService) {
+    function HomeController(UserService, MealService, $location) {
         const vm = this;
 
         vm.loggedIn = false;
 
-        vm.searchRecipes = searchRecipes;
+        vm.searchForRecipes = searchForRecipes;
 
         function init() {
             UserService.checkLoggedIn().then(user => {
                 vm.user = user;
                 vm.loggedIn = user != "0";
-                console.log(vm.loggedIn);
             }).then(() => {
 
             });
@@ -21,8 +20,8 @@
         init();
 
 
-        function searchRecipes(input) {
-
+        function searchForRecipes(input) {
+            $location.path("/recipeSearch/" + input)
         }
 
     }

@@ -1,10 +1,15 @@
 <nav class="navbar navbar-default navbar-fixed-top justify-content-between container-fluid" role="navigation">
+    <div class="navbar-header navbar-brand float-left">
+        <a class="float-left" href="#!/">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
     <div class="navbar-header navbar-brand">
-        Meal Planner
+        Recipes
     </div>
 
     <form class="form-inline navbar-brand col-md-6 col-sm-5 hidden-xs"
-          ng-submit="model.searchForRecipes(model.searchInput)">
+          ng-submit="model.searchForRecipe(model.searchInput)">
         <input class="form-control nav-input" ng-model="model.searchInput" type="text"
                placeholder="Search recipes to plan meals"
                aria-label="Search">
@@ -29,44 +34,23 @@
     </form>
 </nav>
 
-<div ng-show="model.loggedIn" class="page-content container-fluid">
-    <div class="col-md-3">
+
+<div class="page-content container-fluid">
+    <div class="col-md-3 col-sm-3">
 
     </div>
-    <div class="col-md-6">
-        <h3 class="flex-center">Upcoming Meals</h3>
-        <div class="card" ng-repeat="meal in model.user.meals">
+    <div class="col-md-6 col-sm-6">
+        <div class="card recipe-card self-centering" ng-repeat="recipe in model.recipes">
+            <img class="img-fluid" ng-src="https://webknox.com/recipeImages/{{recipe.id}}-556x370.jpg"/>
             <div class="card-body">
-                <h4>Meal Title</h4>
+                <h5>{{recipe.title}}</h5>
             </div>
         </div>
-        <div class="flex-center hint" ng-hide="model.user.meals.length > 0">
-            Plan some meals to have them show up here!
+        <div class="flex-center hint" ng-hide="model.recipes.length > 0">
+            Search for a recipe to have results displayed here
         </div>
     </div>
-    <div class="col-md-3">
-
-    </div>
-</div>
-<div ng-hide="model.loggedIn" class="page-content container-fluid">
-    <div class="col-md-3">
-
-    </div>
-    <div class="col-md-6">
-        <h3>Upcoming Meals</h3>
-        <div class="card">
-            <img class="img-fluid" ng-src="https://static.pexels.com/photos/70497/pexels-photo-70497.jpeg" alt="Card image cap">
-            <div class="card-body">
-                <h4>You can create cards for meals!</h4>
-
-                <p class="card-text">
-                    Here would go a description of the meal you've planned along with the friends who you've invited!
-                </p>
-
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-sm-3">
 
     </div>
 </div>

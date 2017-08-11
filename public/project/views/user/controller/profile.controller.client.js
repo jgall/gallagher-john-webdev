@@ -5,11 +5,16 @@
         const vm = this;
         vm.user = currentUser;
 
+        if (currentUser == 0) {
+            $location.path("/");
+        }
+
         vm.updateUser = updateUser;
         vm.logout = logout;
         vm.deletUser = deleteUser;
 
         function logout() {
+            console.log("logging out");
             UserService
                 .logout()
                 .then(() => $location.url('/login'));
