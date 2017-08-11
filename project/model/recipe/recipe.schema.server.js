@@ -2,7 +2,7 @@
 module.exports = (function () {
     const mongoose = require("mongoose");
     const schema = mongoose.Schema({
-        spoontacularId: {type: String},
+        spoontacularId: {type: String, unique: true},
         vegetarian: Boolean,
         vegan: Boolean,
         glutenFree: Boolean,
@@ -22,7 +22,7 @@ module.exports = (function () {
         aggregateLikes: Number,
         creditText: String,
         sourceName: String,
-        ingredients: [{
+        extendedIngredients: [{
             ingredientId: {type: mongoose.Schema.ObjectId, ref: "ingredient", required: true},
             spoontacularId: {type: Number},
             aisle: String,
@@ -41,7 +41,6 @@ module.exports = (function () {
         imageType: String,
         instructions: String,
         dateCreated: {type: Date, default: Date.now},
-        date: {type: Date, required: true},
     }, {collection: "recipe"});
     return schema;
 }());

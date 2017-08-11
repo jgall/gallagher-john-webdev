@@ -32,6 +32,11 @@
                 controller: "RecipeSearchController",
                 controllerAs: "model"
             })
+            .when("/recipeDetail/:recipeId", {
+                templateUrl: "views/recipe/template/recipe.detail.view.client.html",
+                controller: "RecipeDetailController",
+                controllerAs: "model"
+            })
             .otherwise({redirectTo: "/"});
     }
 

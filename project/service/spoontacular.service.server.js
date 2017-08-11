@@ -59,7 +59,7 @@ module.exports = function (app) {
             res.end();
             return;
         }
-        unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/"
+        return unirest.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/"
             + req.body.query
             + "/information?includenutrition=false")
             .header("X-Mashape-Key", key)
@@ -68,6 +68,7 @@ module.exports = function (app) {
                 cache[req.body.query] = result.body;
                 res.json(result.body);
                 res.end();
+                return result.body;
             });
     }
 

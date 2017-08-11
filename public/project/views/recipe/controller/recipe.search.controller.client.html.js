@@ -1,7 +1,7 @@
 (function () {
     angular.module("MealPlanner").controller("RecipeSearchController", RecipeSearchController);
 
-    function RecipeSearchController($location, $routeParams, RecipeService, UserService) {
+    function RecipeSearchController($location, $routeParams, RecipeService, UserService, $window) {
         const vm = this;
 
         function init() {
@@ -23,6 +23,8 @@
         init();
 
         vm.searchForRecipe = searchForRecipeByRoute;
+        vm.selectRecipe = selectRecipe;
+        vm.back = back;
 
         function searchForRecipe(text) {
             return RecipeService.searchForRecipe(text).then(recipes => {
@@ -33,6 +35,14 @@
 
         function searchForRecipeByRoute(text) {
             $location.path("/recipeSearch/" + text);
+        }
+
+        function selectRecipe(recipe) {
+            $location.path("/recipeDetail/" + recipe.id)
+        }
+
+        function back() {
+            $window.history.back();
         }
     }
 })();
