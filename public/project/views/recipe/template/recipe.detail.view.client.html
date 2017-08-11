@@ -46,6 +46,7 @@
             </div>
             <div class="card-body">
                 <h4>{{model.recipe.title}} <span class="hint">{{model.recipe.readyInMinutes}} Minutes</span></h4>
+                <button class="btn btn-block btn-primary waves-effect">Plan It</button>
                 <hr>
                 <ul>
                     <li ng-repeat="ingredient in model.recipe.extendedIngredients">
@@ -54,7 +55,6 @@
                 </ul>
                 <hr>
                 <div ng-bind-html="model.sanitize(model.recipe.instructions)"></div>
-
                 <hr>
                 <a href="{{model.recipe.sourceUrl}}"><span>{{model.recipe.sourceName}}</span></a>
             </div>

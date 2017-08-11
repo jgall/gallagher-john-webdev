@@ -390,4 +390,8 @@ module.exports = function (app) {
             next();
         }
     }
+
+    function requestContact(req, res) {
+
+    }
 };
