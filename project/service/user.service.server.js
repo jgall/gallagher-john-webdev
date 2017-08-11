@@ -40,6 +40,15 @@ module.exports = function (app) {
     } catch (e) {
         if (process.env.GOOGLE_CLIENT_ID) {
             keyStore = process.env;
+        } else {
+
+            keyStore.GOOGLE_CLIENT_ID = "none";
+            keyStore.GOOGLE_CLIENT_SECRET = "none";
+            keyStore.GOOGLE_CALLBACK_URL = "none";
+
+            keyStore.FACEBOOK_CLIENT_ID = "none";
+            keyStore.FACEBOOK_CLIENT_SECRET = "none";
+            keyStore.FACEBOOK_CALLBACK_URL = "none";
         }
     }
 
@@ -196,35 +205,35 @@ module.exports = function (app) {
         console.log(req.body);
 
         userModel.findUserByUsername(newUser.username).then(function (user) {
-            console.log("found user: " + user);
-            if (!user) {
-                console.log("no user found");
-                return userModel.createUser({
-                    username: newUser.username,
-                    password: newUser.password,
-                    roles: newUser.roles
-                }).then(function (user) {
-                        console.log("logging user in");
-                        if (user) {
-                            req.login(user, function (err) {
-                                if (err) {
-                                    res.status(400).send(err);
-                                } else {
-                                    res.json(user);
-                                }
-                            });
+                console.log("found user: " + user);
+                if (!user) {
+                    console.log("no user found");
+                    return userModel.createUser({
+                        username: newUser.username,
+                        password: newUser.password,
+                        roles: newUser.roles
+                    }).then(function (user) {
+                            console.log("logging user in");
+                            if (user) {
+                                req.login(user, function (err) {
+                                    if (err) {
+                                        res.status(400).send(err);
+                                    } else {
+                                        res.json(user);
+                                    }
+                                });
+                            }
+                        },
+                        function (err) {
+                            console.log("sending error");
+                            console.log(err);
+                            res.status(400).send(err);
                         }
-                    },
-                    function (err) {
-                    console.log("sending error");
-                    console.log(err);
-                        res.status(400).send(err);
-                    }
-                );
-            } else {
-                console.log("User Found");
-                res.status(400).send("User of given username already exists").end();
-            }
+                    );
+                } else {
+                    console.log("User Found");
+                    res.status(400).send("User of given username already exists").end();
+                }
             },
             function (err) {
                 return userModel.createUser({
