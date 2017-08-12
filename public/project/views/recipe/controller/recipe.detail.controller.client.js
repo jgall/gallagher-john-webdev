@@ -1,7 +1,7 @@
 (function () {
     angular.module("MealPlanner").controller("RecipeDetailController", RecipeDetailController);
 
-    function RecipeDetailController($location, RecipeService, UserService, $window, $routeParams, $sce) {
+    function RecipeDetailController($location, RecipeService, UserService, $window, $routeParams, $sce, $timeout) {
         const vm = this;
 
         function init() {
@@ -35,8 +35,14 @@
 
         }
 
-        function planMeal(r) {
+        function planMeal(recipe) {
+            if (vm.loggedIn) {
 
+            } else {
+                vm.alert = "Planning meals may only be done when signed in.";
+                vm.hasAlert = true;
+                $timeout(() => vm.hasAlert = false, 4000);
+            }
         }
 
         function back() {
