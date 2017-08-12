@@ -40,7 +40,11 @@
 
     </div>
     <div class="col-md-6 col-sm-6">
-        <div class="alert alert-danger padded-column-content fade" ng-show="model.hasAlert">{{model.alert}}</div>
+        <div class="alert alert-danger padded-column-content fade" ng-show="model.hasAlert">{{model.alert}}
+            <a ng-hide="model.loggedIn" href="#!/login" class="btn btn-primary btn-md nav-btn waves-effect wow">
+                Sign Up/Log In
+            </a>
+        </div>
         <div class="card recipe-card self-centering">
             <div class="view overlay hm-white-slight">
                 <img ng-src="https://webknox.com/recipeImages/{{model.recipe.id}}-556x370.jpg" class="img-fluid" alt="">
