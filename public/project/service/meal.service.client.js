@@ -9,7 +9,8 @@
         let apiUrl = "/api/project";
 
         let api = {
-
+            "createMeal": createMeal,
+            "updateMeal": updateMeal,
         };
 
         return api;

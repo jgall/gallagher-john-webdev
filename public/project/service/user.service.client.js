@@ -15,6 +15,7 @@
             "checkLoggedIn": checkLoggedIn,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
+            "getContacts": getContacts
         };
 
         return api;
@@ -35,6 +36,10 @@
 
         function updateUser(userId, user) {
             return $http.put(apiUrl + "/user/" + userId, user);
+        }
+
+        function getContacts() {
+            return $http.get(apiUrl + "/getContacts").then(res => res.data);
         }
 
         function deleteUser(userId) {

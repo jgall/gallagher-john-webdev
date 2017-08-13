@@ -34,32 +34,52 @@
 
     </div>
     <div class="col-md-10 col-sm-10">
-        <div class="card no-padding self-centering container-fluid">
+        <div class="card self-centering container-fluid">
             <div class="col-md-6 col-sm-6">
-                <form>
-                    <h4>Planning Details</h4>
+                <div class="card-body">
+                    <form ng-submit="model.save()">
+                        <h4>Planning Details</h4>
 
-                    <label for="name">Name</label>
-                    <input id="name" class="form-control"/>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" class="form-control" type="text" ng-model="model.name" required/>
+                        </div>
 
-                    <label for="description">Description</label>
-                    <input id="description" class="form-control"/>
+                        <div class="form-group">
+                            <label for="description">Description/Notes</label>
+                            <input id="description" class="form-control" type="text" ng-model="model.description"/>
+                        </div>
 
-                    <label for="place">Place</label>
-                    <input id="place" class="form-control"/>
+                        <div class="form-group">
+                            <label for="place">Place</label>
+                            <input id="place" class="form-control" type="text" ng-model="model.place"/>
+                        </div>
 
-                    <label for="date">Date</label>
-                    <input id="date" class="form-control"/>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input id="date" class="form-control" type="date" ng-model="model.date" required/>
+                        </div>
 
-                    <label for="invited">Invite Contacts</label>
-                    <input id="invited" class="form-control"/>
+                        <label for="invited">Invite contacts</label>
+                        <ui-select type="text" id="invited" class="form-control" multiple
+                                   ng-model="model.selectedContacts" theme="bootstrap" id="invited"
+                                   close-on-select="false" title="Invite Contacts">
+                            <ui-select-match placeholder="Enter contacts here">{{$item}}</ui-select-match>
+                            <ui-select-choices repeat="contact in model.contacts | filter:$select.search">
+                                {{contact}}
+                            </ui-select-choices>
+                        </ui-select>
 
-                    <label for="viewByLink">Viewable by Link</label>
-                    <input id="viewByLink" class="form-control"/>
+                        <div class="form-group">
+                            <label for="viewByLink">Viewable by Link <span> &nbsp;</span>
+                                <input id="viewByLink"  type="checkbox"
+                                       ng-model="model.viewByLink"/>
+                            </label>
+                        </div>
 
-                    <button type="submit" class="btn btn-block btn-primary waves-effect">Save</button>
-
-                </form>
+                        <button type="submit" class="btn btn-block btn-primary waves-effect">Save</button>
+                    </form>
+                </div>
             </div>
             <div class="col-md-6 col-sm-6 no-padding">
                 <div class="card-body">

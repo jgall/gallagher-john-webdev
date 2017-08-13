@@ -18,6 +18,7 @@ module.exports = function (app) {
     app.get('/api/project/user', auth, findAllUsers);
     app.put('/api/project/user/:id', auth, updateUser);
     app.delete('/api/project/user/:id', auth, deleteUser);
+    app.get('/api/project/getContacts', getContacts);
 
     app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
     app.get('/auth/facebook/callback',
@@ -388,6 +389,23 @@ module.exports = function (app) {
         } else {
             next();
         }
+    }
+
+    async function getContacts(req, res) {
+        let user = await userModel.findUserById(req.user);
+        let contacts = await Promise.all(user.contacts.map(c => userModel.findUserById(c)));
+        contacts = contacts.map(c => {
+            return {
+                username: c.username,
+                firstName: c.firstName,
+                lastName: c.lastName,
+            }
+        });
+
+
+        res.json(contacts);
+        res.end();
+
     }
 
     function requestContact(req, res) {

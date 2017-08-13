@@ -1,13 +1,17 @@
 (function () {
     angular.module("MealPlanner").controller("CreateMealController", CreateMealController);
 
-    function CreateMealController(MealService, RecipeService, currentUser, $location, $routeParams, $sce, $window) {
+    function CreateMealController(MealService, RecipeService, currentUser, $location, $routeParams, $sce, $window,
+                                  UserService) {
         const vm = this;
 
         vm.searchForRecipe = searchForRecipe;
         vm.planMeal = planMeal;
         vm.back = back;
         vm.sanitize = sanitize;
+        vm.save = save;
+
+        vm.contacts = [];
 
         init();
 
@@ -17,6 +21,8 @@
             if (currentUser == 0) {
                 $location.path("/");
             }
+
+            UserService.getContacts().then(contacts => vm.contacts = contacts);
 
             vm.recipeId = $routeParams["recipeId"];
 
@@ -46,6 +52,10 @@
 
         function sanitize(html) {
             return $sce.trustAsHtml(html);
+        }
+
+        function save() {
+            MealService.createMeal(meal);
         }
 
     }
