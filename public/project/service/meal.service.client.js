@@ -16,7 +16,11 @@
         return api;
 
         function createMeal(meal) {
+            return $http.put("/api/project/createMeal", meal).then(res => res.data);
+        }
 
+        function updateMeal(meal) {
+            return $http.put("/api/project/updateMeal", meal).then(res => res.data);
         }
 
     }

@@ -33,7 +33,6 @@
 
         function searchForRecipe(text) {
             $location.path("/recipeSearch/" + text);
-
         }
 
         function planMeal(recipe) {
@@ -55,6 +54,9 @@
         }
 
         function save() {
+            let meal = {
+
+            };
             MealService.createMeal(meal);
         }
 
