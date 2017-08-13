@@ -6,10 +6,10 @@
         const vm = this;
 
         vm.searchForRecipe = searchForRecipe;
-        vm.planMeal = planMeal;
         vm.back = back;
         vm.sanitize = sanitize;
         vm.save = save;
+        vm.meal = {};
 
         vm.contacts = [];
 
@@ -35,16 +35,6 @@
             $location.path("/recipeSearch/" + text);
         }
 
-        function planMeal(recipe) {
-            if (vm.loggedIn) {
-                $location.path('/mealCreate').search({recipeId: vm.recipeId});
-            } else {
-                vm.alert = "Planning meals may only be done when signed in.";
-                vm.hasAlert = true;
-                $timeout(() => vm.hasAlert = false, 4000);
-            }
-        }
-
         function back() {
             $window.history.back();
         }
@@ -54,15 +44,9 @@
         }
 
         function save() {
-            let meal = {
-                name: vm.name,
-                description: vm.description,
-                place: vm.place,
-                date: vm.date,
-                selectedContacts: vm.selectedContacts,
-                viewByLink: vm.viewByLink
-            };
-            MealService.createMeal(meal);
+            MealService.createMeal(vm.meal).then(meal => {
+                $location.path("/");
+            });
         }
 
     }

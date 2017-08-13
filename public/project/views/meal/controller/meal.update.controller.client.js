@@ -10,19 +10,13 @@
         init();
 
         function init() {
-            MealService.get
+            MealService.getMeal($routeParams["mealId"]).then(meal => {
+                vm.meal = meal;
+            })
         }
 
         function save() {
-            let meal = {
-                name: vm.name,
-                description: vm.description,
-                place: vm.place,
-                date: vm.date,
-                selectedContacts: vm.selectedContacts,
-                viewByLink: vm.viewByLink
-            };
-            MealService.updateMeal(meal);
+            MealService.updateMeal(vm.meal);
         }
 
     }

@@ -35,12 +35,12 @@
     </div>
     <div class="col-md-6">
         <h3 class="flex-center">Upcoming Meals</h3>
-        <div class="card" ng-repeat="meal in model.user.meals">
+        <div class="card" ng-repeat="meal in model.meals">
             <div class="card-body">
-                <h4>Meal Title</h4>
+                <h4>{{meal.name}}</h4>
             </div>
         </div>
-        <div class="flex-center hint" ng-hide="model.user.meals.length > 0">
+        <div class="flex-center hint" ng-hide="model.meals.length > 0">
             Plan some meals to have them show up here!
         </div>
     </div>

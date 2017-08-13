@@ -2,11 +2,13 @@
 module.exports = function (app) {
 
     let MealModelApi = require("../model/meal/meal.model.server");
+    let UserModelApi = require("../model/user/user.model.server");
 
     app.put("/api/project/createMeal", createMeal);
     app.put("/api/project/updateMeal", updateMeal);
     app.delete("/api/project/deleteMeal", deleteMeal);
     app.get("/api/project/getMeal", getMeal);
+    app.post("/api/project/findMealsByOwner", getMealsByOwner);
 
 
     function createMeal(req, res) {
@@ -72,6 +74,18 @@ module.exports = function (app) {
                     res.sendStatus(400);
                 }
             })
+        } else {
+            res.sendStatus(400);
+        }
+    }
+
+    function getMealsByOwner(req, res) {
+        if (req.isAuthenticated()) {
+            MealModelApi.findMealsByOwner(req.user._id).then(meals => {
+                console.log(meals);
+                res.json(meals);
+                res.end();
+            });
         } else {
             res.sendStatus(400);
         }

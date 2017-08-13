@@ -13,6 +13,7 @@
             "updateMeal": updateMeal,
             "deleteMeal": deleteMeal,
             "getMeal": getMeal,
+            "findMealsByOwner": findMealsByOwner
         };
 
         return api;
@@ -31,6 +32,10 @@
 
         function getMeal(mealId) {
             return $http.get("/api/project/getMeal", {_id: mealId}).then(res => res.data);
+        }
+
+        function findMealsByOwner(userId) {
+            return $http.post("/api/project/findMealsByOwner", {userId: userId}).then(res => res.data);
         }
 
     }

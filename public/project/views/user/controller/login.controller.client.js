@@ -15,7 +15,7 @@
             UserService.login(username, password).then(user => {
                 console.log(user);
                 if (!!user) {
-                    $timeout(() => $location.path("/profile"), 1);
+                    $timeout(() => $location.path("/"), 1);
                 } else {
                     $timeout(() => vm.hasAlert = true, 1);
                     vm.alert = "Unable to login";
