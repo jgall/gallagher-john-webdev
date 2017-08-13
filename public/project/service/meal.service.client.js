@@ -27,7 +27,7 @@
         }
 
         function deleteMeal(mealId) {
-            return $http.delete("/api/project/deleteMeal", {_id: mealId}).then(res => res.data);
+            return $http.post("/api/project/deleteMeal", {_id: mealId}).then(res => res.data);
         }
 
         function getMeal(mealId) {

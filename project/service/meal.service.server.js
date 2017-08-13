@@ -6,7 +6,7 @@ module.exports = function (app) {
 
     app.put("/api/project/createMeal", createMeal);
     app.put("/api/project/updateMeal", updateMeal);
-    app.delete("/api/project/deleteMeal", deleteMeal);
+    app.post("/api/project/deleteMeal", deleteMeal);
     app.get("/api/project/getMeal", getMeal);
     app.post("/api/project/findMealsByOwner", getMealsByOwner);
 
@@ -44,14 +44,19 @@ module.exports = function (app) {
     }
 
     function deleteMeal(req, res) {
+        console.log(req.body);
         if (req.isAuthenticated()) {
             MealModelApi.findMealById(req.body._id).then(meal => {
-                if (meal.owner == req.user._id) {
+                console.log(meal);
+                console.log(req.user);
+                if (" " + meal.owner == " " + req.user._id) {
+                    console.log("SHould be deleting.");
                     MealModelApi.deleteMealById(meal._id).then(() => {
                         res.status(200);
                         res.end();
                     });
                 } else {
+                    console.log("not equal???");
                     res.sendStatus(400);
                 }
             }, err => {

@@ -8,6 +8,7 @@
         vm.meals = [];
 
         vm.searchForRecipes = searchForRecipes;
+        vm.deleteMeal = deleteMeal;
 
         init();
 
@@ -18,6 +19,7 @@
                 vm.loggedIn = user != "0";
                 if (vm.loggedIn) {
                     MealService.findMealsByOwner(user._id).then(meals => {
+                        console.log(meals);
                         vm.meals = meals;
                     })
                 }
@@ -29,6 +31,14 @@
 
         function searchForRecipes(input) {
             $location.path("/recipeSearch/" + input)
+        }
+
+        function deleteMeal(meal) {
+            MealService.deleteMeal(meal._id).then(() => {
+                MealService.findMealsByOwner(vm.user._id).then(meals => {
+                    vm.meals = meals;
+                })
+            });
         }
 
     }

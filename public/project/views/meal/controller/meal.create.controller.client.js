@@ -44,6 +44,7 @@
         }
 
         function save() {
+            vm.meal.recipe = vm.recipeId;
             MealService.createMeal(vm.meal).then(meal => {
                 $location.path("/");
             });
