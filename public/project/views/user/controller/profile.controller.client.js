@@ -1,7 +1,7 @@
 (function () {
     angular.module("MealPlanner").controller("ProfileController", ProfileController);
 
-    function ProfileController(currentUser, UserService, $location, $timeout) {
+    function ProfileController(currentUser, UserService, $location, $timeout, $window) {
         const vm = this;
         vm.user = currentUser;
 
@@ -12,6 +12,7 @@
         vm.updateUser = updateUser;
         vm.logout = logout;
         vm.deletUser = deleteUser;
+        vm.back = back;
 
         function logout() {
             console.log("logging out");
@@ -38,6 +39,11 @@
                     vm.hasAlert = true;
                     $timeout(() => vm.hasAlert = false, 3000);
                 })
+        }
+
+        function back() {
+            console.log($window.history);
+            $window.history.back();
         }
     }
 

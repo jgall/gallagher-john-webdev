@@ -37,6 +37,14 @@
                 controller: "RecipeDetailController",
                 controllerAs: "model"
             })
+            .when("/mealCreate", {
+                templateUrl: "views/meal/template/meal.create.view.client.html",
+                controller: "CreateMealController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: currentUser
+                }
+            })
             .otherwise({redirectTo: "/"});
     }
 

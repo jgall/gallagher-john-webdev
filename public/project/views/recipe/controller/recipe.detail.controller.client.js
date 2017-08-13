@@ -37,7 +37,7 @@
 
         function planMeal(recipe) {
             if (vm.loggedIn) {
-
+                $location.path('/mealCreate').search({recipeId: vm.recipeId});
             } else {
                 vm.alert = "Planning meals may only be done when signed in.";
                 vm.hasAlert = true;

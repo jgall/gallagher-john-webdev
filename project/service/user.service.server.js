@@ -279,7 +279,6 @@ module.exports = function (app) {
 
     function deleteUser(req, res) {
         if (isAdmin(req.user)) {
-
             userModel
                 .removeUser(req.params.id)
                 .then(

@@ -12,7 +12,7 @@ module.exports = (function () {
         viewableByLink: Boolean,
         recipe: {type: String},
         dateCreated: {type: Date, default: Date.now},
-        date: {type: Date, required: true},
+        date: {type: Date},
     }, {collection: "meal"});
     return schema;
 }());

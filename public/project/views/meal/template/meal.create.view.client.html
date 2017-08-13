@@ -1,0 +1,84 @@
+<nav class="navbar navbar-default navbar-fixed-top justify-content-between container-fluid" role="navigation">
+    <div class="navbar-header navbar-brand float-left">
+        <a class="float-left" href="" ng-click="model.back()">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="navbar-header navbar-brand">
+        Plan Meal
+    </div>
+
+    <form class="form-inline navbar-brand col-md-6 col-sm-5 hidden-xs"
+          ng-submit="model.searchForRecipe(model.searchInput)">
+        <input class="form-control nav-input" ng-model="model.searchInput" type="text"
+               placeholder="Search recipes to plan meals"
+               aria-label="Search">
+    </form>
+    <div class="pull-right">
+        <a href="#!/profile" class="btn btn-primary btn-md nav-btn waves-effect wow">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>
+
+<form class="flex-center hidden-md hidden-lg hidden-xl hidden-sm"
+      ng-submit="model.searchForRecipes(model.searchInput)">
+    <input class="form-control nav-input" ng-model="model.searchInput" type="text"
+           placeholder="Search recipes to plan meals"
+           aria-label="Search">
+</form>
+
+
+<div class="page-content container-fluid">
+    <div class="col-md-1 col-sm-1">
+
+    </div>
+    <div class="col-md-10 col-sm-10">
+        <div class="card no-padding self-centering container-fluid">
+            <div class="col-md-6 col-sm-6">
+                <form>
+                    <h4>Planning Details</h4>
+
+                    <label for="name">Name</label>
+                    <input id="name" class="form-control"/>
+
+                    <label for="description">Description</label>
+                    <input id="description" class="form-control"/>
+
+                    <label for="place">Place</label>
+                    <input id="place" class="form-control"/>
+
+                    <label for="date">Date</label>
+                    <input id="date" class="form-control"/>
+
+                    <label for="invited">Invite Contacts</label>
+                    <input id="invited" class="form-control"/>
+
+                    <label for="viewByLink">Viewable by Link</label>
+                    <input id="viewByLink" class="form-control"/>
+
+                    <button type="submit" class="btn btn-block btn-primary waves-effect">Save</button>
+
+                </form>
+            </div>
+            <div class="col-md-6 col-sm-6 no-padding">
+                <div class="card-body">
+                    <h4>{{model.recipe.title}} <span class="hint">{{model.recipe.readyInMinutes}} Minutes</span></h4>
+                    <hr>
+                    <ul>
+                        <li ng-repeat="ingredient in model.recipe.extendedIngredients">
+                            {{ingredient.originalString}}
+                        </li>
+                    </ul>
+                    <hr>
+                    <div ng-bind-html="model.sanitize(model.recipe.instructions)"></div>
+                    <hr>
+                    <a href="{{model.recipe.sourceUrl}}"><span>{{model.recipe.sourceName}}</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-1 col-sm-1">
+
+    </div>
+</div>
