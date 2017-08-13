@@ -45,6 +45,14 @@
                     currentUser: currentUser
                 }
             })
+            .when("/mealUpdate/:mealId", {
+                templateUrl: "views/meal/template/meal.create.view.client.html",
+                controller: "UpdateMealController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: currentUser
+                }
+            })
             .otherwise({redirectTo: "/"});
     }
 

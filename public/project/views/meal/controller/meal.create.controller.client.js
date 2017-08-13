@@ -55,7 +55,12 @@
 
         function save() {
             let meal = {
-
+                name: vm.name,
+                description: vm.description,
+                place: vm.place,
+                date: vm.date,
+                selectedContacts: vm.selectedContacts,
+                viewByLink: vm.viewByLink
             };
             MealService.createMeal(meal);
         }

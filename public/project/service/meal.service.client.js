@@ -11,6 +11,8 @@
         let api = {
             "createMeal": createMeal,
             "updateMeal": updateMeal,
+            "deleteMeal": deleteMeal,
+            "getMeal": getMeal,
         };
 
         return api;
@@ -21,6 +23,14 @@
 
         function updateMeal(meal) {
             return $http.put("/api/project/updateMeal", meal).then(res => res.data);
+        }
+
+        function deleteMeal(mealId) {
+            return $http.delete("/api/project/deleteMeal", {_id: mealId}).then(res => res.data);
+        }
+
+        function getMeal(mealId) {
+            return $http.get("/api/project/getMeal", {_id: mealId}).then(res => res.data);
         }
 
     }

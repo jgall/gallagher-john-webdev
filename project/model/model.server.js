@@ -4,4 +4,5 @@ module.exports = function() {
     require('./meal/meal.model.server');
     require('./ingredient/ingredient.model.server');
     require('./recipe/recipe.model.server');
+    require('./comment/comment.model.server');
 }();

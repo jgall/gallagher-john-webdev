@@ -23,7 +23,7 @@ module.exports = (function () {
         creditText: String,
         sourceName: String,
         extendedIngredients: [{
-            ingredientId: {type: mongoose.Schema.ObjectId, ref: "ingredient", required: true},
+            ingredientId: {type: mongoose.Schema.ObjectId, ref: "ingredient", require: true},
             spoontacularId: {type: Number},
             aisle: String,
             image: String,

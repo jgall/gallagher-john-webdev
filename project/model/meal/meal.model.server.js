@@ -7,6 +7,9 @@ module.exports = (function () {
     const api = {
         "createMeal": createMeal,
         "updateMeal": updateMeal,
+        "findMealById": findMealById,
+        "deleteMealById": deleteMealById,
+        "addComment": addComment
     };
 
     return api;
@@ -17,6 +20,18 @@ module.exports = (function () {
 
     function updateMeal(mealId, meal) {
         return mealModel.update({_id: mealId}, {$set: meal});
+    }
+
+    function findMealById(mealId) {
+        return mealModel.findById(mealId);
+    }
+
+    function deleteMealById(mealId) {
+        return mealModel.remove({_id: mealId});
+    }
+
+    function addComment(mealId, commentId) {
+        return mealModel.update({_id: mealId}, {$push: {comments: commentId}});
     }
 
 })();
