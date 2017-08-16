@@ -2,7 +2,7 @@
 module.exports = (function () {
     const mongoose = require("mongoose");
     const schema = mongoose.Schema({
-        username: {type: String, unique: true},
+        username: {type: String},
         password: {type: String},
         firstName: String,
         lastName: String,
@@ -15,7 +15,7 @@ module.exports = (function () {
             token: String
         },
         dateOfBirth: Date,
-        email: {type: String},
+        email: {type: String, require: true},
         phone: String,
         roles: [{type: String}],
         ingredientStash: [{type: mongoose.Schema.ObjectId, ref: "ingredient"}],

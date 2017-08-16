@@ -20,19 +20,23 @@ module.exports = function (app) {
     app.delete('/api/project/user/:id', auth, deleteUser);
     app.get('/api/project/getContacts', getContacts);
 
-    app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect: '/#!/profile',
-            failureRedirect: '/#!/login'
+            successRedirect: '/project/#!/profile',
+            failureRedirect: '/project/#!/login'
         }));
 
     app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
     app.get('/auth/google/callback',
         passport.authenticate('google', {
-            successRedirect: '/#!/profile',
-            failureRedirect: '/#!/login'
+            successRedirect: '/project/#!/profile',
+            failureRedirect: '/project/#!/login'
         }));
+
+    // app.get('/auth/google/callback', function (req, res) {
+    //     console.log('wer');
+    // });
 
     let keyStore = {};
 
@@ -72,6 +76,7 @@ module.exports = function (app) {
     passport.deserializeUser(deserializeUser);
 
     function facebookStrategy(token, refreshToken, profile, done) {
+        console.log(profile);
         userModel
             .findUserByFacebookId(profile.id)
             .then(
@@ -111,6 +116,7 @@ module.exports = function (app) {
     }
 
     function googleStrategy(token, refreshToken, profile, done) {
+        console.log("Hello");
         userModel
             .findUserByGoogleId(profile.id)
             .then(
@@ -213,6 +219,7 @@ module.exports = function (app) {
                     return userModel.createUser({
                         username: newUser.username,
                         password: newUser.password,
+                        email: newUser.email,
                         roles: newUser.roles
                     }).then(function (user) {
                             console.log("logging user in");

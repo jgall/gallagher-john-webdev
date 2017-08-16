@@ -56,12 +56,12 @@
             .otherwise({redirectTo: "/"});
     }
 
-    async function checkLoggedIn($location, UserService) {
+    function checkLoggedIn($location, UserService) {
 
     }
 
-    async function currentUser($location, UserService) {
-        return await UserService.checkLoggedIn();
+    function currentUser($location, UserService) {
+        return UserService.checkLoggedIn();
     }
 
 })();
