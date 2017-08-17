@@ -2,7 +2,7 @@
 module.exports = (function () {
     const mongoose = require("mongoose");
     const schema = mongoose.Schema({
-        username: {type: String},
+        username: {type: String, unique: true, require: true},
         password: {type: String},
         firstName: String,
         lastName: String,

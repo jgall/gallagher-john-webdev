@@ -4,6 +4,7 @@ module.exports = function (app) {
     let passport = require('passport');
     let LocalStrategy = require('passport-local').Strategy;
     let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+    let GoogleContacts = require('google-contacts').GoogleContacts;
     let FacebookStrategy = require('passport-facebook').Strategy;
     let mongoose = require("mongoose");
 
@@ -27,16 +28,12 @@ module.exports = function (app) {
             failureRedirect: '/project/#!/login'
         }));
 
-    app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email']}));
+    app.get('/auth/google', passport.authenticate('google', {scope: ['profile', 'email', 'https://www.googleapis.com/auth/contacts.readonly']}));
     app.get('/auth/google/callback',
         passport.authenticate('google', {
             successRedirect: '/project/#!/profile',
             failureRedirect: '/project/#!/login'
         }));
-
-    // app.get('/auth/google/callback', function (req, res) {
-    //     console.log('wer');
-    // });
 
     let keyStore = {};
 
@@ -86,6 +83,7 @@ module.exports = function (app) {
                     } else {
                         let names = profile.displayName.split(" ");
                         let newFacebookUser = {
+                            username: names[0] + names[1],
                             lastName: names[1],
                             firstName: names[0],
                             email: profile.emails ? profile.emails[0].value : "",
@@ -94,7 +92,34 @@ module.exports = function (app) {
                                 token: token
                             }
                         };
-                        return userModel.createUser(newFacebookUser);
+
+                        let createUsername = (num) => {
+                            console.log(num);
+                            return userModel.findUserByUsername(newFacebookUser.username + num).then(user => {
+                                if (!user) {
+                                    newFacebookUser.username = newFacebookUser.username + num;
+                                    return userModel.createUser(newFacebookUser);
+                                } else {
+                                    return createUsername(num + 1);
+                                }
+                            }, err => {
+                                newFacebookUser.username = newFacebookUser.username + num;
+                                return userModel.createUser(newFacebookUser);
+                            })
+                        };
+
+                        return userModel.findUserByUsername(newFacebookUser.username).then(user => {
+                            console.log(user);
+                            if (!user) {
+                                return userModel.createUser(newFacebookUser);
+                            } else {
+                                return createUsername(0);
+                            }
+                        }, err => {
+                            console.log(err);
+                            return userModel.createUser(newFacebookUser);
+
+                        });
                     }
                 },
                 function (err) {
@@ -116,7 +141,6 @@ module.exports = function (app) {
     }
 
     function googleStrategy(token, refreshToken, profile, done) {
-        console.log("Hello");
         userModel
             .findUserByGoogleId(profile.id)
             .then(
@@ -125,6 +149,7 @@ module.exports = function (app) {
                         return done(null, user);
                     } else {
                         let newGoogleUser = {
+                            username: profile.name.givenName + profile.name.familyName,
                             lastName: profile.name.familyName,
                             firstName: profile.name.givenName,
                             email: profile.emails[0].value,
@@ -133,7 +158,35 @@ module.exports = function (app) {
                                 token: token
                             }
                         };
-                        return userModel.createUser(newGoogleUser);
+
+                        let createUsername = (num) => {
+                            console.log(num);
+                            return userModel.findUserByUsername(newGoogleUser.username + num).then(user => {
+                                if (!user) {
+                                    newGoogleUser.username = newGoogleUser.username + num;
+                                    return userModel.createUser(newGoogleUser);
+                                } else {
+                                    return createUsername(num + 1);
+                                }
+                            }, err => {
+                                newGoogleUser.username = newGoogleUser.username + num;
+                                return userModel.createUser(newGoogleUser);
+                            })
+                        };
+
+                        return userModel.findUserByUsername(newGoogleUser.username).then(user => {
+                            console.log(user);
+                            if (!user) {
+                                return userModel.createUser(newGoogleUser);
+                            } else {
+                                return createUsername(0);
+                            }
+                        }, err => {
+                            console.log(err);
+                            return userModel.createUser(newGoogleUser);
+
+                        });
+
                     }
                 },
                 function (err) {
@@ -408,9 +461,9 @@ module.exports = function (app) {
                     lastName: c.lastName,
                 }
             })).then(contacts => {
-                res.json(contacts);
-                res.end();
-            });
+            res.json(contacts);
+            res.end();
+        });
     }
 
     function requestContact(req, res) {

@@ -24,7 +24,15 @@
                 controller: "ProfileController",
                 controllerAs: "model",
                 resolve: {
-                    currentUser: currentUser
+                    currentUser: checkLoggedIn
+                }
+            })
+            .when("/stash", {
+                templateUrl: "views/ingredient/template/stash.view.client.html",
+                controller: "StashController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: checkLoggedIn
                 }
             })
             .when("/recipeSearch/:recipeQuery", {
@@ -42,7 +50,7 @@
                 controller: "CreateMealController",
                 controllerAs: "model",
                 resolve: {
-                    currentUser: currentUser
+                    currentUser: checkLoggedIn
                 }
             })
             .when("/mealUpdate/:mealId", {
@@ -50,14 +58,27 @@
                 controller: "UpdateMealController",
                 controllerAs: "model",
                 resolve: {
-                    currentUser: currentUser
+                    currentUser: checkLoggedIn
                 }
             })
             .otherwise({redirectTo: "/"});
     }
 
-    function checkLoggedIn($location, UserService) {
+    function checkLoggedIn(UserService, $q, $location) {
+        let deferred = $q.defer();
 
+        UserService
+            .checkLoggedIn()
+            .then(function (user) {
+                if (user === '0') {
+                    deferred.reject();
+                    $location.url('/login');
+                } else {
+                    deferred.resolve(user);
+                }
+            });
+
+        return deferred.promise;
     }
 
     function currentUser($location, UserService) {

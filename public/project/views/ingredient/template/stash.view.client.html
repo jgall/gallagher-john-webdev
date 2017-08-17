@@ -1,0 +1,39 @@
+<nav class="navbar navbar-default navbar-fixed-top justify-content-between" role="navigation">
+    <div class="navbar-header navbar-brand float-left">
+        <a class="float-left" href="" ng-click="model.back()">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="navbar-header navbar-brand">
+        <span>Ingredient Stash</span>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+        <div class="alert alert-success padded-column-content fade" ng-show="model.hasAlert">{{model.alert}}</div>
+
+        <form class="center-content">
+            <label for="input">Add a new Ingredient to your personal Stash</label>
+            <input id="input" type="text" class="form-control" ng-model="model.inputField"/>
+
+            <button class="btn btn-primary btn-block waves-effect" ng-click="model.addToStash(model.inputField)">Add</button>
+        </form>
+
+        <div class="card padded-column-content" ng-repeat="ingredient in model.stash">
+            <div class="card-body">
+                <span>{{ingredient.name}}</span> | <span>Aisle: {{ingredient.aisle}}</span>
+                <a href="" ng-click="model.removeFromStash(ingredient)" class="pull-right">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3"></div>
+
+
+</div>

@@ -4,6 +4,8 @@ module.exports = (function () {
     const schema = mongoose.Schema({
         spoontacularId: Number,
         name: String,
+        image: String,
+        aisle: String,
     }, {collection: "ingredient"});
     return schema;
 }());

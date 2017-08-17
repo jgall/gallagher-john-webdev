@@ -14,7 +14,9 @@ module.exports = (function () {
         updateUser: updateUser,
         findUserByGoogleId: findUserByGoogleId,
         findUserByFacebookId: findUserByFacebookId,
-        getMongooseModel: getMongooseModel
+        getMongooseModel: getMongooseModel,
+        addIngredient: addIngredient,
+        removeIngredient: removeIngredient,
     };
 
     return api;
@@ -58,6 +60,14 @@ module.exports = (function () {
 
     function getMongooseModel() {
         return userModel;
+    }
+
+    function addIngredient(userId, ingredientId) {
+        return userModel.update({_id: userId}, {$push: {ingredientStash: ingredientId}});
+    }
+
+    function removeIngredient(userId, ingredientId) {
+        return userModel.update({_id: userId}, {$pull: {ingredientStash: ingredientId}});
     }
 
 })();

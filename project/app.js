@@ -19,4 +19,5 @@ module.exports = function(app) {
     require('./service/meal.service.server.js')(app);
     require('./service/recipe.service.server')(app);
     require('./service/comment.service.server')(app);
+    require('./service/ingredient.service.server')(app);
 };
