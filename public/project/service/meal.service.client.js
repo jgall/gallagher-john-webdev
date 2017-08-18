@@ -13,7 +13,11 @@
             "updateMeal": updateMeal,
             "deleteMeal": deleteMeal,
             "getMeal": getMeal,
-            "findMealsByOwner": findMealsByOwner
+            "findMealsByOwner": findMealsByOwner,
+            "adminCreate": adminCreate,
+            "adminRead": adminRead,
+            "adminUpdate": adminUpdate,
+            "adminRemove": adminRemove,
         };
 
         return api;
@@ -40,6 +44,22 @@
 
         function getAllMeals() {
             return $http.get("/api/project/getAllMeals").then(res => res.data);
+        }
+
+        function adminCreate(body) {
+            return $http.post('/api/project/meal/adminCreate', body).then(res => res.data);
+        }
+
+        function adminRead() {
+            return $http.get('/api/project/meal/adminRead').then(res => res.data);
+        }
+
+        function adminUpdate(meal) {
+            return $http.put('/api/project/meal/adminUpdate/' + meal._id, meal).then(res => res.data);
+        }
+
+        function adminRemove(id) {
+            $http.delete('/api/project/meal/adminRemove/' + id);
         }
 
     }

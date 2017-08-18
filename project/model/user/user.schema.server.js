@@ -19,12 +19,12 @@ module.exports = (function () {
         phone: String,
         roles: [{type: String}],
         ingredientStash: [{type: mongoose.Schema.ObjectId, ref: "ingredient"}],
-        contacts: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
-        incomingContactRequests: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
-        outgoingContactRequests: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
+        contacts: [{type: mongoose.Schema.ObjectId, ref: "userv2"}],
+        incomingContactRequests: [{type: mongoose.Schema.ObjectId, ref: "userv2"}],
+        outgoingContactRequests: [{type: mongoose.Schema.ObjectId, ref: "userv2"}],
         recipes: [{type: String}],
         meals: [{type: mongoose.Schema.ObjectId, ref: "meal"}],
         dateCreated: {type: Date, default: Date.now}
-    }, {collection: "projectUser"});
+    }, {collection: "userv2"});
     return schema;
 }());

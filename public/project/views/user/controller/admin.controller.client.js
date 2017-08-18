@@ -6,6 +6,8 @@
 
         const vm = this;
 
+        vm.back = back;
+
         vm.create = create;
         vm.read = read;
         vm.update = update;
@@ -15,6 +17,7 @@
 
 
         function create(createContent) {
+            createContent = angular.fromJson(createContent);
             switch (vm.dataType) {
                 case 'users':
                     UserService.adminCreate(createContent);
@@ -57,6 +60,7 @@
         }
 
         function update(updateContent) {
+            updateContent = angular.fromJson(updateContent);
             switch (vm.dataType) {
                 case 'users':
                     UserService.adminUpdate(updateContent);
@@ -100,6 +104,9 @@
 
         function getReadContent() {
             return angular.toJson(vm.readContent, true);
+        }
+        function back() {
+            $window.history.back();
         }
 
     }

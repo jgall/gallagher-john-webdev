@@ -18,6 +18,7 @@
             }
 
             vm.isChef = currentUser.roles.includes("CHEF");
+            vm.isAdmin = currentUser.roles.includes("ADMIN");
         }
 
         function logout() {

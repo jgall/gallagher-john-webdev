@@ -8,14 +8,8 @@
         Admin
     </div>
 
-
-    <div class="pull-right" ng-hide="model.loggedIn">
-        <a href="#!/login" class="btn btn-primary btn-md nav-btn waves-effect wow">
-            Sign Up/Log In
-        </a>
-    </div>
-    <div class="pull-right" ng-show="model.loggedIn">
-        <a href="#!/profile" ng-show="model.loggedIn" class="btn btn-primary btn-md nav-btn waves-effect wow">
+    <div class="pull-right">
+        <a href="#!/profile" class="btn btn-primary btn-md nav-btn waves-effect wow">
             <span class="glyphicon glyphicon-user"></span>
         </a>
     </div>
@@ -27,6 +21,8 @@
 
     </div>
     <div class="col-md-6 col-sm-6">
+        <h3>WARNING: Some of these operations may be destructive and break things!</h3>
+
         <h4>Select the type of data you would like to CRUD</h4>
 
         <a href="" ng-click="model.dataType = 'users'"><span>Users</span></a>
@@ -47,7 +43,7 @@
                 Enter the json of the data you would like to add to {{model.dataType}}
             </label>
             <textarea id="create" class="form-control" rows="3" ng-model="model.createContent"></textarea>
-            <button class="btn btn-block btn-danger" ng-click="model.create(model.createContent)"></button>
+            <button class="btn btn-block btn-danger" ng-click="model.create(model.createContent)">Create</button>
         </div>
         <div ng-show="model.op == 'read'">
             <button class="btn btn-block btn-primary" ng-click="model.read()">Show all</button>
