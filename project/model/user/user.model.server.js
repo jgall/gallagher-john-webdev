@@ -1,5 +1,8 @@
 'use strict';
 module.exports = (function () {
+
+    const bcrypt = require('bcrypt-nodejs');
+
     const mongoose = require("mongoose");
     const userSchema = require("./user.schema.server");
     const userModel = mongoose.model("ProjectUserModel", userSchema);
@@ -28,7 +31,7 @@ module.exports = (function () {
     return api;
 
     function createUser(user) {
-        console.log("creating user: " + user);
+        user.password = bcrypt.hashSync(user.password);
         return userModel.create(user);
     }
 
@@ -41,7 +44,15 @@ module.exports = (function () {
     }
 
     function findUserByCredentials(username, password) {
-        return userModel.findOne({username: username, password: password});
+        return userModel
+            .findOne({username: username})
+            .then(function (user) {
+                if (user && bcrypt.compareSync(password, user.password)) {
+                    return user;
+                } else {
+                    null;
+                }
+            });
     }
 
     function findUserById(id) {

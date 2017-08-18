@@ -8,7 +8,7 @@
 
             vm.recipeId = $routeParams["recipeId"];
 
-            console.log("recipeId: " + vm.recipeId);
+            vm.stash = [];
 
             RecipeService.getRecipeInformation(vm.recipeId).then(recipeInfo => {
                 vm.recipe = recipeInfo;
@@ -18,6 +18,9 @@
             UserService.checkLoggedIn().then(user => {
                 vm.user = user;
                 vm.loggedIn = user != "0";
+                if (vm.loggedIn) {
+                    vm.stash = user.ingredientStash;
+                }
             }).then(() => {
 
             });

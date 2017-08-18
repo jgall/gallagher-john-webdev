@@ -88,7 +88,6 @@ module.exports = function (app) {
     passport.deserializeUser(deserializeUser);
 
     function facebookStrategy(token, refreshToken, profile, done) {
-        console.log(profile);
         userModel
             .findUserByFacebookId(profile.id)
             .then(
@@ -223,7 +222,6 @@ module.exports = function (app) {
     }
 
     function localStrategy(username, password, done) {
-        console.log(username + password);
         userModel
             .findUserByCredentials(username, password)
             .then(
