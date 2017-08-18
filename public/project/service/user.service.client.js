@@ -21,7 +21,11 @@
             "requestContact": requestContact,
             "removeIncomingContactRequest": removeIncomingContactRequest,
             "removeOutgoingContactRequest": removeOutgoingContactRequest,
-            "removeContact": removeContact
+            "removeContact": removeContact,
+            "adminCreate": adminCreate,
+            "adminRead": adminRead,
+            "adminUpdate": adminUpdate,
+            "adminRemove": adminRemove,
         };
 
         return api;
@@ -78,6 +82,19 @@
 
         function checkLoggedIn() {
             return $http.get('/api/project/loggedin').then(res => res.data);
+        }
+
+        function adminCreate(body) {
+            return $http.post('/api/project/user', body).then(res => res.data);
+        }
+        function adminRead() {
+            return $http.get('/api/project/user').then(res => res.data);
+        }
+        function adminUpdate(user) {
+            return $http.put('/api/project/user/' + user._id, user).then(res => res.data);
+        }
+        function adminRemove(id) {
+            $http.delete('/api/project/user/' + id);
         }
     }
 

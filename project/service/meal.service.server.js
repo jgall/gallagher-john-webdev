@@ -9,9 +9,18 @@ module.exports = function (app) {
     app.post("/api/project/deleteMeal", deleteMeal);
     app.get("/api/project/getMeal", getMeal);
     app.post("/api/project/findMealsByOwner", getMealsByOwner);
+    app.get("/api/project/getAllMeals", getAllMeals);
 
 
     function createMeal(req, res) {
+
+        if (isAdmin(req.user)) {
+            MealModelApi.createMeal(req.body).then(meal => {
+                res.json(meal);
+            });
+            return;
+        }
+
         if (req.isAuthenticated()) {
             let meal = req.body;
             meal.owner = req.user._id;
@@ -27,7 +36,7 @@ module.exports = function (app) {
     function updateMeal(req, res) {
         if (req.isAuthenticated()) {
             MealModelApi.findMealById(req.body._id).then(meal => {
-                if (meal.owner == req.user._id) {
+                if (meal.owner == req.user._id || isAdmin(req.user)) {
                     MealModelApi.updateMeal(meal._id, req.body).then(updatedMeal => {
                         res.json(updatedMeal);
                         res.end();
@@ -44,12 +53,11 @@ module.exports = function (app) {
     }
 
     function deleteMeal(req, res) {
-        console.log(req.body);
         if (req.isAuthenticated()) {
             MealModelApi.findMealById(req.body._id).then(meal => {
                 console.log(meal);
                 console.log(req.user);
-                if (" " + meal.owner == " " + req.user._id) {
+                if (" " + meal.owner == " " + req.user._id || isAdmin(req.user)) {
                     console.log("SHould be deleting.");
                     MealModelApi.deleteMealById(meal._id).then(() => {
                         res.status(200);
@@ -72,7 +80,8 @@ module.exports = function (app) {
             MealModelApi.findMealById(req.body._id).then(meal => {
                 if (meal.owner == req.user._id
                     || meal.accepted.includes(req.body._id)
-                    || meal.invited.includes(req.body._id)) {
+                    || meal.invited.includes(req.body._id)
+                    || isAdmin(req.user)) {
                     res.json(meal);
                     res.end();
                 } else {
@@ -94,5 +103,19 @@ module.exports = function (app) {
         } else {
             res.sendStatus(400);
         }
+    }
+
+    function getAllMeals(req, res) {
+        if (isAdmin(req.user)) {
+            MealModelApi.getAllMeals().then(data => {
+                res.json(data);
+            });
+        } else {
+            res.status(403);
+        }
+    }
+
+    function isAdmin(user) {
+        return user.roles.indexOf("ADMIN") > 0;
     }
 };

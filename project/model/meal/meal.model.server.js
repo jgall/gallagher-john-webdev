@@ -10,7 +10,8 @@ module.exports = (function () {
         "findMealById": findMealById,
         "deleteMealById": deleteMealById,
         "addComment": addComment,
-        "findMealsByOwner": findMealsByOwner
+        "findMealsByOwner": findMealsByOwner,
+        "getAllMeals": getAllMeals,
     };
 
     return api;
@@ -37,6 +38,10 @@ module.exports = (function () {
 
     function findMealsByOwner(userId) {
         return mealModel.find({owner: userId})
+    }
+
+    function getAllMeals() {
+        return mealModel.find({});
     }
 
 })();

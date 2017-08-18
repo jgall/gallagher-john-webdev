@@ -77,6 +77,14 @@
                     currentUser: checkLoggedIn
                 }
             })
+            .when("/admin", {
+                templateUrl: "views/user/template/admin.view.client.html",
+                controller: "AdminController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: checkIsAdmin
+                }
+            })
             .otherwise({redirectTo: "/"});
     }
 
@@ -107,6 +115,26 @@
                     deferred.reject();
                     $location.url('/login');
                 } else if (user.roles.includes("CHEF")) {
+                    deferred.resolve(user);
+                } else {
+                    deferred.reject();
+                    $location.url('/');
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    function checkIsAdmin(UserService, $q, $location) {
+        let deferred = $q.defer();
+
+        UserService
+            .checkLoggedIn()
+            .then(function (user) {
+                if (user === '0') {
+                    deferred.reject();
+                    $location.url('/login');
+                } else if (user.roles.includes("ADMIN")) {
                     deferred.resolve(user);
                 } else {
                     deferred.reject();

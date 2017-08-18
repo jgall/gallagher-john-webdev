@@ -38,6 +38,10 @@
             return $http.post("/api/project/findMealsByOwner", {userId: userId}).then(res => res.data);
         }
 
+        function getAllMeals() {
+            return $http.get("/api/project/getAllMeals").then(res => res.data);
+        }
+
     }
 
 })();

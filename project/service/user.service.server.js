@@ -14,11 +14,11 @@ module.exports = function (app) {
     app.post('/api/project/login', passport.authenticate('local'), login);
     app.post('/api/project/logout', logout);
     app.post('/api/project/register', register);
-    app.post('/api/project/user', auth, createUser);
+    app.post('/api/project/user', auth, adminCreateUser);
     app.get('/api/project/loggedin', loggedin);
-    app.get('/api/project/user', auth, findAllUsers);
+    app.get('/api/project/user', auth, adminFindAllUsers);
     app.put('/api/project/user/:id', auth, updateUser);
-    app.delete('/api/project/user/:id', auth, deleteUser);
+    app.delete('/api/project/user/:id', auth, adminDeleteUser);
 
     //TODO remove later
     app.get('/api/project/giveChef', (req, res) => {
@@ -336,7 +336,7 @@ module.exports = function (app) {
         )
     }
 
-    function findAllUsers(req, res) {
+    function adminFindAllUsers(req, res) {
         if (isAdmin(req.user)) {
             userModel
                 .findAllUsers()
@@ -353,7 +353,7 @@ module.exports = function (app) {
         }
     }
 
-    function deleteUser(req, res) {
+    function adminDeleteUser(req, res) {
         if (isAdmin(req.user)) {
             userModel
                 .removeUser(req.params.id)
@@ -408,49 +408,56 @@ module.exports = function (app) {
             );
     }
 
-    function createUser(req, res) {
-        let newUser = req.body;
-        if (newUser.roles && newUser.roles.length > 1) {
-            newUser.roles = newUser.roles.split(",");
-        } else {
-            newUser.roles = ["REGULAR"];
-        }
+    function adminCreateUser(req, res) {
+        if (isAdmin(req.user)) {
+            let newUser = req.body;
 
-        // first check if a user already exists with the username
-        userModel
-            .findUserByUsername(newUser.username)
-            .then(
-                function (user) {
-                    // if the user does not already exist
-                    if (user == null) {
-                        // create a new user
-                        return userModel.createUser(newUser)
-                            .then(
-                                // fetch all the users
-                                function () {
-                                    return userModel.findAllUsers();
-                                },
-                                function (err) {
-                                    res.status(400).send(err);
-                                }
-                            );
-                        // if the user already exists, then just fetch all the users
-                    } else {
-                        return userModel.findAllUsers();
+            // first check if a user already exists with the username
+            userModel
+                .findUserByUsername(newUser.username)
+                .then(
+                    function (user) {
+                        // if the user does not already exist
+                        if (user == null) {
+                            // create a new user
+                            return userModel.createUser(newUser)
+                                .then(
+                                    // fetch all the users
+                                    function () {
+                                        return userModel.findAllUsers();
+                                    },
+                                    function (err) {
+                                        res.status(400).send(err);
+                                    }
+                                );
+                            // if the user already exists, then just fetch all the users
+                        } else {
+                            return userModel.findAllUsers();
+                        }
+                    },
+                    function (err) {
+                        res.status(400).send(err);
                     }
-                },
-                function (err) {
-                    res.status(400).send(err);
-                }
-            )
-            .then(
-                function (users) {
-                    res.json(users);
-                },
-                function () {
-                    res.status(400).send(err);
-                }
-            )
+                )
+                .then(
+                    function (users) {
+                        res.json(users);
+                    },
+                    function () {
+                        res.status(400).send(err);
+                    }
+                )
+        } else {
+            res.status(403);
+        }
+    }
+
+    function findAllUsers(req, res) {
+        if (isAdmin(req.user)) {
+            userModel.findAllUsers().then(data => res.json(data));
+        } else {
+            res.status(403);
+        }
     }
 
     function isAdmin(user) {
