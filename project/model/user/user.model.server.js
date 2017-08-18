@@ -17,6 +17,12 @@ module.exports = (function () {
         getMongooseModel: getMongooseModel,
         addIngredient: addIngredient,
         removeIngredient: removeIngredient,
+        addOutgoingContactRequest: addOutgoingContactRequest,
+        removeOutgoingContactRequest: removeOutgoingContactRequest,
+        removeIncomingContactRequest: removeIncomingContactRequest,
+        removeContact: removeContact,
+        addContact: addContact,
+
     };
 
     return api;
@@ -68,6 +74,34 @@ module.exports = (function () {
 
     function removeIngredient(userId, ingredientId) {
         return userModel.update({_id: userId}, {$pull: {ingredientStash: ingredientId}});
+    }
+
+    function addOutgoingContactRequest(userId, contactUsername) {
+        return findUserByUsername(contactUsername).then(c =>
+            userModel.update({_id: userId}, {$push: {outgoingContactRequests: c._id}})
+                .then(() => userModel.update({_id: c._id}, {$push: {incomingContactRequests: userId}})));
+    }
+
+    function removeOutgoingContactRequest(userId1, userId2) {
+        return userModel.update({_id: userId1}, {$pull: {outgoingContactRequests: userId2}})
+            .then(() =>
+                userModel.update({_id: userId2}, {$pull: {incomingContactRequests: userId1}}));
+    }
+
+    function removeIncomingContactRequest(userId1, userId2) {
+        return userModel.update({_id: userId1}, {$pull: {incomingContactRequests: userId2}})
+            .then(() =>
+                userModel.update({_id: userId2}, {$pull: {outgoingContactRequests: userId1}}));
+    }
+
+    function removeContact(userId1, userId2) {
+        return userModel.update({_id: userId1}, {$pull: {contacts: userId2}})
+            .then(() => userModel.update({_id: userId2}, {$pull: {contacts: userId1}}));
+    }
+
+    function addContact(userId1, userId2) {
+        return userModel.update({_id: userId1}, {$push: {contacts: userId2}})
+            .then(() => userModel.update({_id: userId2}, {$push: {contacts: userId1}}));
     }
 
 })();

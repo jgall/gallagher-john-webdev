@@ -15,7 +15,13 @@
             "checkLoggedIn": checkLoggedIn,
             "updateUser": updateUser,
             "deleteUser": deleteUser,
-            "getContacts": getContacts
+            "getContacts": getContacts,
+            "getIncomingContactRequests": getIncomingContactRequests,
+            "getOutgoingContactRequests": getOutgoingContactRequests,
+            "requestContact": requestContact,
+            "removeIncomingContactRequest": removeIncomingContactRequest,
+            "removeOutgoingContactRequest": removeOutgoingContactRequest,
+            "removeContact": removeContact
         };
 
         return api;
@@ -40,6 +46,30 @@
 
         function getContacts() {
             return $http.get(apiUrl + "/getContacts").then(res => res.data);
+        }
+
+        function getIncomingContactRequests() {
+            return $http.get("/api/project/incomingContactRequests").then(res => res.data);
+        }
+
+        function getOutgoingContactRequests() {
+            return $http.get("/api/project/outgoingContactRequests").then(res => res.data);
+        }
+
+        function removeIncomingContactRequest(id) {
+            return $http.delete("/api/project/removeIncomingContactRequest/" + id).then(res => res.data);
+        }
+
+        function removeOutgoingContactRequest(id) {
+            return $http.delete("/api/project/removeOutgoingContactRequest/" + id).then(res => res.data);
+        }
+
+        function requestContact(username) {
+            return $http.put("/api/project/requestContact/" + username).then(res => res.data);
+        }
+
+        function removeContact(id) {
+            return $http.delete("/api/project/contact/" + id).then(res => res.data);
         }
 
         function deleteUser(userId) {

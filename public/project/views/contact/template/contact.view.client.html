@@ -1,0 +1,69 @@
+<nav class="navbar navbar-default navbar-fixed-top justify-content-between" role="navigation">
+    <div class="navbar-header navbar-brand float-left">
+        <a class="float-left" href="" ng-click="model.back()">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="navbar-header navbar-brand">
+        <span>Contacts</span>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="col-md-3"></div>
+
+    <div class="col-md-6">
+        <div class="alert alert-success padded-column-content fade" ng-show="model.hasAlert">{{model.alert}}</div>
+
+        <form class="center-content" ng-submit="model.addContact(inputContact)">
+            <label for="input">Add a new Contact</label>
+            <input id="input" type="text" class="form-control" ng-model="inputContact"/>
+            <button class="btn btn-primary btn-block waves-effect" type="submit">Add
+            </button>
+        </form>
+
+        <hr>
+
+        <H4>Pending Contact Requests from you</H4>
+        <div class="card padded-column-content" ng-repeat="contact in model.outgoingRequests">
+            <div class="card-body">
+                <span>username: {{contact.username}}</span>
+                <a href="" ng-click="model.removeOutgoingContact(contact)" class="pull-right">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+        </div>
+
+        <hr>
+
+        <H4>People requesting to be your contact</H4>
+        <div class="card padded-column-content" ng-repeat="contact in model.incomingRequests">
+            <div class="card-body">
+                <span>{{contact.firstName}} {{contact.lastName}} </span> | <span>username: {{contact.username}}</span>
+                <a href="" ng-click="model.addContact(contact.username)" class="pull-right">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+                <a href="" ng-click="model.removeIncomingContact(contact)" class="pull-right">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+        </div>
+
+        <hr>
+
+        <H4>Contacts</H4>
+
+        <div class="card padded-column-content" ng-repeat="contact in model.contacts">
+            <div class="card-body">
+                <span>{{contact.firstName}} {{contact.lastName}} </span> | <span>username: {{contact.username}}</span>
+                <a href="" ng-click="model.removeContact(contact)" class="pull-right">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-3"></div>
+
+
+</div>

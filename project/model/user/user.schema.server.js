@@ -20,7 +20,8 @@ module.exports = (function () {
         roles: [{type: String}],
         ingredientStash: [{type: mongoose.Schema.ObjectId, ref: "ingredient"}],
         contacts: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
-        contactRequests: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
+        incomingContactRequests: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
+        outgoingContactRequests: [{type: mongoose.Schema.ObjectId, ref: "projectUser"}],
         recipes: [{type: String}],
         meals: [{type: mongoose.Schema.ObjectId, ref: "meal"}],
         dateCreated: {type: Date, default: Date.now}

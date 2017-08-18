@@ -35,6 +35,14 @@
                     currentUser: checkLoggedIn
                 }
             })
+            .when("/contacts", {
+                templateUrl: "views/contact/template/contact.view.client.html",
+                controller: "ContactController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: checkLoggedIn
+                }
+            })
             .when("/recipeSearch/:recipeQuery", {
                 templateUrl: "views/recipe/template/recipe.search.view.client.html",
                 controller: "RecipeSearchController",
