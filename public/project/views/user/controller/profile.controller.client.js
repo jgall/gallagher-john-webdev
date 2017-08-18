@@ -1,18 +1,24 @@
 (function () {
     angular.module("MealPlanner").controller("ProfileController", ProfileController);
 
-    function ProfileController(currentUser, UserService, $location, $timeout, $window) {
+    function ProfileController(currentUser, UserService, $location, $timeout) {
         const vm = this;
         vm.user = currentUser;
-
-        if (currentUser == 0) {
-            $location.path("/");
-        }
 
         vm.updateUser = updateUser;
         vm.logout = logout;
         vm.deletUser = deleteUser;
         vm.back = back;
+
+        init();
+
+        function init() {
+            if (currentUser == 0) {
+                $location.path("/");
+            }
+
+            vm.isChef = currentUser.roles.includes("CHEF");
+        }
 
         function logout() {
             console.log("logging out");
@@ -27,7 +33,7 @@
                 .then(function () {
                     $location.url('/');
                 }, function () {
-                    model.error = "Unable to unregister you";
+                    vm.error = "Unable to unregister you";
                 });
         }
 
@@ -42,8 +48,7 @@
         }
 
         function back() {
-            console.log($window.history);
-            $window.history.back();
+            $location.path("/");
         }
     }
 

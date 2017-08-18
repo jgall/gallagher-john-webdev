@@ -10,7 +10,8 @@
 
         let api = {
             searchForRecipe: searchForRecipe,
-            getRecipeInformation: getRecipeInformation
+            getRecipeInformation: getRecipeInformation,
+            createRecipe: createRecipe,
         };
 
         return api;
@@ -21,6 +22,10 @@
 
         function getRecipeInformation(recipeId) {
             return $http.post("/api/project/getRecipeInformation", {query: recipeId}).then(res => res.data);
+        }
+
+        function createRecipe(recipe) {
+            return $http.put("/api/project/createRecipe", recipe).then(res => res.data);
         }
 
     }

@@ -53,6 +53,14 @@
                 controller: "RecipeDetailController",
                 controllerAs: "model"
             })
+            .when("/recipeCreate", {
+                templateUrl: "views/recipe/template/recipe.create.view.client.html",
+                controller: "RecipeCreateController",
+                controllerAs: "model",
+                resolve: {
+                    currentUser: checkIsChef
+                }
+            })
             .when("/mealCreate", {
                 templateUrl: "views/meal/template/meal.create.view.client.html",
                 controller: "CreateMealController",
@@ -83,6 +91,26 @@
                     $location.url('/login');
                 } else {
                     deferred.resolve(user);
+                }
+            });
+
+        return deferred.promise;
+    }
+
+    function checkIsChef(UserService, $q, $location) {
+        let deferred = $q.defer();
+
+        UserService
+            .checkLoggedIn()
+            .then(function (user) {
+                if (user === '0') {
+                    deferred.reject();
+                    $location.url('/login');
+                } else if (user.roles.includes("CHEF")) {
+                    deferred.resolve(user);
+                } else {
+                    deferred.reject();
+                    $location.url('/');
                 }
             });
 

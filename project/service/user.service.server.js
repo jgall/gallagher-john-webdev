@@ -20,6 +20,22 @@ module.exports = function (app) {
     app.put('/api/project/user/:id', auth, updateUser);
     app.delete('/api/project/user/:id', auth, deleteUser);
 
+    //TODO remove later
+    app.get('/api/project/giveChef', (req, res) => {
+        userModel.getMongooseModel().update({_id: req.user._id}, {$push: {roles: "CHEF"}}).then(() => {
+            res.sendStatus(200);
+            res.end();
+        });
+    });
+
+    //TODO remove later
+    app.get('/api/project/giveAdmin', (req, res) => {
+        userModel.getMongooseModel().update({_id: req.user._id}, {$push: {roles: "ADMIN"}}).then(() => {
+            res.sendStatus(200);
+            res.end();
+        });
+    });
+
     app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {

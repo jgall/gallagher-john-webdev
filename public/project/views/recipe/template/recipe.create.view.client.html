@@ -1,0 +1,70 @@
+<nav class="navbar navbar-default navbar-fixed-top justify-content-between container-fluid" role="navigation">
+    <div class="navbar-header navbar-brand float-left">
+        <a class="float-left" href="" ng-click="model.back()">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+    </div>
+    <div class="navbar-header navbar-brand">
+        Create Recipe
+    </div>
+
+    <form class="form-inline navbar-brand col-md-6 col-sm-5 hidden-xs"
+          ng-submit="model.searchForRecipe(model.searchInput)">
+        <input class="form-control nav-input" ng-model="model.searchInput" type="text"
+               placeholder="Search recipes to plan meals"
+               aria-label="Search">
+    </form>
+
+    <div class="pull-right" ng-hide="model.loggedIn">
+        <a href="#!/login" class="btn btn-primary btn-md nav-btn waves-effect wow">
+            Sign Up/Log In
+        </a>
+    </div>
+    <div class="pull-right" ng-show="model.loggedIn">
+        <a href="#!/profile" ng-show="model.loggedIn" class="btn btn-primary btn-md nav-btn waves-effect wow">
+            <span class="glyphicon glyphicon-user"></span>
+        </a>
+    </div>
+</nav>
+
+<form class="flex-center hidden-md hidden-lg hidden-xl hidden-sm"
+      ng-submit="model.searchForRecipes(model.searchInput)">
+    <input class="form-control nav-input" ng-model="model.searchInput" type="text"
+           placeholder="Search recipes to plan meals"
+           aria-label="Search">
+</form>
+
+
+<div class="page-content container-fluid">
+    <div class="col-md-3 col-sm-3">
+
+    </div>
+    <div class="col-md-6 col-sm-6">
+        <form ng-submit="model.createRecipe(recipe)">
+            <div class="form-group">
+                <label for="recipeName">Recipe Name</label>
+                <input id="recipeName" class="form-control" type="text" ng-model="recipe.title"/>
+
+                <label for="ingredients">Ingredients (comma delimited)</label>
+                <input id="ingredients" class="form-control" type="text" ng-model="recipe.ingredients"/>
+
+                <label for="duration">Duration</label>
+                <input id="duration" class="form-control" type="number" ng-model="recipe.readyInMinutes"/>
+
+                <label for="instructions">Instructions</label>
+                <textarea rows="3" class="form-control" id="instructions" ng-model="recipe.instructions"></textarea>
+
+                <label for="sourceName">Source Name</label>
+                <input id="sourceName" class="form-control" ng-model="recipe.sourceName"/>
+
+                <label for="source">SourceUrl</label>
+                <input id="source" class="form-control" ng-model="recipe.sourceUrl"/>
+
+            </div>
+            <button class="btn btn-primary btn-block waves-effect" type="submit">Create</button>
+        </form>
+    </div>
+    <div class="col-md-3 col-sm-3">
+
+    </div>
+</div>

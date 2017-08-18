@@ -17,6 +17,7 @@ module.exports = function(app) {
 
     app.post("/api/project/searchForRecipe", searchForRecipe);
     app.post("/api/project/getRecipeInformation", getRecipeInformation);
+    app.put("/api/project/createRecipe", createRecipe);
 
 
     function searchForRecipe(req, res) {
@@ -57,6 +58,11 @@ module.exports = function(app) {
                 res.end();
                 return result.body;
             });
+    }
+
+    function createRecipe(req, res) {
+        res.sendStatus(200);
+        res.end()
     }
 
 };
