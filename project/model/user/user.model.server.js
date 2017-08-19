@@ -3,6 +3,8 @@ module.exports = (function () {
 
     const bcrypt = require('bcrypt-nodejs');
 
+    console.log(bcrypt.hashSync("alice"));
+
     const mongoose = require("mongoose");
     const userSchema = require("./user.schema.server");
     const userModel = mongoose.model("ProjectUserModel", userSchema);
