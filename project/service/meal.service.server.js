@@ -164,6 +164,6 @@ module.exports = function (app) {
     }
 
     function isAdmin(user) {
-        return user.roles.indexOf("ADMIN") > 0;
+        return user.roles.indexOf("ADMIN") >= 0;
     }
 };

@@ -85,7 +85,7 @@
         }
 
         function adminCreate(body) {
-            return $http.post('/api/project/user', body).then(res => res.data);
+            return $http.post('/api/project/adminCreateUser', body).then(res => res.data);
         }
         function adminRead() {
             return $http.get('/api/project/user').then(res => res.data);

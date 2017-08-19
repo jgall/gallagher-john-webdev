@@ -2,7 +2,7 @@
     angular.module("MealPlanner").controller("AdminController", AdminController);
 
     function AdminController(UserService, $window, MealService, $location, RecipeService, IngredientService,
-                             CommentService) {
+                             CommentService, $timeout) {
 
         const vm = this;
 
@@ -14,9 +14,16 @@
         vm.remove = remove;
 
         vm.getReadContent = getReadContent;
+        vm.getKeys = getKeys;
 
+        init();
+
+        function init() {
+            vm.createContent = '{"username": "test", "password": "test"}';
+        }
 
         function create(createContent) {
+            console.log(createContent);
             createContent = angular.fromJson(createContent);
             switch (vm.dataType) {
                 case 'users':
@@ -82,31 +89,37 @@
         }
 
         function remove(itemToDelete) {
-            switch (vm.dataType) {
-                case 'users':
-                    UserService.adminRemove(itemToDelete);
-                    break;
-                case 'meals':
-                    MealService.adminRemove(itemToDelete);
-                    break;
-                case 'recipes':
-                    RecipeService.adminRemove(itemToDelete);
-                    break;
-                case 'ingredients':
-                    IngredientService.adminRemove(itemToDelete);
-                    break;
-                case 'comments':
-                    CommentService.adminRemove(itemToDelete);
-                    break;
+            (() => {
+                switch (vm.dataType) {
+                    case 'users':
+                        return UserService.adminRemove(itemToDelete);
+                        break;
+                    case 'meals':
+                        return MealService.adminRemove(itemToDelete);
+                        break;
+                    case 'recipes':
+                        return RecipeService.adminRemove(itemToDelete);
+                        break;
+                    case 'ingredients':
+                        return IngredientService.adminRemove(itemToDelete);
+                        break;
+                    case 'comments':
+                        return CommentService.adminRemove(itemToDelete);
+                        break;
 
-            }
+                }
+            })().then(() => $timeout(read, 200));
         }
 
         function getReadContent() {
-            return angular.toJson(vm.readContent, true);
+            return vm.readContent;
         }
         function back() {
             $window.history.back();
+        }
+
+        function getKeys(obj) {
+            return Object.keys(obj);
         }
 
     }

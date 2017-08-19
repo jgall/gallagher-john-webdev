@@ -14,9 +14,10 @@ module.exports = function (app) {
     app.post('/api/project/login', passport.authenticate('local'), login);
     app.post('/api/project/logout', logout);
     app.post('/api/project/register', register);
-    app.post('/api/project/user', auth, adminCreateUser);
+    app.post('/api/project/user', auth, createUser);
     app.get('/api/project/loggedin', loggedin);
     app.get('/api/project/user', auth, adminFindAllUsers);
+    app.post('/api/project/adminCreateUser', auth, adminCreateUser);
     app.put('/api/project/user/:id', auth, updateUser);
     app.delete('/api/project/user/:id', auth, adminDeleteUser);
 
@@ -335,11 +336,14 @@ module.exports = function (app) {
     }
 
     function adminFindAllUsers(req, res) {
+        console.log("call made");
         if (isAdmin(req.user)) {
+            console.log("is admin");
             userModel
                 .findAllUsers()
                 .then(
                     function (users) {
+                        console.log("Hello");
                         res.json(users);
                     },
                     function () {
@@ -406,10 +410,9 @@ module.exports = function (app) {
             );
     }
 
-    function adminCreateUser(req, res) {
+    function createUser(req, res) {
         if (isAdmin(req.user)) {
             let newUser = req.body;
-
             // first check if a user already exists with the username
             userModel
                 .findUserByUsername(newUser.username)
@@ -450,6 +453,18 @@ module.exports = function (app) {
         }
     }
 
+    function adminCreateUser(req, res) {
+        console.log("createing user for admin");
+        if (isAdmin(req.user)) {
+            userModel.createUser(req.body).then((u) => {
+                res.json(u);
+                res.end();
+            })
+        }
+
+
+    }
+
     function findAllUsers(req, res) {
         if (isAdmin(req.user)) {
             userModel.findAllUsers().then(data => res.json(data));
@@ -459,8 +474,7 @@ module.exports = function (app) {
     }
 
     function isAdmin(user) {
-        return user.roles.indexOf("ADMIN") > 0;
-
+        return user.roles.indexOf("ADMIN") >= 0;
     }
 
     function authorized(req, res, next) {

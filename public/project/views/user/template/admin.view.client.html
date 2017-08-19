@@ -38,28 +38,37 @@
         <a href="" ng-click="model.op = 'update'"><span>Update</span></a>
         <a href="" ng-click="model.op = 'delete'"><span>Delete</span></a>
 
-        <div ng-show="model.op == 'create'">
-            <label for="create">
-                Enter the json of the data you would like to add to {{model.dataType}}
-            </label>
-            <textarea id="create" class="form-control" rows="3" ng-model="model.createContent"></textarea>
-            <button class="btn btn-block btn-danger" ng-click="model.create(model.createContent)">Create</button>
-        </div>
-        <div ng-show="model.op == 'read'">
-            <button class="btn btn-block btn-primary" ng-click="model.read()">Show all</button>
-            <p>{{model.getReadContent()}}</p>
-        </div>
-        <div ng-show="model.op == 'update'">
-            <label for="update">
-                Enter the json of the data you would like to update to and make sure to include an _id field
-            </label>
-            <textarea id="update" rows="3" class="form-control" ng-model="model.updateContent"></textarea>
-            <button class="btn btn-block btn-danger" ng-click="model.update(model.updateContent)">Delete</button>
-        </div>
-        <div ng-show="model.op == 'delete'">
-            <label for="delete">Enter the ID of the item you want to delete</label>
-            <input id="delete" class="form-control" ng-model="model.itemToDelete"/>
-            <button class="btn btn-block btn-danger" ng-click="model.remove(model.itemToDelete)">Delete</button>
+        <div ng-show="model.op">
+            <div ng-show="model.op == 'create'">
+                <label for="create">
+                    Enter the json of the data you would like to add to {{model.dataType}}
+                </label>
+                <textarea id="create" class="form-control" rows="3" ng-model="model.createContent"></textarea>
+                <button class="btn btn-block btn-danger" ng-click="model.create(model.createContent)">Create</button>
+            </div>
+            <div ng-show="model.op == 'read'">
+                <button class="btn btn-block btn-primary" ng-click="model.read()">Show all</button>
+                <div class="card" ng-repeat="data in model.getReadContent()">
+                    <div class="card-body">
+                        <a href="" ng-click="model.remove(data._id)" class="pull-right">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                        <div ng-repeat="key in model.getKeys(data)">{{key}} : {{data[key]}}</div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="model.op == 'update'">
+                <label for="update">
+                    Enter the json of the data you would like to update to and make sure to include an _id field
+                </label>
+                <textarea id="update" rows="3" class="form-control" ng-model="model.updateContent"></textarea>
+                <button class="btn btn-block btn-danger" ng-click="model.update(model.updateContent)">Delete</button>
+            </div>
+            <div ng-show="model.op == 'delete'">
+                <label for="delete">Enter the ID of the item you want to delete</label>
+                <input id="delete" class="form-control" ng-model="model.itemToDelete"/>
+                <button class="btn btn-block btn-danger" ng-click="model.remove(model.itemToDelete)">Delete</button>
+            </div>
         </div>
 
     </div>
