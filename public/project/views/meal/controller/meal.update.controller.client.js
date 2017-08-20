@@ -11,7 +11,6 @@
 
         function init() {
             MealService.getMeal($routeParams["mealId"]).then(meal => {
-                console.log(meal);
                 meal.date = new Date(meal.date);
                 vm.meal = meal;
                 vm.recipeId = meal.recipe;
