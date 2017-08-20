@@ -1,7 +1,7 @@
 (function () {
     angular.module("MealPlanner").controller("CreateMealController", CreateMealController);
 
-    function CreateMealController(MealService, RecipeService, currentUser, $location, $routeParams, $sce, $window,
+    function CreateMealController(MealService, RecipeService, $location, $routeParams, $sce, $window,
                                   UserService) {
         const vm = this;
 
@@ -16,11 +16,14 @@
         init();
 
         function init() {
-            vm.user = currentUser;
 
-            if (currentUser == 0) {
-                $location.path("/");
-            }
+            UserService
+                .checkLoggedIn().then(user => {
+                    vm.user = user;
+                    if (user == 0) {
+                        $location.path("/");
+                    }
+            });
 
             UserService.getContacts().then(contacts => vm.contacts = contacts);
 

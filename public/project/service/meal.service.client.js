@@ -35,7 +35,7 @@
         }
 
         function getMeal(mealId) {
-            return $http.get("/api/project/getMeal", {_id: mealId}).then(res => res.data);
+            return $http.get("/api/project/getMeal/" + mealId).then(res => res.data);
         }
 
         function findMealsByOwner(userId) {

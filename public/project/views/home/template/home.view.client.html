@@ -38,6 +38,9 @@
         <div class="card recipe-card self-centering" ng-repeat="meal in model.meals">
             <div class="view overlay hm-white-slight">
                 <img ng-src="https://webknox.com/recipeImages/{{meal.recipe}}-556x370.jpg" class="img-fluid" alt="">
+                <a href="#!/mealUpdate/{{meal._id}}">
+                    <div class="mask waves-effect"></div>
+                </a>
             </div>
             <a href="" class="btn btn-danger waves-effect wow pull-right" ng-click="model.deleteMeal(meal)">
                 <span class="glyphicon glyphicon-trash"></span>

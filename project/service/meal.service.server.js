@@ -7,7 +7,7 @@ module.exports = function (app) {
     app.put("/api/project/createMeal", createMeal);
     app.put("/api/project/updateMeal", updateMeal);
     app.post("/api/project/deleteMeal", deleteMeal);
-    app.get("/api/project/getMeal", getMeal);
+    app.get("/api/project/getMeal/:mealId", getMeal);
     app.post("/api/project/findMealsByOwner", getMealsByOwner);
     app.get("/api/project/getAllMeals", getAllMeals);
 
@@ -125,10 +125,10 @@ module.exports = function (app) {
 
     function getMeal(req, res) {
         if (req.isAuthenticated()) {
-            MealModelApi.findMealById(req.body._id).then(meal => {
+            MealModelApi.findMealById(req.params.mealId).then(meal => {
                 if (meal.owner == req.user._id
-                    || meal.accepted.includes(req.body._id)
-                    || meal.invited.includes(req.body._id)
+                    || meal.accepted.includes(req.user._id)
+                    || meal.invited.includes(req.user._id)
                     || isAdmin(req.user)) {
                     res.json(meal);
                     res.end();
