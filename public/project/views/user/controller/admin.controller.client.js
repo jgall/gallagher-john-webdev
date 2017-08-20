@@ -15,6 +15,7 @@
 
         vm.getReadContent = getReadContent;
         vm.getKeys = getKeys;
+        vm.getRequiredFields = getRequiredFields;
 
         init();
 
@@ -120,6 +121,27 @@
 
         function getKeys(obj) {
             return Object.keys(obj);
+        }
+
+        function getRequiredFields() {
+            switch (vm.dataType) {
+                case 'users':
+                    return "username, password";
+                    break;
+                case 'meals':
+                    return "name, owner (type: userId)";
+                    break;
+                case 'recipes':
+                    return RecipeService.adminRemove(itemToDelete);
+                    break;
+                case 'ingredients':
+                    return IngredientService.adminRemove(itemToDelete);
+                    break;
+                case 'comments':
+                    return CommentService.adminRemove(itemToDelete);
+                    break;
+
+            }
         }
 
     }

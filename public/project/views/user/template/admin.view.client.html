@@ -25,23 +25,28 @@
 
         <h4>Select the type of data you would like to CRUD</h4>
 
-        <a href="" ng-click="model.dataType = 'users'"><span>Users</span></a>
-        <a href="" ng-click="model.dataType = 'meals'"><span>Meals</span></a>
+        <a href="" class="btn btn-secondary" ng-click="model.dataType = 'users'"><span>Users</span></a>
+        <a href="" class="btn btn-secondary" ng-click="model.dataType = 'meals'"><span>Meals</span></a>
         <!-- <a href="" ng-click="model.dataType = 'recipes'"><span>Recipes</span></a>
         <a href="" ng-click="model.dataType = 'ingredients'"><span>Ingredients</span></a>
         <a href="" ng-click="model.dataType = 'comments'"><span>Comments</span></a> -->
 
-        <hr>
-        <h4>Select the type of operation you would like to perform</h4>
-        <a href="" ng-click="model.op = 'create'"><span>Create</span></a>
-        <a href="" ng-click="model.op = 'read'"><span>Read</span></a>
-        <a href="" ng-click="model.op = 'update'"><span>Update</span></a>
-        <a href="" ng-click="model.op = 'delete'"><span>Delete</span></a>
+        <div ng-show="model.dataType">
+            <hr>
+            <h4>Select the type of operation you would like to perform on {{model.dataType}}</h4>
+            <a href="" class="btn btn-secondary" ng-click="model.op = 'create'">Create</a>
+            <a href="" class="btn btn-secondary" ng-click="model.op = 'read'">Read</a>
+            <a href="" class="btn btn-secondary" ng-click="model.op = 'update'">Update</a>
+            <a href="" class="btn btn-secondary" ng-click="model.op = 'delete'">Delete</a>
+        </div>
 
         <div ng-show="model.op">
             <div ng-show="model.op == 'create'">
                 <label for="create">
-                    Enter the json of the data you would like to add to {{model.dataType}}
+                    Enter the json of the data you would like to add to {{model.dataType}}.
+                    Be sure to wrap keys in quotes and values that you want identified as Strings in quotes.
+                    <br/>
+                    Required Fields: {{model.getRequiredFields()}}
                 </label>
                 <textarea id="create" class="form-control" rows="3" ng-model="model.createContent"></textarea>
                 <button class="btn btn-block btn-danger" ng-click="model.create(model.createContent)">Create</button>
