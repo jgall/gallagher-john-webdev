@@ -44,8 +44,9 @@
             </a>
             <div class="card-body">
                 <h4>{{meal.name}}</h4>
-                <span class="hint">{{meal.date | date : 'fullDate'}} | {{meal.place}}</span>
+                <span class="hint">{{meal.date | date : 'fullDate'}} | location: {{meal.place}}</span>
                 <p>{{meal.description}}</p>
+                <p><a href="#!/recipeDetail/{{meal.recipe}}">Recipe</a></p>
             </div>
         </div>
         <div class="flex-center hint" ng-hide="model.meals.length > 0">
